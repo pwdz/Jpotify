@@ -16,6 +16,7 @@ public class PlayList extends JPanel {
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Colors.getColor("heavy grey"));
+        setPreferredSize(new Dimension(100,0));
         gbc = new GridBagConstraints();
 
         yourLibrary = makeLabelReady("YOUR LIBRARY","grey");

@@ -30,16 +30,19 @@ public class MainFrame {
         playListPanel = new PlayList();
 
         panel2.setOpaque(true);
-        panel2.setBackground(new Color(30, 30, 30));
+        panel2.setBackground(new Color(30,30,30));
 
         panel3.setOpaque(true);
-        panel3.setBackground(Color.CYAN);
+        panel3.setBackground(Colors.getColor("heavy grey"));
+        panel3.setPreferredSize(new Dimension(100,0));
 
         panel4.setOpaque(true);
-        panel4.setBackground(Color.LIGHT_GRAY);
+        panel4.setBackground(Colors.getColor("heavy grey"));
+        panel4.setPreferredSize(new Dimension(0,40));
 
         panel5.setOpaque(true);
-        panel5.setBackground(Color.PINK);
+        panel5.setBackground(Colors.getColor("heavy grey"));
+        panel5.setPreferredSize(new Dimension(0,120));
 
         panel.add(playListPanel, BorderLayout.WEST);
 //        panel.add(panel2,BorderLayout.WEST);
