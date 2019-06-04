@@ -20,13 +20,14 @@ public class MainFrame{
 
         panel.setLayout(new BorderLayout(5,5));
         panel.setOpaque(true);
-        panel.setBackground(new Color(30,30,30));
+        panel.setBackground(Color.BLACK);
 
         panel1.setOpaque(true);
         panel1.setBackground(Color.ORANGE);
+        panel.setPreferredSize(new Dimension(100,100));
 
         panel2.setOpaque(true);
-        panel2.setBackground(Color.BLUE);
+        panel2.setBackground(new Color(30,30,30));
 
         panel3.setOpaque(true);
         panel3.setBackground(Color.CYAN);
