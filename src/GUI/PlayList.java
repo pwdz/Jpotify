@@ -5,6 +5,8 @@ import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PlayList extends JPanel {
     private GridBagConstraints gbc;
@@ -54,7 +56,7 @@ public class PlayList extends JPanel {
         l.addElement("asdad");
 
         gbc.gridy++;
-//        gbc.fill = GridBagConstraints.BOTH;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty=1;
         add(playlist, gbc);
 
@@ -67,6 +69,20 @@ public class PlayList extends JPanel {
         gbc.weighty=1;
         add(newPlayListButton,gbc);*/
         newPlaylist=makeLabelReady("[+]Add Playlist","grey");
+        newPlaylist.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                newPlaylist.setBackground(Colors.getColor("1"));
+            }
+        });
+        newPlaylist.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                newPlaylist.setBackground(Colors.getColor("grey"));
+            }
+        });
         gbc.gridy++;
         gbc.weighty=0;
         gbc.fill=GridBagConstraints.HORIZONTAL;
