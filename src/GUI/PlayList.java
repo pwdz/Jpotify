@@ -1,5 +1,8 @@
 package GUI;
 
+import org.w3c.dom.html.HTMLLabelElement;
+import sun.applet.Main;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +10,7 @@ public class PlayList extends JPanel {
     private GridBagConstraints gbc;
     private JLabel yourLibrary;
     private JLabel songs, albums, playlistLabel;
+    private JLabel newPlaylist;
     private JList<String> playlist;
     private DefaultListModel<String> l;
     private JButton newPlayListButton;
@@ -43,35 +47,42 @@ public class PlayList extends JPanel {
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) playlist.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
-        playlist.setPreferredSize(new Dimension(100, 600));
+        playlist.setPreferredSize(new Dimension(100, 0));
         playlist.setBackground(Colors.getColor("heavy grey"));
         playlist.setForeground(Color.WHITE);
         l.addElement("mosa");
         l.addElement("asdad");
 
         gbc.gridy++;
-        gbc.fill = GridBagConstraints.VERTICAL;
+//        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty=1;
         add(playlist, gbc);
 
-        newPlayListButton = new JButton("[+]New Playlist");
+        /*newPlayListButton = new JButton("[+]New Playlist");
         newPlayListButton.setBackground(Colors.getColor("heavy grey"));
         newPlayListButton.setForeground(Color.WHITE);
         newPlayListButton.setPreferredSize(new Dimension(100,20));
         gbc.gridy++;
-        gbc.fill=GridBagConstraints.CENTER;
+        gbc.fill=GridBagConstraints.HORIZONTAL;
         gbc.weighty=1;
-        add(newPlayListButton,gbc);
+        add(newPlayListButton,gbc);*/
+        newPlaylist=makeLabelReady("[+]Add Playlist","grey");
+        gbc.gridy++;
+        gbc.weighty=0;
+        gbc.fill=GridBagConstraints.HORIZONTAL;
+        add(newPlaylist,gbc);
+
     }
 
     /*
         @param: takes a JLabel and it's name and color and produces it.
     */
-    private JLabel makeLabelReady(String labelName, String colorName) {
-        JLabel label = new JLabel(labelName, SwingConstants.CENTER);
-        label.setOpaque(true);
-        label.setBackground(Colors.getColor(colorName));
-        label.setForeground(Color.WHITE);
-        label.setPreferredSize(new Dimension(100, 30));
-        return label;
+        private JLabel makeLabelReady(String labelName, String colorName) {
+            JLabel label = new JLabel(labelName, SwingConstants.CENTER);
+            label.setOpaque(true);
+            label.setBackground(Colors.getColor(colorName));
+            label.setForeground(Color.WHITE);
+            label.setPreferredSize(new Dimension(100, 30));
+            return label;
+        }
     }
-}
