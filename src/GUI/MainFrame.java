@@ -1,5 +1,4 @@
 package GUI;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,13 +6,13 @@ public class MainFrame {
     private JFrame mainFrame;
     private JPanel panel, panel5, panel2, panel3, panel4;
     private PlayList playListPanel;
+    private FriendsActivity friendsActivityPanel;
     private static final int HEIGHT = 920, WIDTH = 1500;
     private GridBagConstraints gbc;
     public MainFrame() {
         //set JFrame's default properties
         this.mainFrame = new JFrame("Spotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setVisible(true);
         mainFrame.setSize(WIDTH, HEIGHT);
 
         gbc = new GridBagConstraints();
@@ -32,21 +31,20 @@ public class MainFrame {
         playListPanel = new PlayList();
 
         panel2.setOpaque(true);
-        panel2.setBackground(Color.RED);
+        panel2.setBackground(new Color(30,30,30));
 
         panel3.setOpaque(true);
-        panel3.setBackground(Color.YELLOW);
+        panel3.setBackground(Colors.getColor("heavy grey"));
         panel3.setPreferredSize(new Dimension(0,30));
 
-        panel4.setOpaque(true);
-        panel4.setBackground(Color.BLUE);
-        panel4.setPreferredSize(new Dimension(100,80));
+        friendsActivityPanel = new FriendsActivity();
 
         panel5.setOpaque(true);
-        panel5.setBackground(Color.PINK);
+        panel5.setBackground(Colors.getColor("heavy grey"));
         panel5.setPreferredSize(new Dimension(0,120));
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.insets = new Insets(1,1,1,1);
         gbc.weightx=0;
         gbc.weighty=1;
         gbc.gridx=0;
@@ -63,7 +61,7 @@ public class MainFrame {
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx=2;
-        panel.add(panel4,gbc);
+        panel.add(friendsActivityPanel,gbc);
 //
         gbc.gridx=1;
         gbc.gridy=1;
@@ -75,19 +73,16 @@ public class MainFrame {
         gbc.gridwidth=3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(panel5,gbc);
-//        panel.add(playListPanel, BorderLayout.WEST);
-//        panel.add(panel2, BorderLayout.CENTER);
-//        panel.add(panel3, BorderLayout.EAST);
-//        panel.add(panel4, BorderLayout.NORTH);
-//        panel.add(panel5, BorderLayout.SOUTH);
 
         mainFrame.add(panel);
 
+        mainFrame.setVisible(true);
     }
 
     public static void main(String[] args) {
         MainFrame mainFrame = new MainFrame();
     }
+
 
 
 }
