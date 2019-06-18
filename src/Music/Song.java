@@ -1,6 +1,9 @@
 package Music;
 import java.io.*;
-import Player.mp3agic.*;
+import Mp3agic.ID3v2;
+import Mp3agic.InvalidDataException;
+import Mp3agic.Mp3File;
+import Mp3agic.UnsupportedTagException;
 public class Song {
     private String artist;
     private String title;
@@ -35,7 +38,7 @@ public class Song {
             title = metadata.substring(3, 32).trim();
             artist = metadata.substring(33, 62).trim();
             album = metadata.substring(63, 92).trim();
-//            System.out.println(title+"      "+artist+"      "+album);
+          // System.out.println(title+"      "+artist+"      "+album);
             fileInputStream.close();
         } catch (IOException e) {
         }
@@ -48,7 +51,7 @@ public class Song {
 
     }
 
-//    public static void main(String[] args) {
+//   public static void main(String[] args) {
 //        try {
 //            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
 //        } catch (FileNotFoundException e) {
