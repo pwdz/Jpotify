@@ -48,10 +48,13 @@ public class Song {
         Mp3File mp3File=new Mp3File(path);
         ID3v2 id3v2=mp3File.getId3v2Tag();
         artwork=id3v2.getAlbumImage();
-
     }
 
-//   public static void main(String[] args) {
+    public byte[] getArtwork() {
+        return artwork;
+    }
+
+    //   public static void main(String[] args) {
 //        try {
 //            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
 //        } catch (FileNotFoundException e) {

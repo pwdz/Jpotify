@@ -1,14 +1,15 @@
 package GUI;
 import javax.swing.*;
 import java.awt.*;
-
 public class MainFrame {
+
     private JFrame mainFrame;
     private JPanel panel, panel5, panel2, panel3, panel4;
     private PlayList playListPanel;
     private FriendsActivity friendsActivityPanel;
     private static final int HEIGHT = 920, WIDTH = 1500;
     private GridBagConstraints gbc;
+
     public MainFrame() {
         //set JFrame's default properties
         this.mainFrame = new JFrame("Spotify");
@@ -75,7 +76,6 @@ public class MainFrame {
         panel.add(panel5,gbc);
 
         mainFrame.add(panel);
-
         mainFrame.setVisible(true);
     }
 
