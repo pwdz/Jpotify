@@ -52,6 +52,7 @@ public class Song {
     }
 
     public byte[] getArtwork() {
+        int a=1;
         return artwork;
     }
 
@@ -62,13 +63,4 @@ public class Song {
     public String getPath() {
         return path;
     }
-    //   public static void main(String[] args) {
-//        try {
-//            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-
 }
