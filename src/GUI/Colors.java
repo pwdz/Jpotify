@@ -11,12 +11,12 @@ public class Colors {
                 return new Color(138, 138, 117);
             case "heavy grey":
                 return new Color(50, 50, 40);
-            case "3":
-                return new Color(0, 0, 0);
-            case "4":
-                return new Color(0, 0, 0);
-            case "5":
-                return new Color(0, 0, 0);
+            case "blue":
+                return new Color(12, 12, 100);
+            case "red":
+                return new Color(100, 12, 12);
+            case "yellow":
+                return new Color(160, 170, 0);
             case "6":
                 return new Color(0, 0, 0);
             default:

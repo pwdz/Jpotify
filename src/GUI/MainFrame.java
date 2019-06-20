@@ -41,9 +41,6 @@ public class MainFrame {
 
         friendsActivityPanel = new FriendsActivity();
 
-//        panel5.setOpaque(true);
-//        panel5.setBackground(Colors.getColor("heavy grey"));
-//        panel5.setPreferredSize(new Dimension(0,120));
         playerBar = new PlayerBar();
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -56,7 +53,7 @@ public class MainFrame {
         gbc.fill = GridBagConstraints.BOTH;
         panel.add(playListPanel,gbc);
 
-        gbc.weightx=2;
+        gbc.weightx=1;
         gbc.gridx=1;
         gbc.fill=GridBagConstraints.HORIZONTAL;
         panel.add(panel3,gbc);

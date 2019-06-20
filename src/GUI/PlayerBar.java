@@ -27,7 +27,8 @@ public class PlayerBar extends JPanel {
         try {
             Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
             songInfo.setArtwork(song.getArtwork());
-            songInfo.setArtwork(song.getArtwork());
+            songInfo.setArtistName(song.getArtist());
+            songInfo.setSongTitle(song.getTitle());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -37,19 +38,43 @@ public class PlayerBar extends JPanel {
 class SongInfo extends JPanel{
     private ImageIcon artworkImage;
     private JLabel artworkLabel;
-
+    private JLabel artistLabel;
+    private JLabel titleLabel;
+    private JLabel heartLabel;
+    private GridBagConstraints gbc;
     public SongInfo() {
         super();
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(250,100));
         setOpaque(true);
-        setBackground(Color.BLUE);
+        setBackground(Colors.getColor("grey"));
 
-        artworkLabel=new JLabel();
-        artworkLabel.setPreferredSize(new Dimension(90,90));
+        gbc = new GridBagConstraints();
 
-        add(artworkLabel, BorderLayout.WEST);
+        artworkLabel = LabelMaker.labelMaker("","heavy grey",90,90);
+        artistLabel= LabelMaker.labelMaker("","heavy grey",90,40);
+        titleLabel = LabelMaker.labelMaker("","heavy grey",90,40);
+        heartLabel = LabelMaker.labelMaker("","heavy grey",45,45);
+        setHeartLabel();
 
+        gbc.insets=new Insets(1,1,1,1);
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridx=0;
+        gbc.gridy=0;
+        gbc.gridheight=2;
+        gbc.fill= GridBagConstraints.VERTICAL;
+        add(artworkLabel,gbc);
+        gbc.gridheight=1;
+
+        gbc.gridx=1;
+        add(titleLabel,gbc);
+
+        gbc.gridx=2;
+        add(heartLabel,gbc);
+
+        gbc.gridy=1;
+        gbc.gridx=1;
+        add(artistLabel,gbc);
     }
 
     /**+
@@ -62,11 +87,22 @@ class SongInfo extends JPanel{
             artworkImage = new ImageIcon(ImageIO.read(new ByteArrayInputStream(artworkByteCode)));
             artworkImage = new ImageIcon(artworkImage.getImage().getScaledInstance(90,90,Image.SCALE_SMOOTH));
             artworkLabel.setIcon(artworkImage);
-            remove(artworkLabel);
-            add(artworkLabel);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void setSongTitle(String title)
+    {
+        titleLabel.setText(title);
+    }
+    public void setArtistName(String artist)
+    {
+        artistLabel.setText(artist);
+    }
+    public void setHeartLabel()
+    {
+        ImageIcon img= new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\heart.png");
+        heartLabel.setIcon(new ImageIcon(img.getImage().getScaledInstance(45,45,Image.SCALE_SMOOTH)));
     }
 
 }
