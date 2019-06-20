@@ -56,6 +56,18 @@ public class Song {
         return artwork;
     }
 
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
     public File getFile() {
         return file;
     }

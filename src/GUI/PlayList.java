@@ -13,12 +13,13 @@ public class PlayList extends JPanel {
     private JList<String> playlist;
     private DefaultListModel<String> l;
     private JButton newPlayListButton;
+    private static final int WIDTH = 250,HEIGHT=30;
     public PlayList() {
         super();
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Colors.getColor("heavy grey"));
-        setPreferredSize(new Dimension(100, 0));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.NORTH;
 
@@ -46,7 +47,7 @@ public class PlayList extends JPanel {
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) playlist.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
-        playlist.setPreferredSize(new Dimension(100, 0));
+        playlist.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         playlist.setBackground(Colors.getColor("heavy grey"));
         playlist.setForeground(Color.WHITE);
         l.addElement("mosa");
@@ -95,7 +96,7 @@ public class PlayList extends JPanel {
             label.setOpaque(true);
             label.setBackground(Colors.getColor(colorName));
             label.setForeground(Color.WHITE);
-            label.setPreferredSize(new Dimension(100, 30));
+            label.setPreferredSize(new Dimension(WIDTH, HEIGHT));
             return label;
         }
     }

@@ -7,6 +7,7 @@ public class MainFrame {
     private JPanel panel, panel5, panel2, panel3, panel4;
     private PlayList playListPanel;
     private FriendsActivity friendsActivityPanel;
+    private PlayerBar playerBar;
     private static final int HEIGHT = 920, WIDTH = 1500;
     private GridBagConstraints gbc;
 
@@ -40,9 +41,10 @@ public class MainFrame {
 
         friendsActivityPanel = new FriendsActivity();
 
-        panel5.setOpaque(true);
-        panel5.setBackground(Colors.getColor("heavy grey"));
-        panel5.setPreferredSize(new Dimension(0,120));
+//        panel5.setOpaque(true);
+//        panel5.setBackground(Colors.getColor("heavy grey"));
+//        panel5.setPreferredSize(new Dimension(0,120));
+        playerBar = new PlayerBar();
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.insets = new Insets(1,1,1,1);
@@ -73,7 +75,7 @@ public class MainFrame {
         gbc.gridy=2;
         gbc.gridwidth=3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(panel5,gbc);
+        panel.add(playerBar,gbc);
 
         mainFrame.add(panel);
         mainFrame.setVisible(true);
