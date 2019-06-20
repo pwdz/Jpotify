@@ -1,15 +1,16 @@
 package Lists;
+import Music.Song;
 
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class List {
-    protected ArrayList<String> songs;
+    protected ArrayList<Song> songs;
     protected String name;
 
     public List(String name)
     {
         this.name=name;
+        songs=new ArrayList<>();
     }
 
     public String getName()
@@ -17,4 +18,7 @@ public class List {
         return name;
     }
 
+    public ArrayList<Song> getSongs() {
+        return songs;
+    }
 }
