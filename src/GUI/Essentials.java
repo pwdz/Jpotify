@@ -20,6 +20,10 @@ public class Essentials {
                 return new Color(160, 170, 0);
             case "near black":
                 return new Color(30, 30, 30);
+            case "grey2":
+                return new Color(70,40,40);
+            case "green":
+                return new Color(10,100,50);
             default:
                 return new Color(0, 0, 0);
 

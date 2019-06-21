@@ -12,11 +12,6 @@ public class FriendsActivity extends JPanel {
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setBackground(Essentials.getColor("heavy grey"));
 
-//        titleLabel = new JLabel("Friend Activity",SwingConstants.CENTER);
-//        titleLabel.setOpaque(true);
-//        titleLabel.setBackground(Essentials.getColor("grey"));
-//        titleLabel.setForeground(Color.WHITE);
-//        titleLabel.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         titleLabel=Essentials.labelMaker("Friend Activity","grey",WIDTH,HEIGHT);
         add(titleLabel);
     }
