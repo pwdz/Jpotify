@@ -17,8 +17,8 @@ public class Colors {
                 return new Color(100, 12, 12);
             case "yellow":
                 return new Color(160, 170, 0);
-            case "6":
-                return new Color(0, 0, 0);
+            case "near black":
+                return new Color(30, 30, 30);
             default:
                 return new Color(0, 0, 0);
 
