@@ -22,7 +22,7 @@ public class PlayerBar extends JPanel {
         super();
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setBackground(Colors.getColor("heavy grey"));
+        setBackground(Essentials.getColor("heavy grey"));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         songInfo = new SongInfo();
@@ -56,14 +56,14 @@ public class PlayerBar extends JPanel {
             setLayout(new GridBagLayout());
             setPreferredSize(new Dimension(250, 100));
             setOpaque(true);
-            setBackground(Colors.getColor("near black"));
+            setBackground(Essentials.getColor("near black"));
 
             gbc = new GridBagConstraints();
 
-            artworkLabel = LabelMaker.labelMaker("", "heavy grey", 90, 90);
-            artistLabel = LabelMaker.labelMaker("", "heavy grey", 90, 40);
-            titleLabel = LabelMaker.labelMaker("", "heavy grey", 90, 40);
-            heartLabel = LabelMaker.labelMaker("", "heavy grey", 45, 45);
+            artworkLabel = Essentials.labelMaker("", "heavy grey", 90, 90);
+            artistLabel = Essentials.labelMaker("", "heavy grey", 90, 40);
+            titleLabel = Essentials.labelMaker("", "heavy grey", 90, 40);
+            heartLabel = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon imageIcon=new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\EmptyHeart.png");
             heartLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH)));
             heartLabel.addMouseListener(new MouseAdapter() {
@@ -135,56 +135,74 @@ public class PlayerBar extends JPanel {
         private JSlider timeSlider,soundSlider;
         private JLabel pauseAndPlay;
         private JLabel next,previous;
+        private JLabel repeat;
+        private JLabel shuffle;
         public SongPlayer() {
             super();
             setLayout(new BorderLayout());
             setPreferredSize(new Dimension(10,10));
             setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             setOpaque(true);
-            setBackground(Colors.getColor("heavy grey"));
+            setBackground(Essentials.getColor("heavy grey"));
 
             timeSlider = new JSlider(0,80,0);
-//            timeSlider.setBackground(Colors.getColor("grey"));
+//            timeSlider.setBackground(Essentials.getColor("grey"));
 //            Icon icon = new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Circle.png");
 //            UIDefaults defaults = UIManager.getDefaults();
 //            defaults.put("1",icon);
             timeSlider.setPreferredSize(new Dimension(900,15));
-            timeSlider.setBackground(Colors.getColor("heavy grey"));
-//            timeSlider.setForeground(Colors.getColor("blue"));
+            timeSlider.setBackground(Essentials.getColor("heavy grey"));
+//            timeSlider.setForeground(Essentials.getColor("blue"));
 //            timeSlider.setInverted(false);
 //            timeSlider.setPaintTicks(true);
 //            timeSlider.setMajorTickSpacing(2);
 //            timeSlider.setPaintTicks(true);
 //            timeSlider.setPaintLabels(true);
             soundSlider= new JSlider(0,100,50);
-            soundSlider.setBackground(Colors.getColor("heavy grey"));
+            soundSlider.setBackground(Essentials.getColor("heavy grey"));
             soundSlider.setPreferredSize(new Dimension(100,15));
 
-            pauseAndPlay = LabelMaker.labelMaker("","heavy grey",45,45);
+            pauseAndPlay = Essentials.labelMaker("","heavy grey",45,45);
             ImageIcon pauseImg=new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Play.png");
             pauseAndPlay.setIcon(new ImageIcon(pauseImg.getImage().getScaledInstance(40,40,Image.SCALE_SMOOTH)));
 
-            next= LabelMaker.labelMaker("","heavy grey",45,45);
+            next= Essentials.labelMaker("","heavy grey",45,45);
             ImageIcon nextImg= new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Next.png");
             next.setIcon(new ImageIcon(nextImg.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH)));
 
-            previous = LabelMaker.labelMaker("","heavy grey",45,45);
+            previous = Essentials.labelMaker("","heavy grey",45,45);
             ImageIcon prevImg= new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Previous.png");
             previous.setIcon(new ImageIcon(prevImg.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH)));
+
+            shuffle = Essentials.labelMaker("","heavy grey",45,45);
+            ImageIcon shuffleImg = new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Shuffle.png");
+            shuffle.setIcon(new ImageIcon(shuffleImg.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH)));
+
+            repeat = Essentials.labelMaker("","heavy grey",45,45);
+            ImageIcon repeatImg = new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Repeat.png");
+            repeat.setIcon(new ImageIcon(repeatImg.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH)));
 //down: pause and next and previous are in a JLabel
-            JLabel temp = LabelMaker.labelMaker("","heavy grey",0,45);
+            JLabel temp = Essentials.labelMaker("","heavy grey",0,45);
             temp.setLayout(new GridBagLayout());
             GridBagConstraints gbc=new GridBagConstraints();
             gbc.anchor=GridBagConstraints.NORTH;
             gbc.gridx=0;
             gbc.gridy=0;
-            temp.add(previous,gbc);
+            temp.add(shuffle,gbc);
+
             gbc.gridx=1;
-            temp.add(pauseAndPlay,gbc);
+            temp.add(previous,gbc);
+
             gbc.gridx=2;
+            temp.add(pauseAndPlay,gbc);
+
+            gbc.gridx=3;
             temp.add(next,gbc);
+
+            gbc.gridx=4;
+            temp.add(repeat,gbc);
 //down: JSlider is in a JLabel
-            JLabel timeSlideTmp=LabelMaker.labelMaker("","heavy grey",1,30);
+            JLabel timeSlideTmp=Essentials.labelMaker("","heavy grey",1,30);
             gbc.gridx=0;
             gbc.gridy=0;
             gbc.weightx=1;
@@ -195,9 +213,9 @@ public class PlayerBar extends JPanel {
 
 //down: a small JSlider for sound in a JLabel
 
-            JLabel soundSlideTmp = LabelMaker.labelMaker("","yellow",150,45);
+            JLabel soundSlideTmp = Essentials.labelMaker("","yellow",150,45);
 
-            JLabel soundIconLabel = LabelMaker.labelMaker("","heavy grey",45,45);
+            JLabel soundIconLabel = Essentials.labelMaker("","heavy grey",45,45);
             ImageIcon soundImg = new ImageIcon("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\FilledSound.png");
             soundIconLabel.setIcon(new ImageIcon(soundImg.getImage().getScaledInstance(30,25,Image.SCALE_SMOOTH)));
 

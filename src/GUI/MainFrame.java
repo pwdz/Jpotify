@@ -8,6 +8,7 @@ public class MainFrame {
     private PlayList playListPanel;
     private FriendsActivity friendsActivityPanel;
     private PlayerBar playerBar;
+    private HeaderGUI headerPanel;
     private static final int HEIGHT = 920, WIDTH = 1500;
     private GridBagConstraints gbc;
 
@@ -32,11 +33,13 @@ public class MainFrame {
 
         playListPanel = new PlayList();
 
+        headerPanel = new HeaderGUI();
+
         panel2.setOpaque(true);
         panel2.setBackground(new Color(30,30,30));
 
         panel3.setOpaque(true);
-        panel3.setBackground(Colors.getColor("heavy grey"));
+        panel3.setBackground(Essentials.getColor("heavy grey"));
         panel3.setPreferredSize(new Dimension(0,30));
 
         friendsActivityPanel = new FriendsActivity();
@@ -56,7 +59,7 @@ public class MainFrame {
         gbc.weightx=1;
         gbc.gridx=1;
         gbc.fill=GridBagConstraints.HORIZONTAL;
-        panel.add(panel3,gbc);
+        panel.add(headerPanel,gbc);
         gbc.weightx=0;
 
         gbc.fill = GridBagConstraints.BOTH;

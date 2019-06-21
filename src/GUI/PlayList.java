@@ -18,26 +18,26 @@ public class PlayList extends JPanel {
         super();
         setLayout(new GridBagLayout());
         setOpaque(true);
-        setBackground(Colors.getColor("heavy grey"));
+        setBackground(Essentials.getColor("heavy grey"));
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.NORTH;
 
-        yourLibrary = makeLabelReady("YOUR LIBRARY", "grey");
+        yourLibrary = Essentials.labelMaker("YOUR LIBRARY", "grey",WIDTH,HEIGHT);
 //        gbc.weightx=1;
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(yourLibrary, gbc);
 
-        songs = makeLabelReady("Songs", "heavy grey");
+        songs = Essentials.labelMaker("Songs", "heavy grey",WIDTH,HEIGHT);
         gbc.gridy = 1;
         add(songs, gbc);
 
-        albums = makeLabelReady("Albums", "heavy grey");
+        albums = Essentials.labelMaker("Albums", "heavy grey",WIDTH,HEIGHT);
         gbc.gridy = 2;
         add(albums, gbc);
 
-        playlistLabel = makeLabelReady("PLAYLISTS", "grey");
+        playlistLabel = Essentials.labelMaker("PLAYLISTS", "grey",WIDTH,HEIGHT);
         gbc.gridy = 3;
         add(playlistLabel, gbc);
 
@@ -48,7 +48,7 @@ public class PlayList extends JPanel {
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
         playlist.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        playlist.setBackground(Colors.getColor("heavy grey"));
+        playlist.setBackground(Essentials.getColor("heavy grey"));
         playlist.setForeground(Color.WHITE);
         l.addElement("mosa");
         l.addElement("asdad");
@@ -59,26 +59,26 @@ public class PlayList extends JPanel {
         add(playlist, gbc);
 
         /*newPlayListButton = new JButton("[+]New Playlist");
-        newPlayListButton.setBackground(Colors.getColor("heavy grey"));
+        newPlayListButton.setBackground(Essentials.getColor("heavy grey"));
         newPlayListButton.setForeground(Color.WHITE);
         newPlayListButton.setPreferredSize(new Dimension(100,20));
         gbc.gridy++;
         gbc.fill=GridBagConstraints.HORIZONTAL;
         gbc.weighty=1;
         add(newPlayListButton,gbc);*/
-        newPlaylist=makeLabelReady("[+]Add Playlist","grey");
+        newPlaylist=Essentials.labelMaker("[+]Add Playlist","grey",WIDTH,HEIGHT);
         newPlaylist.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                newPlaylist.setBackground(Colors.getColor("1"));
+                newPlaylist.setBackground(Essentials.getColor("1"));
             }
         });
         newPlaylist.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                newPlaylist.setBackground(Colors.getColor("grey"));
+                newPlaylist.setBackground(Essentials.getColor("grey"));
             }
         });
         gbc.gridy++;
@@ -91,12 +91,12 @@ public class PlayList extends JPanel {
     /*
         @param: takes a JLabel and it's name and color and produces it.
     */
-        private JLabel makeLabelReady(String labelName, String colorName) {
-            JLabel label = new JLabel(labelName, SwingConstants.CENTER);
-            label.setOpaque(true);
-            label.setBackground(Colors.getColor(colorName));
-            label.setForeground(Color.WHITE);
-            label.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-            return label;
-        }
+//        private JLabel makeLabelReady(String labelName, String colorName) {
+//            JLabel label = new JLabel(labelName, SwingConstants.CENTER);
+//            label.setOpaque(true);
+//            label.setBackground(Essentials.getColor(colorName));
+//            label.setForeground(Color.WHITE);
+//            label.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+//            return label;
+//        }
     }
