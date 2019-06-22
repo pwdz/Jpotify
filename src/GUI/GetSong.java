@@ -44,8 +44,8 @@ public class GetSong extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        GetSong getSong=new GetSong();
-    }
+//     public static void main(String[] args) {
+//         GetSong getSong=new GetSong();
+//     }
 
 }
