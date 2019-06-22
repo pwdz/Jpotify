@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class List {
     protected ArrayList<Song> songs;
     protected String name;
-
+    protected byte[] artwork;
     public List(String name)
     {
         this.name=name;

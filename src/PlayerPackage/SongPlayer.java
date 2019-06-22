@@ -8,33 +8,22 @@ import Music.Song;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import Listeners.SongPlayerListener;
+import Listeners.SongPlayerAndGUIListener;
 import sun.applet.Main;
 
-public class SongPlayer {
+public class SongPlayer implements SongPlayerAndGUIListener {
     private Player player;
     private Song song;
     private Object playerLock;
     private PlayerStatus playerStatus;
     private FileInputStream fileInputStream;
-    private SongPlayerListener listener = null;
+    private SongPlayerAndGUIListener listener = null;
     private int count = 0;
-    private MainFrame mainFrame;
 
     public SongPlayer(Song song) {
-        mainFrame = new MainFrame();
-        setListener(mainFrame);
         this.song = song;
         fileInputStream = null;
         setSong(song);
-//        try {
-//            fileInputStream = new FileInputStream(song.getPath());
-//            player = new Player(fileInputStream);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (JavaLayerException e) {
-//            e.printStackTrace();
-//        }
         playerLock = new Object();
         playerStatus = PlayerStatus.NOTSTARTED;
     }
@@ -147,11 +136,11 @@ public class SongPlayer {
         return playerStatus;
     }
 
-    public static void main(String[] args) {
-        try {
-            Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
-            SongPlayer songPlayer = new SongPlayer(song);
-            songPlayer.playTheSong();
+//    public static void main(String[] args) {
+//        try {
+//            Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//            SongPlayer songPlayer = new SongPlayer(song);
+//            songPlayer.playTheSong();
 
 //            Thread t1=new Thread();
 //            Thread.sleep(10000);
@@ -163,17 +152,29 @@ public class SongPlayer {
 //            Thread.sleep(5000);
 //            songPlayer.resume();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
 //        catch (InterruptedException e){
 //            e.printStackTrace();
 //        }
 
+//    }
+
+    public void setListener(SongPlayerAndGUIListener l) {
+        this.listener = l;
     }
 
-    public void setListener(SongPlayerListener l) {
-        this.listener = l;
+    @Override
+    public void sinkSongWithGUI(int count) {
+    }
+
+    @Override
+    public void sinkPauseAndPlay(PlayerStatus playerStatus) {
+        if(playerStatus.equals(PlayerStatus.PAUSED))
+            pause();
+        else
+            resume();
     }
 }
 

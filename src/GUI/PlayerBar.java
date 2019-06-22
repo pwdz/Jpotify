@@ -1,7 +1,8 @@
 package GUI;
 
-import Listeners.SongPlayerListener;
+import Listeners.SongPlayerAndGUIListener;
 import Music.Song;
+import PlayerPackage.PlayerStatus;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.ByteOrder;
 
 public class PlayerBar extends JPanel {
     private SongInfo songInfo;
@@ -138,13 +138,14 @@ public class PlayerBar extends JPanel {
         }
     }
 
-    private class SongPlayer extends JPanel   {
+    private class SongPlayer extends JPanel  {
         private JSlider timeSlider, soundSlider;
         private JLabel pauseAndPlay;
         private JLabel next, previous;
         private JLabel repeat;
         private JLabel shuffle;
-
+        private PlayerStatus playerStatus=PlayerStatus.PAUSED;
+        private SongPlayerAndGUIListener songPlayerAndGUIListener=null;
         public SongPlayer() {
             super();
             setLayout(new BorderLayout());
@@ -164,6 +165,25 @@ public class PlayerBar extends JPanel {
             pauseAndPlay = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon pauseImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Play.png",40,40);
             pauseAndPlay.setIcon(pauseImg);
+            pauseAndPlay.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    switch (playerStatus)
+                    {
+                        case PAUSED:
+                            pauseAndPlay.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Pause.png",40,40));
+                            playerStatus = PlayerStatus.PLAYING;
+                            songPlayerAndGUIListener.sinkPauseAndPlay(playerStatus);
+                            break;
+                        case PLAYING:
+                            pauseAndPlay.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Play.png",40,40));
+                            playerStatus = PlayerStatus.PAUSED;
+                            songPlayerAndGUIListener.sinkPauseAndPlay(playerStatus);
+                            break;
+                    }
+                }
+            });
 
             next = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon nextImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Next.png",25,25);
@@ -226,12 +246,23 @@ public class PlayerBar extends JPanel {
             add(temp, BorderLayout.CENTER);
             add(timeSlideTmp, BorderLayout.SOUTH);
             add(soundSlideTmp, BorderLayout.EAST);
-        }
 
+//            songPlayerAndGUIListener.set
+        }
+        public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
+        {
+            songPlayerAndGUIListener=destination;
+        }
 
         public void setTimeSliderValue(int value) {
             timeSlider.setValue(value);
         }
+
+    }
+    ///////////////////////////////PlayerBar class
+    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
+    {
+        songPlayer.setPauseAndPlayDestination(destination);
     }
 
 }

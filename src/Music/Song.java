@@ -52,7 +52,6 @@ public class Song {
     }
 
     public byte[] getArtwork() {
-        int a=1;
         return artwork;
     }
 

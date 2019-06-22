@@ -5,7 +5,6 @@ import Music.Song;
 import java.util.ArrayList;
 
 public class Album extends List {
-    byte artwork[];
     public Album(String name){
         super(name);
         setArtwork();

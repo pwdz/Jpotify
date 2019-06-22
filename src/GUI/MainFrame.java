@@ -1,9 +1,10 @@
 package GUI;
-import Listeners.SongPlayerListener;
+import Listeners.SongPlayerAndGUIListener;
+import PlayerPackage.PlayerStatus;
 
 import javax.swing.*;
 import java.awt.*;
-public class MainFrame implements SongPlayerListener {
+public class MainFrame implements SongPlayerAndGUIListener {
 
     private JFrame mainFrame;
     private JPanel panel, panel5, panel2, panel3, panel4;
@@ -86,6 +87,15 @@ public class MainFrame implements SongPlayerListener {
     @Override
     public void sinkSongWithGUI(int count) {
         playerBar.setTime(count);
+    }
+
+    @Override
+    public void sinkPauseAndPlay(PlayerStatus playerStatus) {
+    }
+
+    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
+    {
+        playerBar.setPauseAndPlayDestination(destination);
     }
 //
 //     public static void main(String[] args) {
