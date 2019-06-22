@@ -14,7 +14,7 @@ public class Song {
     private ID3v2 id3v2;
     private byte artwork[];
     private int duration;
-
+    private int numberOfFrames;
     public Song(String path) throws FileNotFoundException {
         this.path = path;
         file = new File(path);
@@ -25,6 +25,7 @@ public class Song {
             id3v2=mp3File.getId3v2Tag();
             setArtwork();
             setDuration();
+            numberOfFrames=mp3File.getFrameCount();
         } catch (InvalidDataException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -96,4 +97,5 @@ public class Song {
 //    }
 
 }
+
 
