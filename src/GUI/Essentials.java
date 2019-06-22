@@ -46,5 +46,13 @@ public class Essentials {
         ImageIcon img=new ImageIcon(path);
         return new ImageIcon(img.getImage().getScaledInstance(width,height,Image.SCALE_SMOOTH));
     }
+    public static  void gridBagSetups(GridBagConstraints gbc, int gridX,int gridY, int gridWidth,int gridHeight){
+        gbc.gridx=gridX;
+        gbc.gridy=gridY;
+        gbc.gridwidth=gridWidth;
+        gbc.gridheight=gridHeight;
+        gbc.fill=GridBagConstraints.HORIZONTAL;
+        gbc.fill=GridBagConstraints.VERTICAL;
+    }
 
 }
