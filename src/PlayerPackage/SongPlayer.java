@@ -1,4 +1,6 @@
 package PlayerPackage;
+
+import GUI.MainFrame;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import Music.Song;
@@ -6,33 +8,42 @@ import Music.Song;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import Listeners.SongPlayerListener;
+import sun.applet.Main;
+
 public class SongPlayer {
     private Player player;
     private Song song;
     private Object playerLock;
     private PlayerStatus playerStatus;
     private FileInputStream fileInputStream;
-    public SongPlayer(Song song){
-        this.song=song;
-        fileInputStream= null;
-        try {
-            fileInputStream = new FileInputStream(song.getPath());
-            player=new Player(fileInputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (JavaLayerException e) {
-            e.printStackTrace();
-        }
-        playerLock=new Object();
-        playerStatus=PlayerStatus.NOTSTARTED;
+    private SongPlayerListener listener = null;
+    private int count = 0;
+    private MainFrame mainFrame;
+
+    public SongPlayer(Song song) {
+        mainFrame = new MainFrame();
+        setListener(mainFrame);
+        this.song = song;
+        fileInputStream = null;
+        setSong(song);
+//        try {
+//            fileInputStream = new FileInputStream(song.getPath());
+//            player = new Player(fileInputStream);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (JavaLayerException e) {
+//            e.printStackTrace();
+//        }
+        playerLock = new Object();
+        playerStatus = PlayerStatus.NOTSTARTED;
     }
 
     public void setSong(Song song) {
         this.song = song;
         try {
-            fileInputStream=new FileInputStream(song.getPath());
-            player=new Player(fileInputStream);
+            fileInputStream = new FileInputStream(song.getPath());
+            player = new Player(fileInputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (JavaLayerException e) {
@@ -41,20 +52,20 @@ public class SongPlayer {
 
     }
 
-    public void playTheSong(){
-        synchronized (playerLock){
-            switch (playerStatus){
+    public void playTheSong() {
+        synchronized (playerLock) {
+            switch (playerStatus) {
                 case NOTSTARTED:
-                    Runnable playerRunnable =new Runnable() {
+                    Runnable playerRunnable = new Runnable() {
                         @Override
                         public void run() {
-                                myPlay();
+                            myPlay();
                         }
                     };
-                    Thread playerThread=new Thread(playerRunnable);
+                    Thread playerThread = new Thread(playerRunnable);
                     //playerThread.setDaemon(true);
                     playerThread.setPriority(Thread.MAX_PRIORITY);
-                    playerStatus=PlayerStatus.PLAYING;
+                    playerStatus = PlayerStatus.PLAYING;
                     playerThread.start();
                     break;
                 case PAUSED:
@@ -65,10 +76,15 @@ public class SongPlayer {
         }
 
     }
-    private void myPlay() {
 
+    private void myPlay() {
         while (playerStatus != PlayerStatus.FINISHED) {
             try {
+
+                count++;
+//                if()
+                    listener.sinkSongWithGUI(count);
+                System.out.println(count);
                 if (!player.play(1)) {
                     break;
                 }
@@ -84,7 +100,7 @@ public class SongPlayer {
                     }
                 }
             }
-          //  System.out.println(playerStatus);
+            //  System.out.println(playerStatus);
         }
         myClose();
     }
@@ -114,9 +130,9 @@ public class SongPlayer {
         }
     }
 
-    public void myClose(){
-        synchronized (playerLock){
-            playerStatus=PlayerStatus.FINISHED;
+    public void myClose() {
+        synchronized (playerLock) {
+            playerStatus = PlayerStatus.FINISHED;
 //            System.out.println(playerStatus);
         }
         try {
@@ -131,11 +147,13 @@ public class SongPlayer {
         return playerStatus;
     }
 
-//    public static void main(String[] args) {
-//        try {
-//            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//            SongPlayer songPlayer=new SongPlayer(song);
-//            songPlayer.playTheSong();
+    public static void main(String[] args) {
+        try {
+            Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
+            SongPlayer songPlayer = new SongPlayer(song);
+            songPlayer.playTheSong();
+
+//            Thread t1=new Thread();
 //            Thread.sleep(10000);
 //            songPlayer.pause();
 //            Thread.sleep(5000);
@@ -144,15 +162,19 @@ public class SongPlayer {
 //            songPlayer.pause();
 //            Thread.sleep(5000);
 //            songPlayer.resume();
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 //        catch (InterruptedException e){
 //            e.printStackTrace();
 //        }
-//
-//    }
+
+    }
+
+    public void setListener(SongPlayerListener l) {
+        this.listener = l;
+    }
 }
 
 

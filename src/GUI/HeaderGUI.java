@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HeaderGUI extends JPanel {
-    private static final int WIDTH = 0,HEIGHT=70;
+    private static final int WIDTH = 0,HEIGHT=35;
     private JTextField searchField;
     private JLabel searchLabel;
     private  JLabel username;

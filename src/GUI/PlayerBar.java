@@ -1,5 +1,6 @@
 package GUI;
 
+import Listeners.SongPlayerListener;
 import Music.Song;
 
 import javax.imageio.ImageIO;
@@ -42,7 +43,10 @@ public class PlayerBar extends JPanel {
         }
 
     }
-
+    public void setTime(int count)
+    {
+        songPlayer.setTimeSliderValue(count);
+    }
     private class SongInfo extends JPanel {
         private ImageIcon artworkImage;
         private JLabel artworkLabel;
@@ -134,7 +138,7 @@ public class PlayerBar extends JPanel {
         }
     }
 
-    private class SongPlayer extends JPanel {
+    private class SongPlayer extends JPanel   {
         private JSlider timeSlider, soundSlider;
         private JLabel pauseAndPlay;
         private JLabel next, previous;
@@ -224,10 +228,10 @@ public class PlayerBar extends JPanel {
             add(soundSlideTmp, BorderLayout.EAST);
         }
 
+
         public void setTimeSliderValue(int value) {
             timeSlider.setValue(value);
         }
-
     }
 
 }

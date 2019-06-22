@@ -1,7 +1,9 @@
 package GUI;
+import Listeners.SongPlayerListener;
+
 import javax.swing.*;
 import java.awt.*;
-public class MainFrame {
+public class MainFrame implements SongPlayerListener {
 
     private JFrame mainFrame;
     private JPanel panel, panel5, panel2, panel3, panel4;
@@ -81,9 +83,14 @@ public class MainFrame {
         mainFrame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        MainFrame mainFrame = new MainFrame();
+    @Override
+    public void sinkSongWithGUI(int count) {
+        playerBar.setTime(count);
     }
+//
+//     public static void main(String[] args) {
+//        MainFrame mainFrame = new MainFrame();
+//    }
 
 
 
