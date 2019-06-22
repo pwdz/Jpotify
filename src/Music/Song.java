@@ -10,14 +10,21 @@ public class Song {
     private String album;
     private String path;
     private File file;
+    private Mp3File mp3File;
+    private ID3v2 id3v2;
     private byte artwork[];
+    private int duration;
 
     public Song(String path) throws FileNotFoundException {
         this.path = path;
         file = new File(path);
+
         setMetaData();
         try {
+            mp3File=new Mp3File(path);
+            id3v2=mp3File.getId3v2Tag();
             setArtwork();
+            setDuration();
         } catch (InvalidDataException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -38,19 +45,22 @@ public class Song {
             title = metadata.substring(3, 32).trim();
             artist = metadata.substring(33, 62).trim();
             album = metadata.substring(63, 92).trim();
-          // System.out.println(title+"      "+artist+"      "+album);
+
+            // System.out.println(title+"      "+artist+"      "+album);
             fileInputStream.close();
         } catch (IOException e) {
         }
+
     }
 
     public void setArtwork() throws InvalidDataException, IOException, UnsupportedTagException {
-        Mp3File mp3File=new Mp3File(path);
-        ID3v2 id3v2=mp3File.getId3v2Tag();
         artwork=id3v2.getAlbumImage();
 
     }
+    public void setDuration(){
+       duration= (int) mp3File.getLengthInSeconds();
 
+    }
     public byte[] getArtwork() {
         int a=1;
         return artwork;
@@ -75,4 +85,15 @@ public class Song {
     public String getPath() {
         return path;
     }
+
+//       public static void main(String[] args) {
+//        try {
+//            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
 }
+
