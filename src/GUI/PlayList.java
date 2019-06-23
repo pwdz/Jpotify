@@ -63,8 +63,8 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar {
         playlist.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         playlist.setBackground(Essentials.getColor("heavy grey"));
         playlist.setForeground(Color.WHITE);
-        l.addElement("mosa");
-        l.addElement("asdad");
+//        l.addElement("mosa");
+//        l.addElement("asdad");
 
         gbc.gridy++;
         gbc.fill = GridBagConstraints.BOTH;

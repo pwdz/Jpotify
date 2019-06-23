@@ -1,6 +1,7 @@
 package PlayerPackage;
 
 import GUI.MainFrame;
+import Listeners.TimeSliderListener;
 import Music.Song;
 import javazoom.jl.decoder.JavaLayerException;
 
@@ -13,7 +14,7 @@ import java.io.FileNotFoundException;
 import Listeners.SongPlayerAndGUIListener;
 import sun.applet.Main;
 
-public class SongPlayer implements SongPlayerAndGUIListener {
+public class SongPlayer implements SongPlayerAndGUIListener , TimeSliderListener {
     private AdvancedPlayer player;
     private String path;
     private Object playerLock;
@@ -21,9 +22,16 @@ public class SongPlayer implements SongPlayerAndGUIListener {
     private FileInputStream fileInputStream;
     private SongPlayerAndGUIListener listener = null;
     private int count = 0;
+    private Song song;
 
     public SongPlayer(String path) {
         setPath(path);
+        try {
+            song = new Song(path);
+            System.out.println(song.getNumberOfFrames());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         playerLock = new Object();
         playerStatus = PlayerStatus.NOTSTARTED;
     }
@@ -75,8 +83,8 @@ public class SongPlayer implements SongPlayerAndGUIListener {
 
                 count++;
 //                if()
-                listener.sinkSongWithGUI(count);
-                System.out.println(count);
+                listener.sinkSongWithGUI((double) count/song.getNumberOfFrames());
+//                System.out.println(count);
                 if (!player.play(1)) {
                     break;
                 }
@@ -115,10 +123,10 @@ public class SongPlayer implements SongPlayerAndGUIListener {
         }
     }
 
-    public void seek(int percentage) {
+    public void seek(double percentage) {
         try {
             Song song = new Song(path);
-            seekTo((percentage / 100) * song.getNumberOfFrames());
+            seekTo((int)((percentage) * song.getNumberOfFrames()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -173,7 +181,7 @@ public class SongPlayer implements SongPlayerAndGUIListener {
 
     //Down: it has no use.
     @Override
-    public void sinkSongWithGUI(int count) {
+    public void sinkSongWithGUI(double percentage) {
     }
 
     @Override
@@ -182,6 +190,11 @@ public class SongPlayer implements SongPlayerAndGUIListener {
             pause();
         else
             resume();
+    }
+
+    @Override
+    public void seekToFrame(double percentage) {
+        seek(percentage);
     }
 //    public static void main(String[] args) {
 //        try {

@@ -105,7 +105,7 @@ public class AddPlaylist extends JFrame {
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!name.getText().equals("") && !fileChooser.getSelectedFile().equals(null) && !fileChooser.getSelectedFile().equals("")) {
+                if(!name.getText().equals("") && !String.valueOf(fileChooser.getSelectedFile()).equals(null) && !String.valueOf(fileChooser.getSelectedFile()).equals("")) {
                     addPlaylistListener.makePlaylist(name.getText(), description.getText(), String.valueOf(fileChooser.getSelectedFile()));
                     name.setText("");
                     description.setText("");

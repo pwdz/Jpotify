@@ -68,7 +68,7 @@ public class ChooseSong extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!String.valueOf(fileChooser.getSelectedFile()).equals(null) && !String.valueOf(fileChooser.getSelectedFile()).equals("")) {
-//                    System.out.println("!!!!!!!!!!!!!!!:" + String.valueOf(fileChooser.getSelectedFile()));
+                    System.out.println("!!!!!!!!!!!!!!!:" + String.valueOf(fileChooser.getSelectedFile()));
                     chooseSongListener.addSongToLibrary(String.valueOf(fileChooser.getSelectedFile()));
                     fileChooser.setSelectedFile(new File(""));
 //                    fileChooser

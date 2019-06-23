@@ -2,11 +2,14 @@ package GUI;
 
 import Listeners.SongPlayerAndGUIAdapter;
 import Listeners.SongPlayerAndGUIListener;
+import Listeners.TimeSliderListener;
 import Music.Song;
 import PlayerPackage.PlayerStatus;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,6 +17,7 @@ import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Time;
 
 public class PlayerBar extends JPanel {
     private SongInfo songInfo;
@@ -44,10 +48,11 @@ public class PlayerBar extends JPanel {
         }
 
     }
-    public void setTime(int count)
-    {
+
+    public void setTime(int count) {
         songPlayer.setTimeSliderValue(count);
     }
+
     private class SongInfo extends JPanel {
         private ImageIcon artworkImage;
         private JLabel artworkLabel;
@@ -139,14 +144,17 @@ public class PlayerBar extends JPanel {
         }
     }
 
-    private class SongPlayer extends JPanel  implements SongPlayerAndGUIListener{
+    private class SongPlayer extends JPanel implements SongPlayerAndGUIListener {
         private JSlider timeSlider, soundSlider;
         private JLabel pauseAndPlay;
         private JLabel next, previous;
         private JLabel repeat;
         private JLabel shuffle;
-        private PlayerStatus playerStatus=PlayerStatus.PAUSED;
-        private SongPlayerAndGUIListener songPlayerAndGUIListener=null;
+        private PlayerStatus playerStatus = PlayerStatus.PAUSED;
+        private SongPlayerAndGUIListener songPlayerAndGUIListener = null;
+        private final int timeSliderMax = 8238;
+        private TimeSliderListener timeSliderListener;
+
         public SongPlayer() {
             super();
             setLayout(new BorderLayout());
@@ -155,30 +163,31 @@ public class PlayerBar extends JPanel {
             setOpaque(true);
             setBackground(Essentials.getColor("heavy grey"));
 
-            timeSlider = new JSlider(0, 80, 0);
+            timeSlider = new JSlider(0, timeSliderMax, 0);
             timeSlider.setPreferredSize(new Dimension(900, 15));
             timeSlider.setBackground(Essentials.getColor("heavy grey"));
+            addTimeSliderListener();
+
 
             soundSlider = new JSlider(0, 100, 50);
             soundSlider.setBackground(Essentials.getColor("heavy grey"));
             soundSlider.setPreferredSize(new Dimension(100, 15));
 
             pauseAndPlay = Essentials.labelMaker("", "heavy grey", 45, 45);
-            ImageIcon pauseImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Play.png",40,40);
+            ImageIcon pauseImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Play.png", 40, 40);
             pauseAndPlay.setIcon(pauseImg);
             pauseAndPlay.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    switch (playerStatus)
-                    {
+                    switch (playerStatus) {
                         case PAUSED:
-                            pauseAndPlay.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Pause.png",40,40));
+                            pauseAndPlay.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Pause.png", 40, 40));
                             playerStatus = PlayerStatus.PLAYING;
                             songPlayerAndGUIListener.sinkPauseAndPlay(playerStatus);
                             break;
                         case PLAYING:
-                            pauseAndPlay.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Play.png",40,40));
+                            pauseAndPlay.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Play.png", 40, 40));
                             playerStatus = PlayerStatus.PAUSED;
                             songPlayerAndGUIListener.sinkPauseAndPlay(playerStatus);
                             break;
@@ -187,19 +196,19 @@ public class PlayerBar extends JPanel {
             });
 
             next = Essentials.labelMaker("", "heavy grey", 45, 45);
-            ImageIcon nextImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Next.png",25,25);
+            ImageIcon nextImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Next.png", 25, 25);
             next.setIcon(nextImg);
 
             previous = Essentials.labelMaker("", "heavy grey", 45, 45);
-            ImageIcon prevImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Previous.png",25,25);
+            ImageIcon prevImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Previous.png", 25, 25);
             previous.setIcon(prevImg);
 
             shuffle = Essentials.labelMaker("", "heavy grey", 45, 45);
-            ImageIcon shuffleImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Shuffle.png",25,25);
+            ImageIcon shuffleImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Shuffle.png", 25, 25);
             shuffle.setIcon(shuffleImg);
 
             repeat = Essentials.labelMaker("", "heavy grey", 45, 45);
-            ImageIcon repeatImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Repeat.png",25,25);
+            ImageIcon repeatImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Repeat.png", 25, 25);
             repeat.setIcon(repeatImg);
 //down: pause and next and previous are in a JLabel
             JLabel temp = Essentials.labelMaker("", "heavy grey", 0, 45);
@@ -237,7 +246,7 @@ public class PlayerBar extends JPanel {
 //            soundSlideTmp.addMouseListener();
 
             JLabel soundIconLabel = Essentials.labelMaker("", "heavy grey", 45, 45);
-            ImageIcon soundImg =  Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\FilledSound.png",30,25);
+            ImageIcon soundImg = Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\FilledSound.png", 30, 25);
             soundIconLabel.setIcon(soundImg);
 
             soundSlideTmp.setLayout(new BorderLayout());
@@ -256,24 +265,56 @@ public class PlayerBar extends JPanel {
 //        }
 
         public void setTimeSliderValue(int value) {
+//            System.out.println("PER*100:"+value);
             timeSlider.setValue(value);
         }
 
         @Override
-        public void sinkSongWithGUI(int value) {
-            setTimeSliderValue(value);
+        public void sinkSongWithGUI(double percentage) {
+            setTimeSliderValue((int) (percentage * timeSliderMax));
+//            System.out.println("PER:"+percentage);
         }
-//Down: It must stay empty. doesn't have any use.
+
+        //Down: It must stay empty. doesn't have any use.
         @Override
-        public void sinkPauseAndPlay(PlayerStatus playerStatus) {}
+        public void sinkPauseAndPlay(PlayerStatus playerStatus) {
+        }
+
+        private void addTimeSliderListener() {
+            timeSlider.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    super.mouseReleased(e);
+                    System.out.println("@:"+timeSlider.getValue());
+                    timeSliderListener.seekToFrame(((double) timeSlider.getValue()/timeSliderMax));
+                    System.out.println(timeSlider.getValue());
+                }
+            });
+//            timeSlider.addChangeListener(new ChangeListener() {
+//                @Override
+//                public void stateChanged(ChangeEvent e) {
+//                    timeSliderListener.seekToFrame((double) timeSlider.getValue() / timeSliderMax);
+//                    System.out.println((double) timeSlider.getValue() / timeSliderMax);
+//                }
+//            });
+        }
     }
-    public void setPauseAndPlayLabel(SongPlayerAndGUIListener destination)
-    {
-        songPlayer.songPlayerAndGUIListener=destination;
+
+    ////////////////////////////////////////////////////////
+    public void setPauseAndPlayLabel(SongPlayerAndGUIListener destination) {
+        songPlayer.songPlayerAndGUIListener = destination;
     }
-    public SongPlayerAndGUIListener getSongPlayer()
-    {
+
+    public SongPlayerAndGUIListener getSongPlayerTypeListener() {
         return songPlayer;
+    }
+
+    public JPanel getSongPlayer() {
+        return songPlayer;
+    }
+
+    public void setTimeSliderListener(TimeSliderListener listener) {
+        songPlayer.timeSliderListener = listener;
     }
     ///////////////////////////////PlayerBar class
 //    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)

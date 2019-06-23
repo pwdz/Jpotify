@@ -3,6 +3,7 @@ package GUI;
 import Listeners.AddPlaylistListener;
 import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.SongPlayerAndGUIListener;
+import Listeners.TimeSliderListener;
 import PlayerPackage.PlayerStatus;
 
 import javax.swing.*;
@@ -87,7 +88,7 @@ public class MainFrame {
     }
 
     public SongPlayerAndGUIListener getTimeSlider() {
-        return playerBar.getSongPlayer();
+        return playerBar.getSongPlayerTypeListener();
     }
     public AddPlaylist getAddPlaylist()
     {
@@ -104,6 +105,10 @@ public class MainFrame {
     public LibraryListenerToPlaylistBar getPlayListPanel()
     {
         return playListPanel;
+    }
+    public void setTimeSliderListener(TimeSliderListener listener)
+    {
+        playerBar.setTimeSliderListener(listener);
     }
 
 
