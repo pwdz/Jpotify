@@ -3,9 +3,9 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class GetSong extends JFrame {
+public class ChooseSong extends JFrame {
     private static final int WIDTH = 950,HEIGHT=550;
-    public GetSong(){
+    public ChooseSong(){
         this.setSize(new Dimension(WIDTH,HEIGHT));
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -45,7 +45,7 @@ public class GetSong extends JFrame {
     }
 
 //    public static void main(String[] args) {
-//        GetSong getSong=new GetSong();
+//        ChooseSong chooseSong=new ChooseSong();
 //    }
 
 }
