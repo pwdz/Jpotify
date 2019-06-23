@@ -1,38 +1,36 @@
 package PlayerPackage;
 
 import GUI.MainFrame;
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
 import Music.Song;
+import javazoom.jl.decoder.JavaLayerException;
+
+import javazoom.jl.player.advanced.AdvancedPlayer;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import Listeners.SongPlayerAndGUIListener;
 import sun.applet.Main;
-
-public class SongPlayer implements SongPlayerAndGUIListener {
-    private Player player;
-    private Song song;
+public class SongPlayer implements SongPlayerAndGUIListener  {
+    private AdvancedPlayer player;
+    private String path;
     private Object playerLock;
     private PlayerStatus playerStatus;
     private FileInputStream fileInputStream;
     private SongPlayerAndGUIListener listener = null;
     private int count = 0;
-
-    public SongPlayer(Song song) {
-        this.song = song;
-        fileInputStream = null;
-        setSong(song);
-        playerLock = new Object();
-        playerStatus = PlayerStatus.NOTSTARTED;
+    public SongPlayer(String path){
+        setPath(path);
+        playerLock=new Object();
+        playerStatus=PlayerStatus.NOTSTARTED;
     }
 
-    public void setSong(Song song) {
-        this.song = song;
+    public void setPath(String path) {
+        this.path=path;
         try {
-            fileInputStream = new FileInputStream(song.getPath());
-            player = new Player(fileInputStream);
+            fileInputStream=new FileInputStream(path);
+            player=new AdvancedPlayer(fileInputStream);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (JavaLayerException e) {
@@ -41,20 +39,21 @@ public class SongPlayer implements SongPlayerAndGUIListener {
 
     }
 
-    public void playTheSong() {
-        synchronized (playerLock) {
-            switch (playerStatus) {
+    public void playTheSong(){
+        synchronized (playerLock){
+            switch (playerStatus){
                 case NOTSTARTED:
-                    Runnable playerRunnable = new Runnable() {
+
+                    Runnable playerRunnable =new Runnable() {
                         @Override
                         public void run() {
                             myPlay();
                         }
                     };
-                    Thread playerThread = new Thread(playerRunnable);
+                    Thread playerThread=new Thread(playerRunnable);
                     //playerThread.setDaemon(true);
                     playerThread.setPriority(Thread.MAX_PRIORITY);
-                    playerStatus = PlayerStatus.PLAYING;
+                    playerStatus=PlayerStatus.PLAYING;
                     playerThread.start();
                     break;
                 case PAUSED:
@@ -65,11 +64,11 @@ public class SongPlayer implements SongPlayerAndGUIListener {
         }
 
     }
-
     private void myPlay() {
+
         while (playerStatus != PlayerStatus.FINISHED) {
             try {
-
+                
                 count++;
 //                if()
                     listener.sinkSongWithGUI(count);
@@ -96,7 +95,7 @@ public class SongPlayer implements SongPlayerAndGUIListener {
 
     public void resume() {
         synchronized (playerLock) {
-            if (playerStatus == PlayerStatus.PAUSED) {
+            if (playerStatus == PlayerStatus.PAUSED ) {
                 playerStatus = PlayerStatus.PLAYING;
                 playerLock.notifyAll();
             }
@@ -111,7 +110,33 @@ public class SongPlayer implements SongPlayerAndGUIListener {
             }
         }
     }
+    public void seek(int percentage){
+        try {
+            Song song=new Song(path);
+            seekTo((percentage/100)*song.getNumberOfFrames());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public void seekTo(int frame ) {
+        synchronized (playerLock) {
+//            System.out.println(playerStatus);
+            player.close();
+            try {
+                fileInputStream=new FileInputStream(path);
+                player = new AdvancedPlayer(fileInputStream);
+                player.play(frame, frame + 1);
 
+            } catch (JavaLayerException ex) {
+                ex.printStackTrace();
+
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
     public void stop() {
         synchronized (playerLock) {
             playerStatus = PlayerStatus.FINISHED;
@@ -119,9 +144,9 @@ public class SongPlayer implements SongPlayerAndGUIListener {
         }
     }
 
-    public void myClose() {
-        synchronized (playerLock) {
-            playerStatus = PlayerStatus.FINISHED;
+    public void myClose(){
+        synchronized (playerLock){
+            playerStatus=PlayerStatus.FINISHED;
 //            System.out.println(playerStatus);
         }
         try {
@@ -135,33 +160,7 @@ public class SongPlayer implements SongPlayerAndGUIListener {
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
     }
-
-//    public static void main(String[] args) {
-//        try {
-//            Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//            SongPlayer songPlayer = new SongPlayer(song);
-//            songPlayer.playTheSong();
-
-//            Thread t1=new Thread();
-//            Thread.sleep(10000);
-//            songPlayer.pause();
-//            Thread.sleep(5000);
-//            songPlayer.resume();
-//            Thread.sleep(5000);
-//            songPlayer.pause();
-//            Thread.sleep(5000);
-//            songPlayer.resume();
-
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        catch (InterruptedException e){
-//            e.printStackTrace();
-//        }
-
-//    }
-
-    public void setDestinationToTimeSlider(SongPlayerAndGUIListener destination) {
+public void setDestinationToTimeSlider(SongPlayerAndGUIListener destination) {
         this.listener = destination;
     }
 //Down: it has no use.
@@ -176,7 +175,21 @@ public class SongPlayer implements SongPlayerAndGUIListener {
         else
             resume();
     }
+//    public static void main(String[] args) {
+//        try {
+//
+//            SongPlayer songPlayer=new SongPlayer("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//            songPlayer.playTheSong();
+//            Thread.sleep(2000);
+//            songPlayer.seekTo(3000 );
+//            Thread.sleep(60000);
+//
+//        }
+//        catch (InterruptedException e){
+//            e.printStackTrace();
+//        }
+//
+//    }
 }
-
 
 
