@@ -1,6 +1,7 @@
 package GUI;
 
 import Listeners.AddPlaylistListener;
+import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.SongPlayerAndGUIListener;
 import PlayerPackage.PlayerStatus;
 
@@ -10,7 +11,7 @@ import java.awt.*;
 public class MainFrame {
 
     private JFrame mainFrame;
-    private JPanel panel, panel5, panel2, panel3, panel4;
+    private JPanel panel, panel2;
     private PlayList playListPanel;
     private FriendsActivity friendsActivityPanel;
     private PlayerBar playerBar;
@@ -35,9 +36,6 @@ public class MainFrame {
         panel.setBackground(Color.BLACK);
 
         panel2 = new JPanel();
-        panel3 = new JPanel();
-        panel4 = new JPanel();
-        panel5 = new JPanel();
 
         playListPanel = new PlayList();
 
@@ -45,10 +43,6 @@ public class MainFrame {
 
         panel2.setOpaque(true);
         panel2.setBackground(new Color(30, 30, 30));
-
-        panel3.setOpaque(true);
-        panel3.setBackground(Essentials.getColor("heavy grey"));
-        panel3.setPreferredSize(new Dimension(0, 30));
 
         friendsActivityPanel = new FriendsActivity();
 
@@ -99,10 +93,18 @@ public class MainFrame {
     {
         return playListPanel.getAddPlaylist();
     }
+    public ChooseSong getChooseSong()
+    {
+        return playListPanel.getChooseSong();
+    }
 //
 //     public static void main(String[] args) {
 //        MainFrame mainFrame = new MainFrame();
 //    }
+    public LibraryListenerToPlaylistBar getPlayListPanel()
+    {
+        return playListPanel;
+    }
 
 
 }

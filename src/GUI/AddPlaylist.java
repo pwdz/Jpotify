@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import ClientPackage.Library;
@@ -46,6 +47,7 @@ public class AddPlaylist extends JFrame {
 
         fileChooser = new JFileChooser();
         fileChooser.setSize(new Dimension(10, 12));
+        fileChooser.setControlButtonsAreShown(false);
 
         JLabel title = Essentials.labelMaker("Create Playlist", "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 30), "grey");
 
@@ -91,7 +93,7 @@ public class AddPlaylist extends JFrame {
         panel3.add(title);
         panel4.add(createButton);
 
-        this.setVisible(true);
+//        this.setVisible(true);
         this.add(panel2, BorderLayout.WEST);
         this.add(panel4, BorderLayout.SOUTH);
         this.add(panel1, BorderLayout.CENTER);
@@ -99,20 +101,22 @@ public class AddPlaylist extends JFrame {
         pack();
     }
 
-    private void addCreateButtonActionListener(JButton createButton)
-    {
+    private void addCreateButtonActionListener(JButton createButton) {
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!addPlaylistListener.equals(null))
-                System.out.println(name.getText());
-                    addPlaylistListener.makePlaylist(name.getText(),description.getText(),null);
-                dispose();
+                if(!name.getText().equals("") && !fileChooser.getSelectedFile().equals(null) && !fileChooser.getSelectedFile().equals("")) {
+                    addPlaylistListener.makePlaylist(name.getText(), description.getText(), String.valueOf(fileChooser.getSelectedFile()));
+                    name.setText("");
+                    description.setText("");
+                    fileChooser.setSelectedFile(new File(""));
+                    dispose();
+                }
             }
         });
     }
-    public void setAddPlaylistListener(AddPlaylistListener listener)
-    {
+
+    public void setAddPlaylistListener(AddPlaylistListener listener) {
         addPlaylistListener = listener;
     }
 }
