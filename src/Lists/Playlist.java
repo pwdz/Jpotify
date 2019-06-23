@@ -1,7 +1,4 @@
 package Lists;
-
-import Music.Song;
-
 import java.util.ArrayList;
 
 public class Playlist extends List {
@@ -14,32 +11,32 @@ public class Playlist extends List {
         return isRemovable;
     }
 
-    public void addSong(Song song){
-        songs.add(song);
+    public void addSong(String path){
+        songPath.add(path);
     }
-    public void removeSong(Song song){
-        songs.remove(song);
+    public void removeSong(String path){
+        songPath.remove(path);
     }
-    public void changeOrder(Song song ,int newPlace){
-        int index=songs.indexOf(song);
-        Song arrayOfSongs [] = new Song[songs.size()];
-        for (int i = 0; i <songs.size() ; i++) {
-            arrayOfSongs[i]=songs.get(i);
+    public void changeOrder(String path ,int newPlace){
+        int index=songPath.indexOf(path);
+        String arrayOfPaths [] = new String[songPath.size()];
+        for (int i = 0; i <songPath.size() ; i++) {
+            arrayOfPaths[i]=songPath.get(i);
         }
         if (newPlace<index) {
             for (int i = index; i>newPlace; i--) {
-                arrayOfSongs[i]=arrayOfSongs[i-1];
+                arrayOfPaths[i]=arrayOfPaths[i-1];
             }
         }
         if(newPlace>index){
             for (int i = index; i<newPlace ; i++) {
-                arrayOfSongs[i]=arrayOfSongs[i+1];
+                arrayOfPaths[i]=arrayOfPaths[i+1];
             }
         }
-        arrayOfSongs[newPlace]=song;
-        songs=new ArrayList<>();
-        for (int i = 0; i <arrayOfSongs.length ; i++) {
-            songs.add(arrayOfSongs[i]);
+        arrayOfPaths[newPlace]=path;
+        songPath=new ArrayList<>();
+        for (int i = 0; i <arrayOfPaths.length ; i++) {
+            songPath.add(arrayOfPaths[i]);
         }
     }
 
@@ -85,3 +82,5 @@ public class Playlist extends List {
 //
 //    }
 }
+
+
