@@ -1,10 +1,11 @@
 package Lists;
 
+import Listeners.AddPlaylistListener;
 import Music.Song;
 
 import java.util.ArrayList;
 
-public class Playlist extends List {
+public class Playlist extends List implements AddPlaylistListener {
     protected boolean isRemovable;
     public Playlist(String name){
         super(name);
@@ -24,7 +25,7 @@ public class Playlist extends List {
         int index=songs.indexOf(song);
         Song arrayOfSongs [] = new Song[songs.size()];
         for (int i = 0; i <songs.size() ; i++) {
-            arrayOfSongs[i]=songs.get(i);
+            arra yOfSongs[i]=songs.get(i);
         }
         if (newPlace<index) {
             for (int i = index; i>newPlace; i--) {
@@ -41,6 +42,11 @@ public class Playlist extends List {
         for (int i = 0; i <arrayOfSongs.length ; i++) {
             songs.add(arrayOfSongs[i]);
         }
+    }
+
+    @Override
+    public void makePlaylist(String name, String description, byte[] playlistArtwork) {
+
     }
 
 

@@ -10,7 +10,7 @@ public class GetSong extends JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setResizable(false);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel panel1=new JPanel();
         JPanel panel2 =new JPanel();
         JPanel panel3=new JPanel();
@@ -44,8 +44,8 @@ public class GetSong extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        GetSong getSong=new GetSong();
-    }
+//    public static void main(String[] args) {
+//        GetSong getSong=new GetSong();
+//    }
 
 }

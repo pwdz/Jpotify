@@ -1,10 +1,12 @@
 package GUI;
+
 import Listeners.SongPlayerAndGUIListener;
 import PlayerPackage.PlayerStatus;
 
 import javax.swing.*;
 import java.awt.*;
-public class MainFrame implements SongPlayerAndGUIListener {
+
+public class MainFrame {
 
     private JFrame mainFrame;
     private JPanel panel, panel5, panel2, panel3, panel4;
@@ -17,6 +19,8 @@ public class MainFrame implements SongPlayerAndGUIListener {
 
     public MainFrame() {
         //set JFrame's default properties
+//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+//        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2 - 100);
         this.mainFrame = new JFrame("Spotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setSize(WIDTH, HEIGHT);
@@ -39,69 +43,61 @@ public class MainFrame implements SongPlayerAndGUIListener {
         headerPanel = new HeaderGUI();
 
         panel2.setOpaque(true);
-        panel2.setBackground(new Color(30,30,30));
+        panel2.setBackground(new Color(30, 30, 30));
 
         panel3.setOpaque(true);
         panel3.setBackground(Essentials.getColor("heavy grey"));
-        panel3.setPreferredSize(new Dimension(0,30));
+        panel3.setPreferredSize(new Dimension(0, 30));
 
         friendsActivityPanel = new FriendsActivity();
 
         playerBar = new PlayerBar();
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.insets = new Insets(1,1,1,1);
-        gbc.weightx=0;
-        gbc.weighty=1;
-        gbc.gridx=0;
-        gbc.gridy=0;
+        gbc.insets = new Insets(1, 1, 1, 1);
+        gbc.weightx = 0;
+        gbc.weighty = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         gbc.gridheight = 2;
         gbc.fill = GridBagConstraints.BOTH;
-        panel.add(playListPanel,gbc);
+        panel.add(playListPanel, gbc);
 
-        gbc.weightx=1;
-        gbc.gridx=1;
-        gbc.fill=GridBagConstraints.HORIZONTAL;
-        panel.add(headerPanel,gbc);
-        gbc.weightx=0;
+        gbc.weightx = 1;
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(headerPanel, gbc);
+        gbc.weightx = 0;
 
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx=2;
-        panel.add(friendsActivityPanel,gbc);
+        gbc.gridx = 2;
+        panel.add(friendsActivityPanel, gbc);
 //
-        gbc.gridx=1;
-        gbc.gridy=1;
-        panel.add(panel2,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(panel2, gbc);
 
-        gbc.weighty=0;
-        gbc.gridx=0;
-        gbc.gridy=2;
-        gbc.gridwidth=3;
+        gbc.weighty = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(playerBar,gbc);
-
+        panel.add(playerBar, gbc);
         mainFrame.add(panel);
         mainFrame.setVisible(true);
     }
 
-    @Override
-    public void sinkSongWithGUI(int count) {
-        playerBar.setTime(count);
+    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination) {
+        playerBar.setPauseAndPlayLabel(destination);
     }
 
-    @Override
-    public void sinkPauseAndPlay(PlayerStatus playerStatus) {
-    }
-
-    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
-    {
-        playerBar.setPauseAndPlayDestination(destination);
+    public SongPlayerAndGUIListener getTimeSlider() {
+        return playerBar.getSongPlayer();
     }
 //
 //     public static void main(String[] args) {
 //        MainFrame mainFrame = new MainFrame();
 //    }
-
 
 
 }

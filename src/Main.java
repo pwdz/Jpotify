@@ -10,7 +10,7 @@ public class Main {
         try {
             Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
             SongPlayer songPlayer = new SongPlayer(song);
-            songPlayer.setListener(mainFrame);
+            songPlayer.setDestinationToTimeSlider(mainFrame.getTimeSlider());
             mainFrame.setPauseAndPlayDestination(songPlayer);
             songPlayer.playTheSong();
             songPlayer.pause();

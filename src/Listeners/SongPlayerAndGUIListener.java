@@ -3,6 +3,6 @@ package Listeners;
 import PlayerPackage.PlayerStatus;
 
 public interface SongPlayerAndGUIListener {
-        void sinkSongWithGUI(int count);
-        void sinkPauseAndPlay(PlayerStatus playerStatus);
+    public void sinkSongWithGUI(int count);
+    public void sinkPauseAndPlay(PlayerStatus playerStatus);
 }

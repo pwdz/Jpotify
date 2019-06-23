@@ -1,5 +1,6 @@
 package GUI;
 
+import Listeners.SongPlayerAndGUIAdapter;
 import Listeners.SongPlayerAndGUIListener;
 import Music.Song;
 import PlayerPackage.PlayerStatus;
@@ -138,7 +139,7 @@ public class PlayerBar extends JPanel {
         }
     }
 
-    private class SongPlayer extends JPanel  {
+    private class SongPlayer extends JPanel  implements SongPlayerAndGUIListener{
         private JSlider timeSlider, soundSlider;
         private JLabel pauseAndPlay;
         private JLabel next, previous;
@@ -233,6 +234,7 @@ public class PlayerBar extends JPanel {
 //down: a small JSlider for sound in a JLabel
 
             JLabel soundSlideTmp = Essentials.labelMaker("", "yellow", 150, 45);
+//            soundSlideTmp.addMouseListener();
 
             JLabel soundIconLabel = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon soundImg =  Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\FilledSound.png",30,25);
@@ -247,23 +249,37 @@ public class PlayerBar extends JPanel {
             add(timeSlideTmp, BorderLayout.SOUTH);
             add(soundSlideTmp, BorderLayout.EAST);
 
-//            songPlayerAndGUIListener.set
         }
-        public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
-        {
-            songPlayerAndGUIListener=destination;
-        }
+//        public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
+//        {
+//            songPlayerAndGUIListener=destination;
+//        }
 
         public void setTimeSliderValue(int value) {
             timeSlider.setValue(value);
         }
 
+        @Override
+        public void sinkSongWithGUI(int value) {
+            setTimeSliderValue(value);
+        }
+//Down: It must stay empty. doesn't have any use.
+        @Override
+        public void sinkPauseAndPlay(PlayerStatus playerStatus) {}
+    }
+    public void setPauseAndPlayLabel(SongPlayerAndGUIListener destination)
+    {
+        songPlayer.songPlayerAndGUIListener=destination;
+    }
+    public SongPlayerAndGUIListener getSongPlayer()
+    {
+        return songPlayer;
     }
     ///////////////////////////////PlayerBar class
-    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
-    {
-        songPlayer.setPauseAndPlayDestination(destination);
-    }
+//    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
+//    {
+//        songPlayer.setPauseAndPlayDestination(destination);
+//    }
 
 }
 

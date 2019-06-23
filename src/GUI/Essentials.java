@@ -21,38 +21,47 @@ public class Essentials {
             case "near black":
                 return new Color(30, 30, 30);
             case "grey2":
-                return new Color(70,40,40);
+                return new Color(70, 40, 40);
             case "green":
-                return new Color(10,100,50);
+                return new Color(10, 100, 50);
             default:
                 return new Color(0, 0, 0);
 
         }
     }
-    public static JLabel labelMaker(String text, String colorName, int width, int height)
-    {
-        JLabel label=new JLabel();
+
+    public static JLabel labelMaker(String text, String colorName, int width, int height) {
+        JLabel label = new JLabel();
         label.setText(text);
         label.setOpaque(true);
         label.setBackground(Essentials.getColor(colorName));
         label.setForeground(Color.WHITE);
-        label.setPreferredSize(new Dimension(width,height));
+        label.setPreferredSize(new Dimension(width, height));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);
+        label.setFont(new Font("Serif", Font.PLAIN, 15));
         return label;
     }
-    public static ImageIcon imageProvider(String path,int width,int height)
-    {
-        ImageIcon img=new ImageIcon(path);
-        return new ImageIcon(img.getImage().getScaledInstance(width,height,Image.SCALE_SMOOTH));
+
+    public static JLabel labelMaker(String text, String colorName, int width, int height,Font font,String foreroundColor) {
+        JLabel label=Essentials.labelMaker(text,colorName,width,height);
+        label.setFont(font);
+        label.setForeground(Essentials.getColor(foreroundColor));
+        return label;
     }
-    public static  void gridBagSetups(GridBagConstraints gbc, int gridX,int gridY, int gridWidth,int gridHeight){
-        gbc.gridx=gridX;
-        gbc.gridy=gridY;
-        gbc.gridwidth=gridWidth;
-        gbc.gridheight=gridHeight;
-        gbc.fill=GridBagConstraints.HORIZONTAL;
-        gbc.fill=GridBagConstraints.VERTICAL;
+
+    public static ImageIcon imageProvider(String path, int width, int height) {
+        ImageIcon img = new ImageIcon(path);
+        return new ImageIcon(img.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    }
+
+    public static void gridBagSetups(GridBagConstraints gbc, int gridX, int gridY, int gridWidth, int gridHeight) {
+        gbc.gridx = gridX;
+        gbc.gridy = gridY;
+        gbc.gridwidth = gridWidth;
+        gbc.gridheight = gridHeight;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.VERTICAL;
     }
 
 }

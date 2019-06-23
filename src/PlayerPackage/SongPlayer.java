@@ -161,10 +161,10 @@ public class SongPlayer implements SongPlayerAndGUIListener {
 
 //    }
 
-    public void setListener(SongPlayerAndGUIListener l) {
-        this.listener = l;
+    public void setDestinationToTimeSlider(SongPlayerAndGUIListener destination) {
+        this.listener = destination;
     }
-
+//Down: it has no use.
     @Override
     public void sinkSongWithGUI(int count) {
     }

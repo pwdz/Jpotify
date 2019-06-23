@@ -4,6 +4,8 @@ import Mp3agic.ID3v2;
 import Mp3agic.InvalidDataException;
 import Mp3agic.Mp3File;
 import Mp3agic.UnsupportedTagException;
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 public class Song {
     private String artist;
     private String title;
@@ -84,6 +86,11 @@ public class Song {
 
     public String getPath() {
         return path;
+    }
+
+    public int getDuration()
+    {
+        return duration;
     }
 
 //       public static void main(String[] args) {

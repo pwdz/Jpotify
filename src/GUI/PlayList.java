@@ -1,5 +1,7 @@
 package GUI;
 
+import Listeners.AddPlaylistListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -9,10 +11,12 @@ public class PlayList extends JPanel {
     private GridBagConstraints gbc;
     private JLabel yourLibrary;
     private JLabel songs, albums, playlistLabel;
-    private JLabel newPlaylist;
+    private JLabel newPlaylist,newSong;
     private JList<String> playlist;
     private DefaultListModel<String> l;
     private JButton newPlayListButton;
+    private AddPlaylist addPlaylist;
+    private GetSong getSong;
     private static final int WIDTH = 250,HEIGHT=30;
     public PlayList() {
         super();
@@ -67,36 +71,57 @@ public class PlayList extends JPanel {
         gbc.weighty=1;
         add(newPlayListButton,gbc);*/
         newPlaylist=Essentials.labelMaker("[+]Add Playlist","grey",WIDTH,HEIGHT);
-        newPlaylist.addMouseListener(new MouseAdapter() {
+        newSong = Essentials.labelMaker("[+]Add new song","grey",WIDTH,HEIGHT);
+
+        MouseAdapter mouseEntered = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                newPlaylist.setBackground(Essentials.getColor("1"));
+                ((JLabel)e.getSource()).setBackground(Essentials.getColor("black"));
             }
-        });
-        newPlaylist.addMouseListener(new MouseAdapter() {
+        };
+        MouseAdapter mouseExit = new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                newPlaylist.setBackground(Essentials.getColor("grey"));
+                ((JLabel)e.getSource()).setBackground(Essentials.getColor("grey"));
             }
-        });
+        };
+        newPlaylist.addMouseListener(mouseEntered);
+        newPlaylist.addMouseListener(mouseExit);
+        this.setMouseClicked(newPlaylist);
+
+        newSong.addMouseListener(mouseEntered);
+        newSong.addMouseListener(mouseExit);
+        this.setMouseClicked(newSong);
+
         gbc.gridy++;
         gbc.weighty=0;
         gbc.fill=GridBagConstraints.HORIZONTAL;
+        add(newSong,gbc);
+
+        gbc.gridy++;
+//        gbc.weighty=0;
+//        gbc.fill=GridBagConstraints.HORIZONTAL;
         add(newPlaylist,gbc);
 
     }
-
-    /*
-        @param: takes a JLabel and it's name and color and produces it.
-    */
-//        private JLabel makeLabelReady(String labelName, String colorName) {
-//            JLabel label = new JLabel(labelName, SwingConstants.CENTER);
-//            label.setOpaque(true);
-//            label.setBackground(Essentials.getColor(colorName));
-//            label.setForeground(Color.WHITE);
-//            label.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-//            return label;
-//        }
+    private void setMouseClicked(JLabel label)
+    {
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if(((JLabel)e.getSource()).equals(newPlaylist))
+                {
+                   addPlaylist = new AddPlaylist();
+                }
+                else if(((JLabel)e.getSource()).equals(newSong))
+                {
+                    getSong = new GetSong();
+                }
+            }
+        });
     }
+//    public AddPlaylistListener
+}
