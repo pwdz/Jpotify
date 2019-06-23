@@ -1,25 +1,24 @@
 package Lists;
 
-import Music.Song;
+        import Music.Song;
 
-import java.util.ArrayList;
+        import java.io.FileNotFoundException;
+        import java.util.ArrayList;
 
-public class Album extends List {
+public class  Album extends List {
+    byte artwork[];
     public Album(String name){
         super(name);
         setArtwork();
     }
-    @Override
-    public ArrayList<Song> getSongs(){
-        return songs;
-    }
-    @Override
-    public String getName() {
-        return super.getName();
-    }
     public void setArtwork(){
-        artwork=songs.get(0).getArtwork();
+        Song song= null;
+        try {
+            song = new Song(songPath.get(0));
+            artwork=song.getArtwork();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }
-
