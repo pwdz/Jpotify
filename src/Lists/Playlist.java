@@ -5,10 +5,12 @@ import Music.Song;
 
 import java.util.ArrayList;
 
-public class Playlist extends List implements AddPlaylistListener {
+public class Playlist extends List {
     protected boolean isRemovable;
-    public Playlist(String name){
-        super(name);
+
+    public Playlist(String name, String description, byte[] artwork, boolean isRemovable) {
+        super(name, description, artwork);
+        this.isRemovable = isRemovable;
     }
 
     public boolean isRemovable() {
@@ -42,10 +44,6 @@ public class Playlist extends List implements AddPlaylistListener {
         for (int i = 0; i <arrayOfPaths.length ; i++) {
             songPath.add(arrayOfPaths[i]);
         }
-    }
-
-    @Override
-    public void makePlaylist(String name, String description, byte[] playlistArtwork) {
 
     }
 

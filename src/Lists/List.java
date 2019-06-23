@@ -7,16 +7,39 @@ import java.util.Collections;
     public class List {
         protected ArrayList<String> songPath;
         protected String name;
-
-        public List(String name)
+        protected String description;
+        protected byte[] artwork;
+        public List(String name,String description,byte[] artwork)
         {
             this.name=name;
+            this.description=description;
+            this.artwork=artwork;
             songPath=new ArrayList<>();
         }
 
         public String getName()
         {
             return name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public byte[] getArtwork() {
+            return artwork;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public void setArtwork(byte[] artwork) {
+            this.artwork = artwork;
         }
 
         public ArrayList<String> getsongPath() {

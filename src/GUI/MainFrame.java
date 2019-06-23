@@ -1,5 +1,6 @@
 package GUI;
 
+import Listeners.AddPlaylistListener;
 import Listeners.SongPlayerAndGUIListener;
 import PlayerPackage.PlayerStatus;
 
@@ -93,6 +94,10 @@ public class MainFrame {
 
     public SongPlayerAndGUIListener getTimeSlider() {
         return playerBar.getSongPlayer();
+    }
+    public AddPlaylist getAddPlaylist()
+    {
+        return playListPanel.getAddPlaylist();
     }
 //
 //     public static void main(String[] args) {

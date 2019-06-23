@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import ClientPackage.Library;
 import GUI.Essentials;
+import Listeners.AddPlaylistListener;
 
 public class AddPlaylist extends JFrame {
     private static final int WIDTH = 950, HEIGHT = 550;
@@ -15,6 +17,8 @@ public class AddPlaylist extends JFrame {
     private JTextField name, description;
     private JFileChooser fileChooser;
     JPanel panel1 = new JPanel();
+
+    private AddPlaylistListener addPlaylistListener;
 
     public AddPlaylist() {
         super();
@@ -100,9 +104,15 @@ public class AddPlaylist extends JFrame {
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(!addPlaylistListener.equals(null))
+                System.out.println(name.getText());
+                    addPlaylistListener.makePlaylist(name.getText(),description.getText(),null);
                 dispose();
             }
         });
+    }
+    public void setAddPlaylistListener(AddPlaylistListener listener)
+    {
+        addPlaylistListener = listener;
     }
 }

@@ -20,6 +20,8 @@ public class PlayList extends JPanel {
     private static final int WIDTH = 250,HEIGHT=30;
     public PlayList() {
         super();
+        addPlaylist = new AddPlaylist();
+        addPlaylist.setVisible(false);
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Essentials.getColor("heavy grey"));
@@ -114,7 +116,8 @@ public class PlayList extends JPanel {
                 super.mouseClicked(e);
                 if(((JLabel)e.getSource()).equals(newPlaylist))
                 {
-                   addPlaylist = new AddPlaylist();
+//                   addPlaylist = new AddPlaylist();
+                    addPlaylist.setVisible(true);
                 }
                 else if(((JLabel)e.getSource()).equals(newSong))
                 {
@@ -123,5 +126,8 @@ public class PlayList extends JPanel {
             }
         });
     }
-//    public AddPlaylistListener
+    public AddPlaylist getAddPlaylist()
+    {
+        return addPlaylist;
+    }
 }
