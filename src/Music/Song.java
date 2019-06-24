@@ -95,6 +95,15 @@ public class Song {
     public int getDuration() {
         return duration;
     }
+    public String songDurationToString(){
+        int seconds=duration%60;
+        int minutes=duration/60;
+        if (seconds>=10)
+        return minutes+":"+seconds;
+        else
+            return minutes+":0"+seconds;
+
+    }
     //       public static void main(String[] args) {
 //        try {
 //            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
@@ -105,5 +114,8 @@ public class Song {
 //    }
 
 }
+
+
+
 
 
