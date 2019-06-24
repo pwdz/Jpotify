@@ -6,13 +6,13 @@ package Lists;
         import java.util.ArrayList;
 
 public class  Album extends List {
-    public Album(String name){
-        super(name);
+    public Album(String name,String description){
+        super(name,description);
     }
     public void setArtwork(Song song){
-      
+
             artwork=song.getArtwork();
-       
+
     }
     public void addSong(String path){
         if(songPath.size()==0){
