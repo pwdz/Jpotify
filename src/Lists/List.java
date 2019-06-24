@@ -7,14 +7,17 @@ import java.util.Collections;
     public class List {
         protected ArrayList<String> songPath;
         protected String name;
+        protected byte artwork[];
+        protected int totalTime;
         protected String description;
-        protected byte[] artwork;
-        public List(String name,String description,byte[] artwork)
+        public List(String name,String description)
         {
-            this.name=name;
             this.description=description;
-            this.artwork=artwork;
+            this.name=name;
             songPath=new ArrayList<>();
+            totalTime=0;
+            setTotalTime();
+
         }
 
         public String getName()
@@ -22,29 +25,6 @@ import java.util.Collections;
             return name;
         }
 
-        public String getDescription() {
-            return description;
-        }
-
-        public byte[] getArtwork() {
-            return artwork;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public void setArtwork(byte[] artwork) {
-            this.artwork = artwork;
-        }
-
-        public ArrayList<String> getsongPath() {
-            return songPath;
-        }
         public ArrayList<String> search(String key){
             Song song;
             ArrayList<String> foundItems=new ArrayList<>();
@@ -91,4 +71,28 @@ import java.util.Collections;
     public ArrayList<String> getSongPath() {
         return songPath;
     }
-}
+    public void setTotalTime(){
+            Song song;
+        for (String path: songPath) {
+            try {
+                song=new Song(path);
+                totalTime+=song.getDuration();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+    public String totalTimeToString(){
+            int seconds= totalTime%60;
+            int minutes=totalTime/60;
+            if (seconds>=10)
+                return minutes+":"+seconds;
+            else
+                return minutes+":0"+seconds;
+    }
+        public byte[] getArtwork() {
+            return artwork;
+        }
+    }

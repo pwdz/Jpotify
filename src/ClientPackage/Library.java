@@ -41,7 +41,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener {
         try {
             File artworkFile = new File(artworkPath);
             byte[] artworkByteCode = Files.readAllBytes(artworkFile.toPath());
-            Playlist playlist = new Playlist(name, description, artworkByteCode, true);
+            Playlist playlist = new Playlist(name, description, artworkByteCode);
             if (!lists.contains(playlist)) {
                 addList(playlist);
                 libraryListenerToPlaylistBar.addNewPlaylist(playlist);

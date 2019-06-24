@@ -1,15 +1,12 @@
 package GUI;
 
-import Listeners.SongPlayerAndGUIAdapter;
 import Listeners.SongPlayerAndGUIListener;
-import Listeners.TimeSliderListener;
+import Listeners.TimeProgressBarListener;
 import Music.Song;
 import PlayerPackage.PlayerStatus;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,7 +14,6 @@ import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Time;
 
 public class PlayerBar extends JPanel {
     private SongInfo songInfo;
@@ -154,7 +150,7 @@ public class PlayerBar extends JPanel {
         private PlayerStatus playerStatus = PlayerStatus.PAUSED;
         private SongPlayerAndGUIListener songPlayerAndGUIListener = null;
         private final int timeProgressMax = 5000;
-        private TimeSliderListener timeProgressListener;
+        private TimeProgressBarListener timeProgressListener;
 
         public SongPlayer() {
             super();
@@ -332,7 +328,7 @@ public class PlayerBar extends JPanel {
         return songPlayer;
     }
 
-    public void setTimeSliderListener(TimeSliderListener listener) {
+    public void setTimeSliderListener(TimeProgressBarListener listener) {
         songPlayer.timeProgressListener = listener;
     }
     ///////////////////////////////PlayerBar class

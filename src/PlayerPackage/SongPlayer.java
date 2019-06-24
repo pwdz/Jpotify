@@ -1,6 +1,6 @@
 package PlayerPackage;
 
-import Listeners.TimeSliderListener;
+import Listeners.TimeProgressBarListener;
 import Music.Song;
 import javazoom.jl.decoder.JavaLayerException;
 
@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 
 import Listeners.SongPlayerAndGUIListener;
 
-public class SongPlayer implements SongPlayerAndGUIListener, TimeSliderListener {
+public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener {
     private AdvancedPlayer player;
     private String path;
     private Object playerLock;

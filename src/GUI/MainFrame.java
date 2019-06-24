@@ -1,10 +1,8 @@
 package GUI;
 
-import Listeners.AddPlaylistListener;
 import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.SongPlayerAndGUIListener;
-import Listeners.TimeSliderListener;
-import PlayerPackage.PlayerStatus;
+import Listeners.TimeProgressBarListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -106,7 +104,7 @@ public class MainFrame {
     {
         return playListPanel;
     }
-    public void setTimeSliderListener(TimeSliderListener listener)
+    public void setTimeSliderListener(TimeProgressBarListener listener)
     {
         playerBar.setTimeSliderListener(listener);
     }

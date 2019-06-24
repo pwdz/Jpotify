@@ -1,5 +1,5 @@
 package Listeners;
 
-public interface TimeSliderListener {
+public interface TimeProgressBarListener {
     void seekToFrame(double percentage);
 }
