@@ -1,6 +1,5 @@
 package PlayerPackage;
 
-import GUI.MainFrame;
 import Listeners.TimeSliderListener;
 import Music.Song;
 import javazoom.jl.decoder.JavaLayerException;
@@ -12,17 +11,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import Listeners.SongPlayerAndGUIListener;
-import sun.applet.Main;
 
-public class SongPlayer implements SongPlayerAndGUIListener , TimeSliderListener {
+public class SongPlayer implements SongPlayerAndGUIListener, TimeSliderListener {
     private AdvancedPlayer player;
     private String path;
     private Object playerLock;
     private PlayerStatus playerStatus;
     private FileInputStream fileInputStream;
     private SongPlayerAndGUIListener listener = null;
-    private int count = 0;
     private Song song;
+    private int frameNumber = 0;
 
     public SongPlayer(String path) {
         setPath(path);
@@ -80,11 +78,8 @@ public class SongPlayer implements SongPlayerAndGUIListener , TimeSliderListener
 
         while (playerStatus != PlayerStatus.FINISHED) {
             try {
-
-                count++;
-//                if()
-                listener.sinkSongWithGUI((double) count/song.getNumberOfFrames());
-//                System.out.println(count);
+                frameNumber++;
+                listener.sinkSongWithGUI((double) frameNumber / song.getNumberOfFrames());
                 if (!player.play(1)) {
                     break;
                 }
@@ -100,7 +95,6 @@ public class SongPlayer implements SongPlayerAndGUIListener , TimeSliderListener
                     }
                 }
             }
-            //  System.out.println(playerStatus);
         }
         myClose();
     }
@@ -126,7 +120,8 @@ public class SongPlayer implements SongPlayerAndGUIListener , TimeSliderListener
     public void seek(double percentage) {
         try {
             Song song = new Song(path);
-            seekTo((int)((percentage) * song.getNumberOfFrames()));
+            frameNumber = (int) (percentage * song.getNumberOfFrames());
+            seekTo((int) ((percentage) * song.getNumberOfFrames()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

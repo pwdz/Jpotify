@@ -27,7 +27,7 @@ public class HeaderGUI extends JPanel {
         JButton button=new JButton();
         button.setBackground(Essentials.getColor("grey"));
         button.setPreferredSize(new Dimension(35,30));
-        button.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Search.png",25,25));
+        button.setIcon(Essentials.imageProvider(".\\pics\\Search.png",25,25));
 
 //        searchLabel = Essentials.labelMaker("","heavy grey",35,30);
 //        searchLabel.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\Search.png",30,30));
@@ -35,7 +35,7 @@ public class HeaderGUI extends JPanel {
         username = Essentials.labelMaker("Mohammad","heavy grey",100,HEIGHT);
 
         userPictureLabel = Essentials.labelMaker("","heavy grey",HEIGHT,HEIGHT);
-        userPictureLabel.setIcon(Essentials.imageProvider("C:\\Users\\acer\\Desktop\\Jpotify\\pics\\userPhoto.JPG",55,HEIGHT));
+        userPictureLabel.setIcon(Essentials.imageProvider(".\\pics\\userPhoto.JPG",55,HEIGHT));
 
         gbc.anchor=GridBagConstraints.WEST;
         gbc.gridx=0;
