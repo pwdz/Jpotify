@@ -1,16 +1,11 @@
 package Lists;
-
-import Listeners.AddPlaylistListener;
-import Music.Song;
-
 import java.util.ArrayList;
 
 public class Playlist extends List {
     protected boolean isRemovable;
-
-    public Playlist(String name, String description, byte[] artwork, boolean isRemovable) {
-        super(name, description, artwork);
-        this.isRemovable = isRemovable;
+    public Playlist(String name,String description,byte[] artwork){
+        super(name,description);
+        this.artwork=artwork;
     }
 
     public boolean isRemovable() {
@@ -44,7 +39,6 @@ public class Playlist extends List {
         for (int i = 0; i <arrayOfPaths.length ; i++) {
             songPath.add(arrayOfPaths[i]);
         }
-
     }
 
 
@@ -89,3 +83,4 @@ public class Playlist extends List {
 //
 //    }
 }
+
