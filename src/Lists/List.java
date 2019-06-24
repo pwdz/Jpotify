@@ -1,94 +1,98 @@
 package Lists;
-
-import Listeners.AddPlaylistListener;
 import Music.Song;
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Playlist extends List implements AddPlaylistListener {
-    protected boolean isRemovable;
-    public Playlist(String name,byte artwork[]){
-        super(name);
-        this.artwork=artwork;
-    }
+    public class List {
+        protected ArrayList<String> songPath;
+        protected String name;
+        protected byte artwork[];
+        protected int totalTime;
+        protected String description;
+        public List(String name,String description)
+        {
+            this.description=description;
+            this.name=name;
+            songPath=new ArrayList<>();
+            totalTime=0;
+            setTotalTime();
 
-    public boolean isRemovable() {
-        return isRemovable;
-    }
-
-    public void addSong(String path){
-        songPath.add(path);
-    }
-    public void removeSong(String path){
-        songPath.remove(path);
-    }
-    public void changeOrder(String path ,int newPlace){
-        int index=songPath.indexOf(path);
-        String arrayOfPaths [] = new String[songPath.size()];
-        for (int i = 0; i <songPath.size() ; i++) {
-            arrayOfPaths[i]=songPath.get(i);
         }
-        if (newPlace<index) {
-            for (int i = index; i>newPlace; i--) {
-                arrayOfPaths[i]=arrayOfPaths[i-1];
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public ArrayList<String> search(String key){
+            Song song;
+            ArrayList<String> foundItems=new ArrayList<>();
+            for (String path: songPath) {
+                try {
+                    song=new Song(path);
+                    if(song.getTitle().contains(key))
+                        foundItems.add(path);
+                    if(song.getAlbum().contains(key))
+                        foundItems.add(path);
+                    if(song.getArtist().contains(key))
+                        foundItems.add(path);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
             }
+            return foundItems;
         }
-        if(newPlace>index){
-            for (int i = index; i<newPlace ; i++) {
-                arrayOfPaths[i]=arrayOfPaths[i+1];
+        public ArrayList<String> shuffle(){
+            ArrayList<String> shuffledsongPath=new ArrayList<>();
+            for (int i = 0; i < songPath.size(); i++) {
+                shuffledsongPath.add(songPath.get(i));
             }
+            Collections.shuffle(shuffledsongPath);
+            return shuffledsongPath;
         }
-        arrayOfPaths[newPlace]=path;
-        songPath=new ArrayList<>();
-        for (int i = 0; i <arrayOfPaths.length ; i++) {
-            songPath.add(arrayOfPaths[i]);
+        public String nextSong(String path){
+            int index= songPath.indexOf(path);
+            if(index!=songPath.size()-1)
+                return songPath.get(index+1);
+            else
+                return songPath.get(0);
+
+        }
+        public String previousSong(String path){
+            int index=songPath.indexOf(path);
+            if(index!=0)
+                return songPath.get(index-1);
+            else
+                return songPath.get(songPath.size()-1);
+        }
+
+    public ArrayList<String> getSongPath() {
+        return songPath;
+    }
+    public void setTotalTime(){
+            Song song;
+        for (String path: songPath) {
+            try {
+                song=new Song(path);
+                totalTime+=song.getDuration();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+    public String totalTimeToString(){
+            int seconds= totalTime%60;
+            int minutes=totalTime/60;
+            if (seconds>=10)
+                return minutes+":"+seconds;
+            else
+                return minutes+":0"+seconds;
+    }
+        public byte[] getArtwork() {
+            return artwork;
         }
     }
-
-    @Override
-    public void makePlaylist(String name, String description, byte[] playlistArtwork) {
-
-    }
-
-
-//    public void changeOrderTest(int intChange ,int newPlace){
-//        ArrayList<Integer> integers=new ArrayList<>();
-//        for (Integer i = 0; i <11 ; i++) {
-//            integers.add(i);
-//        }
-//
-//        int index=integers.indexOf(intChange);
-//        Integer inNewIndex=integers.get(newPlace);
-//        Integer arrayOfSongs [] = new Integer[integers.size()];
-//        for (int i = 0; i <integers.size() ; i++) {
-//            arrayOfSongs[i]=integers.get(i);
-//        }
-//        if (newPlace<index) {
-//            for (int i = index; i>newPlace; i--) {
-//                arrayOfSongs[i]=arrayOfSongs[i-1];
-//            }
-//        }
-//
-//        if(newPlace>index){
-//            for (int i = index; i<newPlace ; i++) {
-//                arrayOfSongs[i]=arrayOfSongs[i+1];
-//            }
-//        }
-//        arrayOfSongs[newPlace]=intChange;
-//        integers=new ArrayList<>();
-//        for (int i = 0; i <arrayOfSongs.length ; i++) {
-//            integers.add(arrayOfSongs[i]);
-//        }
-//        for (int i = 0; i <integers.size() ; i++) {
-//            System.out.println(integers.get(i));
-//        }
-//
-
-//    }
-
-//    public static void main(String[] args) {
-//        Playlist playlist=new Playlist("myPlaylist");
-//        playlist.changeOrderTest(4,7);
-//
-//    }
-}
