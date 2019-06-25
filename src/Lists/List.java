@@ -74,10 +74,10 @@ import java.util.Collections;
     public ArrayList<String> getSongsPaths() {
         return songPath;
     }
-    public void addSong(String path)
-    {
-        songPath.add(path);
-    }
+//    public void addSong(String path)
+//    {
+//        songPath.add(path);
+//    }
     public void setTotalTime(){
             totalTime=0;
             Song song;

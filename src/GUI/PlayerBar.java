@@ -66,6 +66,7 @@ public class PlayerBar extends JPanel {
             setOpaque(true);
             setBackground(Essentials.getColor("near black"));
 
+
             gbc = new GridBagConstraints();
 
             artworkLabel = Essentials.labelMaker("", "heavy grey", 90, 90);

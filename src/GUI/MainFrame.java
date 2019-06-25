@@ -4,9 +4,13 @@ import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.SongPlayerAndGUIListener;
 import Listeners.SoundSliderListener;
 import Listeners.TimeProgressBarListener;
+import Lists.FavouriteSongs;
+import Lists.List;
+import Music.Song;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class MainFrame {
 
@@ -18,8 +22,18 @@ public class MainFrame {
     private HeaderGUI headerPanel;
     private static final int HEIGHT = 920, WIDTH = 1500;
     private GridBagConstraints gbc;
-
+    private ListDisplayer listDisplayer;
     public MainFrame() {
+        Song song = null;
+        try {
+            song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        FavouriteSongs list=new FavouriteSongs("the thrill of it all","",song.getArtwork());
+        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+                list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+        listDisplayer = new ListDisplayer(list);
         //set JFrame's default properties
 //        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2 - 100);
@@ -41,9 +55,9 @@ public class MainFrame {
 
         headerPanel = new HeaderGUI();
 
-        panel2.setOpaque(true);
+//        panel2.setOpaque(true);
 //        panel2.setPreferredSize(new Dimension(1000,1000));
-        panel2.setBackground(new Color(30, 30, 30));
+//        panel2.setBackground(new Color(30, 30, 30));
 
         friendsActivityPanel = new FriendsActivity();
 
@@ -71,7 +85,7 @@ public class MainFrame {
 //
         gbc.gridx = 1;
         gbc.gridy = 1;
-        panel.add(panel2, gbc);
+        panel.add(listDisplayer, gbc);
 
         gbc.weighty = 0;
         gbc.gridx = 0;

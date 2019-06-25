@@ -100,6 +100,7 @@ public class ListDisplayer extends JPanel {
        // this.add(panel1,BorderLayout.NORTH);
        this.add(panel3,BorderLayout.NORTH);
         this.add(panel2,BorderLayout.CENTER);
+//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
     }
 
     public void albumDisplaySetups(){
@@ -122,10 +123,10 @@ public class ListDisplayer extends JPanel {
         artist=null;
         numberAndTime=null;
         try {
-            Song firstSong=new Song(list.getSongPath().get(0));
+            Song firstSong=new Song(list.getSongsPaths().get(0));
             titleOfTheList=Essentials.labelMaker(firstSong.getAlbum(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 60), "grey");
             artist = Essentials.labelMaker(firstSong.getArtist(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
-            numberAndTime=  Essentials.labelMaker(list.getSongPath().size()+" songs, "+list.totalTimeToString(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
+            numberAndTime=  Essentials.labelMaker(list.getSongsPaths().size()+" songs, "+list.totalTimeToString(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -139,12 +140,12 @@ public class ListDisplayer extends JPanel {
         ImageIcon heartImg = Essentials.imageProvider("./pics/EmptyHeart.png", 10, 10);
         JLabel heartLable= Essentials.labelMaker("", "heavy grey", 10, 10);
         heartLable.setIcon(heartImg);
-        for (String path:list.getSongPath()) {
+        for (String path:list.getSongsPaths()) {
             try {
                 song=new Song(path);
                 titleString=song.getTitle();
                 timeString=song.songDurationToString();
-                number=String.valueOf(list.getSongPath().indexOf(path)+1);
+                number=String.valueOf(list.getSongsPaths().indexOf(path)+1);
                 defaultTableModel.addRow(new Object[]{heartImg,number, titleString, timeString});
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -202,7 +203,7 @@ public class ListDisplayer extends JPanel {
             titleOfTheList = Essentials.labelMaker(list.getName(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 60), "grey");
         }
         artist=null;
-        numberAndTime= Essentials.labelMaker(list.getSongPath().size()+" songs, "+list.totalTimeToString(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
+        numberAndTime= Essentials.labelMaker(list.getSongsPaths().size()+" songs, "+list.totalTimeToString(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
 
         Song song;
         String titleString;
@@ -215,13 +216,13 @@ public class ListDisplayer extends JPanel {
         ImageIcon removeImg = Essentials.imageProvider("./pics/icons8-minus-50.png", 10, 10);
         //ImageIcon changeImg = Essentials.imageProvider("./pics/convert-a-png-to-vector-2.png", 10, 10);
         if(list instanceof FavouriteSongs){
-            for (String path : list.getSongPath()) {
+            for (String path : list.getSongsPaths()) {
                 try {
                     song = new Song(path);
                     titleString = song.getTitle();
                     timeString = song.songDurationToString();
                     artistString = song.getArtist();
-                    number = String.valueOf(list.getSongPath().indexOf(path) + 1);
+                    number = String.valueOf(list.getSongsPaths().indexOf(path) + 1);
                     defaultTableModel.addRow(new Object[]{ "   "+number, titleString, artistString, timeString, removeImg});
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -229,13 +230,13 @@ public class ListDisplayer extends JPanel {
             }
         }
         else{
-            for (String path : list.getSongPath()) {
+            for (String path : list.getSongsPaths()) {
                 try {
                     song = new Song(path);
                     titleString = song.getTitle();
                     timeString = song.songDurationToString();
                     artistString = song.getArtist();
-                    number = String.valueOf(list.getSongPath().indexOf(path) + 1);
+                    number = String.valueOf(list.getSongsPaths().indexOf(path) + 1);
                     defaultTableModel.addRow(new Object[]{heartImg, number, titleString, artistString, timeString, removeImg});
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -251,40 +252,40 @@ public class ListDisplayer extends JPanel {
 
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         Song song = null;
         try {
-            song = new Song("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+            song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         FavouriteSongs list=new FavouriteSongs("the thrill of it all","",song.getArtwork());
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
 
 
         JFrame jFrame=new JFrame();
-        jFrame.setSize(new Dimension(1000, 700));
+        jFrame.setSize(new Dimension(1000, 500));
         jFrame.setVisible(true);
         ListDisplayer listDisplayer=new ListDisplayer(list);
         listDisplayer.setVisible(true);
@@ -292,5 +293,5 @@ public class ListDisplayer extends JPanel {
 
 
 
-    }
+    }*/
 }
