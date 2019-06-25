@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
+import GUI.Essentials;
 import Listeners.AddPlaylistListener;
 import Listeners.ChooseSongListener;
 import Listeners.LibraryListenerToPlaylistBar;
@@ -19,16 +20,13 @@ public class Library implements AddPlaylistListener, ChooseSongListener {
     private ArrayList<List> lists;
     private SharedPlaylist sharedPlaylist;
     private FavouriteSongs favouriteSongs;
-    private ArrayList<String> songs;
+    private LibrarySong songs;
     private LibraryListenerToPlaylistBar libraryListenerToPlaylistBar;
+
     //    private ArrayList<Song> songs;
     public Library() {
         lists = new ArrayList<>();
-        songs = new ArrayList<>();
-    }
-
-    public void addSong(String path) {
-        songs.add(path);
+        songs = new LibrarySong("Songs", "All of your songs", imageConverterToByteCode(".\\pics\\Music.png"));
     }
 
     public void addList(List list) {
@@ -38,30 +36,35 @@ public class Library implements AddPlaylistListener, ChooseSongListener {
     @Override
     public void makePlaylist(String name, String description, String artworkPath) {
 
-        try {
-            File artworkFile = new File(artworkPath);
-            byte[] artworkByteCode = Files.readAllBytes(artworkFile.toPath());
-            Playlist playlist = new Playlist(name, description, artworkByteCode);
-            if (!lists.contains(playlist)) {
-                addList(playlist);
-                libraryListenerToPlaylistBar.addNewPlaylist(playlist);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        Playlist playlist = new Playlist(name, description, imageConverterToByteCode(artworkPath));
+        if (!lists.contains(playlist)) {
+            addList(playlist);
+            libraryListenerToPlaylistBar.addNewPlaylist(playlist);
         }
 
     }
 
     @Override
     public void addSongToLibrary(String songPath) {
-        if(!songs.contains(songPath)) {
-            addSong(songPath);
+        if (!songs.getSongsPaths().contains(songPath)) {
+            songs.addSong(songPath);
         }
 //        System.out.println(songPath);
     }
 
-    public void setLibraryListenerToPlaylistBar(LibraryListenerToPlaylistBar listener)
-    {
+    public void setLibraryListenerToPlaylistBar(LibraryListenerToPlaylistBar listener) {
         libraryListenerToPlaylistBar = listener;
+    }
+
+    private byte[] imageConverterToByteCode(String path) {
+        File artworkFile = new File(path);
+        byte[] artworkByteCode;
+        try {
+            artworkByteCode = Files.readAllBytes(artworkFile.toPath());
+            return artworkByteCode;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

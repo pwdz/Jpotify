@@ -7,7 +7,7 @@ import java.util.Collections;
     public class List {
         protected ArrayList<String> songPath;
         protected String name;
-        protected byte artwork[];
+        protected byte[] artwork;
         protected int totalTime;
         protected String description;
         public List(String name,String description)
@@ -68,8 +68,12 @@ import java.util.Collections;
                 return songPath.get(songPath.size()-1);
         }
 
-    public ArrayList<String> getSongPath() {
+    public ArrayList<String> getSongsPaths() {
         return songPath;
+    }
+    public void addSong(String path)
+    {
+        songPath.add(path);
     }
     public void setTotalTime(){
             Song song;

@@ -1,18 +1,16 @@
 package PlayerPackage;
 
+import Listeners.SoundSliderListener;
 import Listeners.TimeProgressBarListener;
 import Music.Song;
 import javazoom.jl.decoder.JavaLayerException;
-
 import javazoom.jl.player.advanced.AdvancedPlayer;
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import Listeners.SongPlayerAndGUIListener;
 
-public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener {
+public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener, SoundSliderListener {
     private AdvancedPlayer player;
     private String path;
     private Object playerLock;
@@ -26,7 +24,6 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
         setPath(path);
         try {
             song = new Song(path);
-            System.out.println(song.getNumberOfFrames());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -39,6 +36,8 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
         try {
             fileInputStream = new FileInputStream(path);
             player = new AdvancedPlayer(fileInputStream);
+            player.setVol(6f);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -79,7 +78,8 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
         while (playerStatus != PlayerStatus.FINISHED) {
             try {
                 frameNumber++;
-                listener.sinkSongWithGUI((double) frameNumber / song.getNumberOfFrames());
+//                if (frameNumber % == 0)
+                listener.syncSongWithGUI((double) frameNumber / song.getNumberOfFrames());
                 if (!player.play(1)) {
                     break;
                 }
@@ -176,11 +176,11 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
 
     //Down: it has no use.
     @Override
-    public void sinkSongWithGUI(double percentage) {
+    public void syncSongWithGUI(double percentage) {
     }
 
     @Override
-    public void sinkPauseAndPlay(PlayerStatus playerStatus) {
+    public void syncPauseAndPlay(PlayerStatus playerStatus) {
         if (playerStatus.equals(PlayerStatus.PAUSED))
             pause();
         else
@@ -190,6 +190,12 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     @Override
     public void seekToFrame(double percentage) {
         seek(percentage);
+    }
+
+    @Override
+    public void setVolume(float percentage) {
+        player.setVol(percentage*86-80);
+
     }
 //    public static void main(String[] args) {
 //        try {

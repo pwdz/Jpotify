@@ -15,5 +15,6 @@ public class Main {
         mainFrame.getChooseSong().setChooseSongListener(client.getLibrary());
         client.getLibrary().setLibraryListenerToPlaylistBar(mainFrame.getPlayListPanel());
         mainFrame.setTimeSliderListener(songPlayer);
+        mainFrame.setSoundSliderListener(songPlayer);
     }
 }

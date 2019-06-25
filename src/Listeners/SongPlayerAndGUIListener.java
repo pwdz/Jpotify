@@ -3,6 +3,6 @@ package Listeners;
 import PlayerPackage.PlayerStatus;
 
 public interface SongPlayerAndGUIListener {
-    public void sinkSongWithGUI(double percentage);
-    public void sinkPauseAndPlay(PlayerStatus playerStatus);
+    public void syncSongWithGUI(double percentage);
+    public void syncPauseAndPlay(PlayerStatus playerStatus);
 }

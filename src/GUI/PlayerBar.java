@@ -1,6 +1,7 @@
 package GUI;
 
 import Listeners.SongPlayerAndGUIListener;
+import Listeners.SoundSliderListener;
 import Listeners.TimeProgressBarListener;
 import Music.Song;
 import PlayerPackage.PlayerStatus;
@@ -141,6 +142,7 @@ public class PlayerBar extends JPanel {
     }
 
     private class SongPlayer extends JPanel implements SongPlayerAndGUIListener {
+
         private JSlider  soundSlider;
         private JProgressBar timeProgress;
         private JLabel pauseAndPlay;
@@ -151,6 +153,7 @@ public class PlayerBar extends JPanel {
         private SongPlayerAndGUIListener songPlayerAndGUIListener = null;
         private final int timeProgressMax = 5000;
         private TimeProgressBarListener timeProgressListener;
+        private SoundSliderListener soundSliderListener;
 
         public SongPlayer() {
             super();
@@ -161,15 +164,16 @@ public class PlayerBar extends JPanel {
             setBackground(Essentials.getColor("heavy grey"));
 
             timeProgress = new JProgressBar(0,0,timeProgressMax);
-            timeProgress.setPreferredSize(new Dimension(900, 15));
+            timeProgress.setPreferredSize(new Dimension(900, 5));
             timeProgress.setBackground(Essentials.getColor("heavy grey"));
             timeProgress.setValue(0);
-            addTimeProgressListener();
+            addTimeProgressMouseListener();
 
 
-            soundSlider = new JSlider(0, 100, 50);
+            soundSlider = new JSlider(0, 100, 100);
             soundSlider.setBackground(Essentials.getColor("heavy grey"));
             soundSlider.setPreferredSize(new Dimension(100, 15));
+            addSoundSliderMouseListener();
 
             pauseAndPlay = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon pauseImg = Essentials.imageProvider(".\\pics\\Play.png", 40, 40);
@@ -182,12 +186,12 @@ public class PlayerBar extends JPanel {
                         case PAUSED:
                             pauseAndPlay.setIcon(Essentials.imageProvider(".\\pics\\Pause.png", 40, 40));
                             playerStatus = PlayerStatus.PLAYING;
-                            songPlayerAndGUIListener.sinkPauseAndPlay(playerStatus);
+                            songPlayerAndGUIListener.syncPauseAndPlay(playerStatus);
                             break;
                         case PLAYING:
                             pauseAndPlay.setIcon(Essentials.imageProvider(".\\pics\\Play.png", 40, 40));
                             playerStatus = PlayerStatus.PAUSED;
-                            songPlayerAndGUIListener.sinkPauseAndPlay(playerStatus);
+                            songPlayerAndGUIListener.syncPauseAndPlay(playerStatus);
                             break;
                     }
                 }
@@ -268,50 +272,41 @@ public class PlayerBar extends JPanel {
         }
 
         @Override
-        public void sinkSongWithGUI(double percentage) {
+        public void syncSongWithGUI(double percentage) {
             setTimeProgressValue((int) (percentage * timeProgressMax));
 //            System.out.println("PER:"+percentage);
         }
 
         //Down: It must stay empty. doesn't have any use.
         @Override
-        public void sinkPauseAndPlay(PlayerStatus playerStatus) {
+        public void syncPauseAndPlay(PlayerStatus playerStatus) {
         }
 
-        private void addTimeProgressListener() {
-//            timeProgress.addChangeListener(new ChangeListener() {
-//                @Override
-//                public void stateChanged(ChangeEvent e) {
-//                    timeProgressListener.seekToFrame(((double) timeProgress.getValue()/timeProgressMax));
-//                    System.out.println(timeProgress.getValue());
-//                }
-//            });
+        private void addTimeProgressMouseListener() {
             timeProgress.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseReleased(e);
-                    int v = timeProgress.getValue();
-//                    jlabel.setText("----"+v);
-
-                    //Retrieves the mouse position relative to the component origin.
                     int mouseX = e.getX();
-
-                    //Computes how far along the mouse is relative to the component width then multiply it by the progress bar's maximum value.
                     int progressBarVal = (int)Math.round(((double)mouseX / (double)timeProgress.getWidth()) * timeProgress.getMaximum());
-
-                    timeProgress.setValue(progressBarVal);
-                    System.out.println("ASDLASD:"+(double) progressBarVal/timeProgressMax);
+                    timeProgress.setValue(Math.round(e.getX()));
                     timeProgressListener.seekToFrame((double)progressBarVal/timeProgressMax);
-
+//                    System.out.println(timeProgressMax+" "+timeProgress.getMaximum());
                 }
             });
-//            timeProgress.addChangeListener(new ChangeListener() {
-//                @Override
-//                public void stateChanged(ChangeEvent e) {
-//                    timeProgressListener.seekToFrame((double) timeProgress.getValue() / timeProgressMax);
-//                    System.out.println((double) timeProgress.getValue() / timeProgressMax);
-//                }
-//            });
+        }
+        private void addSoundSliderMouseListener()
+        {
+            soundSlider.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    super.mouseClicked(e);
+                    int value=(int) Math.round((double)e.getX()/soundSlider.getWidth()*soundSlider.getMaximum());
+                    soundSlider.setValue(value);
+                    soundSliderListener.setVolume((float) value/soundSlider.getMaximum());
+//                    System.out.println((float) value/soundSlider.getMaximum());
+            }
+            });
         }
     }
 
@@ -330,6 +325,9 @@ public class PlayerBar extends JPanel {
 
     public void setTimeSliderListener(TimeProgressBarListener listener) {
         songPlayer.timeProgressListener = listener;
+    }
+    public void setSoundSliderListener(SoundSliderListener listener){
+        songPlayer.soundSliderListener = listener;
     }
     ///////////////////////////////PlayerBar class
 //    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)

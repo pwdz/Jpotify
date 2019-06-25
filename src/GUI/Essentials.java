@@ -11,7 +11,7 @@ public class Essentials {
             case "grey":
                 return new Color(138, 138, 117);
             case "heavy grey":
-                return new Color(50, 50, 40);
+                return new Color(100, 50, 40);
             case "blue":
                 return new Color(12, 12, 100);
             case "red":

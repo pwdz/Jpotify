@@ -29,6 +29,7 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.decoder.SampleBuffer;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.FactoryRegistry;
+import javazoom.jl.player.JavaSoundAudioDevice;
 
 /**
  * a hybrid of javazoom.jl.player.Player tweeked to include <code>play(startFrame, endFrame)</code>
@@ -239,4 +240,50 @@ public class AdvancedPlayer
 		listener.playbackFinished(createEvent(PlaybackEvent.STOPPED));
 		close();
 	}
+	/*public boolean setGain(float newGain) {
+		if (audio instanceof JavaSoundAudioDevice) {
+			System.out.println("InstanceOf");
+			JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) audio;
+			try {
+				jsAudio.write(null, 0, 0);
+			} catch (JavaLayerException ex) {
+				ex.printStackTrace();
+			}
+			return jsAudio.setLineGain(newGain);
+		}
+		return false;
+	}*/
+//	public boolean setGain(float newGain) {
+//		if (audio instanceof JavaSoundAudioDevice) {
+//			System.out.println("InstanceOf");
+//			JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) audio;
+//			try {
+//				jsAudio.write(null, 0, 0);
+//			} catch (JavaLayerException ex) {
+//				ex.printStackTrace();
+//			}
+//			return jsAudio.setLineGain(newGain);
+//		}
+//		return false;
+//	}
+
+	public void setVol(float value){
+		if(this.audio instanceof JavaSoundAudioDevice){
+			JavaSoundAudioDevice audioDevice = (JavaSoundAudioDevice) audio;
+			audioDevice.setLineGain(value);
+		}
+	}
+//	public void setGain(float newGain) {
+//		if (audio instanceof JavaSoundAudioDevice) {
+//			System.out.println("InstanceOf");
+//			JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) audio;
+//			try {
+//				jsAudio.write(null, 0, 0);
+//			} catch (JavaLayerException ex) {
+//				ex.printStackTrace();
+//			}
+//			return jsAudio.setLineGain(newGain);
+//		}
+//		return false;
+//	}
 }

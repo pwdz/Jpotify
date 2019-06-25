@@ -2,6 +2,7 @@ package GUI;
 
 import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.SongPlayerAndGUIListener;
+import Listeners.SoundSliderListener;
 import Listeners.TimeProgressBarListener;
 
 import javax.swing.*;
@@ -41,6 +42,7 @@ public class MainFrame {
         headerPanel = new HeaderGUI();
 
         panel2.setOpaque(true);
+//        panel2.setPreferredSize(new Dimension(1000,1000));
         panel2.setBackground(new Color(30, 30, 30));
 
         friendsActivityPanel = new FriendsActivity();
@@ -107,6 +109,10 @@ public class MainFrame {
     public void setTimeSliderListener(TimeProgressBarListener listener)
     {
         playerBar.setTimeSliderListener(listener);
+    }
+    public void setSoundSliderListener(SoundSliderListener listener)
+    {
+        playerBar.setSoundSliderListener(listener);
     }
 
 
