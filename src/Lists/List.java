@@ -19,7 +19,10 @@ import java.util.Collections;
             setTotalTime();
 
         }
-
+        public void addSong(String path){
+            songPath.add(path);
+            setTotalTime();
+        }
         public String getName()
         {
             return name;
@@ -76,6 +79,7 @@ import java.util.Collections;
         songPath.add(path);
     }
     public void setTotalTime(){
+            totalTime=0;
             Song song;
         for (String path: songPath) {
             try {

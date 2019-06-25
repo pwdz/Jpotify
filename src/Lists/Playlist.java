@@ -12,11 +12,10 @@ public class Playlist extends List {
         return isRemovable;
     }
 
-    public void addSong(String path){
-        songPath.add(path);
-    }
+
     public void removeSong(String path){
         songPath.remove(path);
+        setTotalTime();
     }
     public void changeOrder(String path ,int newPlace){
         int index=songPath.indexOf(path);

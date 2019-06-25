@@ -14,6 +14,7 @@ public class  Album extends List {
             artwork=song.getArtwork();
 
     }
+    @Override
     public void addSong(String path){
         if(songPath.size()==0){
             Song song = null;
@@ -25,6 +26,8 @@ public class  Album extends List {
             setArtwork(song);
         }
         songPath.add(path);
+
+        setTotalTime();
     }
 
 }
