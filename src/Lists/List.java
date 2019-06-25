@@ -1,10 +1,11 @@
 package Lists;
 import Music.Song;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-    public class List {
+    public class List implements Serializable {
         protected ArrayList<String> songPath;
         protected String name;
         protected byte[] artwork;
