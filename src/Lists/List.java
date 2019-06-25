@@ -72,6 +72,7 @@ import java.util.Collections;
         return songPath;
     }
     public void setTotalTime(){
+            totalTime=0;
             Song song;
         for (String path: songPath) {
             try {
