@@ -78,11 +78,11 @@ public class ListDisplayer extends JPanel {
 //        jTable.add(js);
         js.setBackground(Essentials.getColor("near black"));
 
-        JLabel nothing= Essentials.labelMaker("", "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
+        JLabel nothing= Essentials.labelMaker("", "heavy grey", WIDTH, 50, new Font("Serif", Font.PLAIN, 20), "grey");
         jTable.setDragEnabled(true);
-        jTable.setRowHeight(20);
+        jTable.setRowHeight(40);
         jTable.setTableHeader(null);
-
+        jTable.setFont(new Font("Serif", Font.PLAIN, 15));
         panel2.add(js,BorderLayout.CENTER);
         panel1.setBackground(Essentials.getColor("heavy grey"));
         panel3.add(nothing,BorderLayout.NORTH);
@@ -248,8 +248,10 @@ public class ListDisplayer extends JPanel {
         JLabel nothing= Essentials.labelMaker("", "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
         panel1.add(nothing);
         panel1.add(numberAndTime);
-        //button
-
+//        JButton playButton=new JButton();
+//        playButton.setIcon(Essentials.imageProvider("./pics/Play.png",15,15));
+//        playButton.setForeground(Essentials.getColor("heavy grey"));
+//        panel1.add(playButton);
     }
 
 /*    public static void main(String[] args) {
