@@ -18,7 +18,7 @@ public class LibrarySong extends Playlist {
                 song=new Song(path);
                 found=false;
                 for (int i = 0; i <albums.size() && !found; i++) {
-                    if(song.getAlbum()==albums.get(i).getName()){
+                    if(song.getAlbum().equals(albums.get(i).getName())){
                         albums.get(i).addSong(song.getPath());
                         found=true;
                     }
@@ -37,3 +37,4 @@ public class LibrarySong extends Playlist {
 
 
 }
+
