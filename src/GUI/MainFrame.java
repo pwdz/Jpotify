@@ -21,7 +21,7 @@ public class MainFrame implements LibraryChangeListListener {
     private GridBagConstraints gbc;
     private ListDisplayer listDisplayer;
 
-    public MainFrame() {
+    public MainFrame(List list) {
 //        Song song = null;
 //        try {
 //            song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
@@ -34,7 +34,7 @@ public class MainFrame implements LibraryChangeListListener {
 //        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
 //        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
 //        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-        listDisplayer = new ListDisplayer();
+        listDisplayer = new ListDisplayer(list);
         //set JFrame's default properties
 //        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2 - 100);
@@ -86,6 +86,7 @@ public class MainFrame implements LibraryChangeListListener {
 //
         gbc.gridx = 1;
         gbc.gridy = 1;
+//        JPanel fakePanel=new JPanel();
         panel.add(listDisplayer, gbc);
 
         gbc.weighty = 0;
@@ -162,11 +163,16 @@ public class MainFrame implements LibraryChangeListListener {
     @Override
     public void updateCenter(List list) {
         System.out.println("pppp:"+list.getName());
+        if(list instanceof LibrarySong)
+            System.out.println("dembele");
 //        listDisplayer = new ListDisplayer(list);
+//        if()
         panel.remove(listDisplayer);
         panel.revalidate();
         panel.repaint();
         listDisplayer = new ListDisplayer(list);
+        System.out.println("mosaaaaaaaaaaaaa");
         panel.add(listDisplayer, gbc);
+//        panel.repaint();
     }
 }

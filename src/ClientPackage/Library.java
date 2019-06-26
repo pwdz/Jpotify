@@ -21,14 +21,21 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     private LibrarySong songs;
     private LibraryListenerToPlaylistBar libraryListenerToPlaylistBar;
     private List currentList;
-    private LibraryChangeListListener libraryChangeListListener;
+    public LibraryChangeListListener libraryChangeListListener;
 
     //    private ArrayList<Song> songs;
-    public Library() {
-        lists = new ArrayList<>();
-        songs = new LibrarySong("Songs", "All songs", imageConverterToByteCode(".\\pics\\Music.png"));
-        favouriteSongs = new FavouriteSongs("Favourite Songs", "", imageConverterToByteCode(".\\pics\\Favourite2.png"));
-        sharedPlaylist = new SharedPlaylist("Shared playlist", "", imageConverterToByteCode(".\\pics\\Shared.png"));
+    public Library(ArrayList<List> lists) {
+        if (lists == null) {
+            this.lists = new ArrayList<>();
+            songs = new LibrarySong("Songs", "All songs", imageConverterToByteCode(".\\pics\\Music.png"));
+            favouriteSongs = new FavouriteSongs("Favourite Songs", "", imageConverterToByteCode(".\\pics\\Favourite2.png"));
+            sharedPlaylist = new SharedPlaylist("Shared playlist", "", imageConverterToByteCode(".\\pics\\Shared.png"));
+
+        }
+        else
+        {
+            
+        }
         currentList = songs;
 //        libraryChangeListListener.updateCenter(currentList);
     }
@@ -77,6 +84,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
         switch (listType) {
             case LibrarySong://Songs
                 currentList = songs;
+                System.out.println("babaaaaaaaaaaaaaa");
                 break;
             case FavouriteSong://Favourite Songs
                 currentList = favouriteSongs;
@@ -87,6 +95,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
                 break;
             case Album://Albums
                 //code here
+                System.out.println("pasha");
                 break;
             case Playlist:
                 System.out.println("~~~~~~~~~");
@@ -100,14 +109,14 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     }
 
     private Playlist searchForPlaylist(String playlistName) {
-        System.out.println("PlaylistName:"+playlistName);
+        System.out.println("PlaylistName:" + playlistName);
         for (List list : lists) {
-            System.out.println("N:"+list.getName());
+            System.out.println("N:" + list.getName());
             if (list instanceof Playlist) {
                 if (((Playlist) list).getName().equals(playlistName))
                     if (((Playlist) list).isRemovable())//if removable is true then it's not Fav and Shared playlist.
                     {
-                        System.out.println("000000"+list.getName());
+                        System.out.println("000000" + list.getName());
                         return (Playlist) list;
                     }
             }
@@ -115,8 +124,11 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
         return null;
     }
 
-    public void setLibraryChangeListListener(LibraryChangeListListener listener)
-    {
+    public void setLibraryChangeListListener(LibraryChangeListListener listener) {
         libraryChangeListListener = listener;
+    }
+
+    public LibrarySong getSongs() {
+        return songs;
     }
 }

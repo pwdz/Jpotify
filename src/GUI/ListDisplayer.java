@@ -23,7 +23,7 @@ public class ListDisplayer extends JPanel {
     private JPanel panel1=new JPanel();
     private DefaultTableModel defaultTableModel;
     public ListDisplayer(List list){
-
+//        System.out.println("ESAAAAAAA"+list.getName());
         this.setVisible(true);
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.list=list;
@@ -252,52 +252,6 @@ public class ListDisplayer extends JPanel {
         JLabel nothing= Essentials.labelMaker("", "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
         panel1.add(nothing);
         panel1.add(numberAndTime);
-//        JButton playButton=new JButton();
-//        playButton.setIcon(Essentials.imageProvider("./pics/Play.png",15,15));
-//        playButton.setForeground(Essentials.getColor("heavy grey"));
-//        panel1.add(playButton);
     }
 
-/*    public static void main(String[] args) {
-        Song song = null;
-        try {
-            song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        FavouriteSongs list=new FavouriteSongs("the thrill of it all","",song.getArtwork());
-        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-//        list.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//        list.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
-
-
-        JFrame jFrame=new JFrame();
-        jFrame.setSize(new Dimension(1000, 500));
-        jFrame.setVisible(true);
-        ListDisplayer listDisplayer=new ListDisplayer(list);
-        listDisplayer.setVisible(true);
-        jFrame.add(listDisplayer,BorderLayout.CENTER);
-
-
-
-    }*/
 }

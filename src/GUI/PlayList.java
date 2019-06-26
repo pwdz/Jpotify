@@ -1,14 +1,11 @@
 package GUI;
 
-import Listeners.AddPlaylistListener;
 import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.ListGUIListener;
 import Lists.ListType;
 import Lists.Playlist;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,18 +18,18 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar {
     private JLabel songs, albums, playlistLabel;
     private JLabel favouriteSongs, sharedPlaylist;
     private JLabel newPlaylist, newSong;
-    //    private JList<String> playlist;
-//    private DefaultListModel<String> l;
     private ArrayList<JLabel> playlistsNames;
     private AddPlaylist addPlaylist;
     private ChooseSong chooseSong;
     private static final int WIDTH = 250, HEIGHT = 30;
     private ListGUIListener listGUIListener;
+    GridBagConstraints gb = new GridBagConstraints();
 
     public PlayList() {
         super();
+        gb.anchor = GridBagConstraints.NORTHWEST;
+
         addPlaylist = new AddPlaylist();
-//        addPlaylist.setVisible(false);
 
         chooseSong = new ChooseSong();
 
@@ -96,15 +93,17 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar {
 //        jScrollPane.setPreferredSize(new Dimension(WIDTH, 0));
 //        jScrollPane.setVisible(true);
 //        add(jScrollPane, gbc);
-        playlistPanel = new JPanel();
+        playlistPanel = new JPanel(new GridBagLayout());
         playlistPanel.setBackground(Essentials.getColor("heavy grey"));
-        playlistsNames=new ArrayList<>();
+        playlistsNames = new ArrayList<>();
         arrangePlaylists();
 
         gbc.gridy++;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1;
-        add(playlistPanel, gbc);
+        JScrollPane js = new JScrollPane(playlistPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        js.setPreferredSize(new Dimension(WIDTH, 0));
+        add(js, gbc);
 //////////////////////////////////////////////////////////////////////
         newPlaylist = Essentials.labelMaker("[+]Add Playlist", "grey", WIDTH, HEIGHT);
         newSong = Essentials.labelMaker("[+]Add new song", "grey", WIDTH, HEIGHT);
@@ -172,7 +171,7 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar {
 
     @Override
     public void addNewPlaylist(Playlist playlist) {
-        playlistPanel.add(Essentials.labelMaker(playlist.getName(),"red",WIDTH,HEIGHT));
+        playlistsNames.add(Essentials.labelMaker(playlist.getName(), "heavy grey", WIDTH, HEIGHT));
         arrangePlaylists();
     }
 
@@ -190,49 +189,41 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar {
                 super.mouseClicked(e);
                 if (label.equals(songs)) {
                     listGUIListener.listClicked(ListType.LibrarySong, "");
-                    System.out.println(ListType.LibrarySong.toString());
+//                    System.out.println("dafuk");
                 } else if (label.equals(favouriteSongs)) {
                     listGUIListener.listClicked(ListType.FavouriteSong, "");
-
-                    System.out.println(ListType.FavouriteSong.toString());
+//                    System.out.println(ListType.FavouriteSong.toString());
                 } else if (label.equals(sharedPlaylist))
                     listGUIListener.listClicked(ListType.SharedPlaylist, "");
                 else if (label.equals(albums))
                     listGUIListener.listClicked(ListType.Album, "");
-                else
-                    listGUIListener.listClicked(ListType.Playlist,label.getName());
+                else {
+                    listGUIListener.listClicked(ListType.Playlist, label.getText());
+//                    System.out.println("{}"+label.getName());
+                }
             }
         });
     }
-//        } else//for JList which has Playlists
-//        {
-//            playlist.addListSelectionListener(new ListSelectionListener() {
-//                @Override
-//                public void valueChanged(ListSelectionEvent e) {
-//                    listGUIListener.listClicked(ListType.Playlist, playlist.getSelectedValue());
-
-//            });
-//        }
-
 
     private void arrangePlaylists() {
-        playlistPanel.setLayout(new GridBagLayout());
-//        playlistPanel.removeAll();
+        playlistPanel.removeAll();
         playlistPanel.repaint();
         playlistPanel.revalidate();
-//        playlistsNames.add(Essentials.labelMaker("a","red",WIDTH,HEIGHT));
-//                playlistsNames.add(Essentials.labelMaker("b","red",WIDTH,HEIGHT));
-//        playlistPanel.setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        System.out.println(playlistsNames.size());
+        gb.gridx = 0;
+        gb.gridy = 0;
         for (JLabel label : playlistsNames) {
-            playlistPanel.add(label, gbc);
-            gbc.gridy++;
+            mouseEnterAndExit(label,"black","heavy grey");
+            addListGUIListenerToComponents(label);
+            playlistPanel.add(label,gb);
+            gb.gridy++;
         }
+        gb.weighty=1;
+        gb.fill = GridBagConstraints.VERTICAL;
+        playlistPanel.add(Essentials.labelMaker("","heavy grey",WIDTH,0),gb);
+        gb.weighty=0;
+        gb.fill=GridBagConstraints.HORIZONTAL;
+
     }
 
 }
