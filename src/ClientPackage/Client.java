@@ -1,6 +1,7 @@
 package ClientPackage;
 
 import Lists.List;
+import Lists.ListType;
 
 public class Client {
     private String username;
@@ -14,5 +15,9 @@ public class Client {
     public Library getLibrary()
     {
         return library;
+    }
+    public void activateMainFrameCenter()
+    {
+        library.listClicked(ListType.LibrarySong,"");
     }
 }

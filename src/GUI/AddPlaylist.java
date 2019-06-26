@@ -48,6 +48,7 @@ public class AddPlaylist extends JFrame {
         fileChooser = new JFileChooser();
         fileChooser.setSize(new Dimension(10, 12));
         fileChooser.setControlButtonsAreShown(false);
+        fileChooser.setSelectedFile(new File(""));
 
         JLabel title = Essentials.labelMaker("Create Playlist", "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 30), "grey");
 
@@ -105,7 +106,7 @@ public class AddPlaylist extends JFrame {
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!name.getText().equals("") && !fileChooser.getSelectedFile().getAbsolutePath().equals("")) {
+                if(!name.getText().equals("") && !String.valueOf(fileChooser.getSelectedFile()).equals("")) {
                     addPlaylistListener.makePlaylist(name.getText(), description.getText(), fileChooser.getSelectedFile().getAbsolutePath());
                     name.setText("");
                     description.setText("");

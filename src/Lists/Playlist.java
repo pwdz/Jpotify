@@ -6,6 +6,7 @@ public class Playlist extends List {
     public Playlist(String name,String description,byte[] artwork){
         super(name,description);
         this.artwork=artwork;
+        isRemovable=true;
     }
 
     public boolean isRemovable() {

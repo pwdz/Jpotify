@@ -152,7 +152,7 @@ public class PlayerBar extends JPanel {
         private JLabel shuffle;
         private PlayerStatus playerStatus = PlayerStatus.PAUSED;
         private SongPlayerAndGUIListener songPlayerAndGUIListener = null;
-        private final int timeProgressMax = 5000;
+        private final int timeProgressMax = 100;
         private TimeProgressBarListener timeProgressListener;
         private SoundSliderListener soundSliderListener;
 
@@ -290,7 +290,7 @@ public class PlayerBar extends JPanel {
                     super.mouseReleased(e);
                     int mouseX = e.getX();
                     int progressBarVal = (int)Math.round(((double)mouseX / (double)timeProgress.getWidth()) * timeProgress.getMaximum());
-                    timeProgress.setValue(Math.round(e.getX()));
+                    timeProgress.setValue(Math.round(progressBarVal));
                     timeProgressListener.seekToFrame((double)progressBarVal/timeProgressMax);
 //                    System.out.println(timeProgressMax+" "+timeProgress.getMaximum());
                 }

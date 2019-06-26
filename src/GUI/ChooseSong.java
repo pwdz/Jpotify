@@ -43,6 +43,7 @@ public class ChooseSong extends JFrame {
         fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
         fileChooser.setControlButtonsAreShown(false);
+        fileChooser.setSelectedFile(new File(""));
 
         panel1.setBackground(Essentials.getColor("heavy grey"));
         panel2.setBackground(Essentials.getColor("heavy grey"));
@@ -68,14 +69,13 @@ public class ChooseSong extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (!fileChooser.getSelectedFile().equals(null))
-                    if (!fileChooser.getSelectedFile().getAbsolutePath().equals("")) {
-                        System.out.println("!!!!!!!!!!!!!!!:" + String.valueOf(fileChooser.getSelectedFile()));
-                        chooseSongListener.addSongToLibrary(String.valueOf(fileChooser.getSelectedFile()));
-                        fileChooser.setSelectedFile(new File(""));
+                if (!String.valueOf(fileChooser.getSelectedFile()).equals("")) {
+                    System.out.println("!!!!!!!!!!!!!!!:" + String.valueOf(fileChooser.getSelectedFile())+"!!");
+                    chooseSongListener.addSongToLibrary(String.valueOf(fileChooser.getSelectedFile()));
+                    fileChooser.setSelectedFile(new File(""));
 //                    fileChooser
-                        dispose();
-                    }
+                    dispose();
+                }
             }
         });
     }

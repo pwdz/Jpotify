@@ -1,10 +1,7 @@
 package GUI;
 
-import Listeners.LibraryListenerToPlaylistBar;
-import Listeners.SongPlayerAndGUIListener;
-import Listeners.SoundSliderListener;
-import Listeners.TimeProgressBarListener;
-import Lists.FavouriteSongs;
+import Listeners.*;
+import Lists.*;
 import Lists.List;
 import Music.Song;
 
@@ -12,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
-public class MainFrame {
+public class MainFrame implements LibraryChangeListListener {
 
     private JFrame mainFrame;
     private JPanel panel, panel2;
@@ -23,21 +20,25 @@ public class MainFrame {
     private static final int HEIGHT = 920, WIDTH = 1500;
     private GridBagConstraints gbc;
     private ListDisplayer listDisplayer;
+
     public MainFrame() {
-        Song song = null;
-        try {
-            song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        FavouriteSongs list=new FavouriteSongs("the thrill of it all","",song.getArtwork());
-        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-                list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-        listDisplayer = new ListDisplayer(list);
+//        Song song = null;
+//        try {
+//            song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        SharedPlaylist list = new SharedPlaylist("the thrill of it all", "", song.getArtwork());
+//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+        listDisplayer = new ListDisplayer();
         //set JFrame's default properties
 //        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2 - 100);
-        this.mainFrame = new JFrame("Spotify");
+        this.mainFrame = new JFrame("Jpotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setSize(WIDTH, HEIGHT);
 
@@ -94,6 +95,30 @@ public class MainFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(playerBar, gbc);
         mainFrame.add(panel);
+
+//        gbc.gridy=1;
+//        gbc.gridx=1;
+//        gbc.weighty=1;
+//        gbc.weightx=0;
+//        gbc.fill =  GridBagConstraints.BOTH;
+//        panel.remove(listDisplayer);
+//        panel.revalidate();
+//        panel.repaint();
+//        mainFrame.repaint(10,10,1000,1000);
+//        mainFrame.setView//
+//        panel.add(listDisplayer,gbc);
+//        panel.revalidate();
+//        panel.repaint();
+
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+
         mainFrame.setVisible(true);
     }
 
@@ -104,30 +129,44 @@ public class MainFrame {
     public SongPlayerAndGUIListener getTimeSlider() {
         return playerBar.getSongPlayerTypeListener();
     }
-    public AddPlaylist getAddPlaylist()
-    {
+
+    public AddPlaylist getAddPlaylist() {
         return playListPanel.getAddPlaylist();
     }
-    public ChooseSong getChooseSong()
-    {
+
+    public ChooseSong getChooseSong() {
         return playListPanel.getChooseSong();
     }
-//
+
+    //
 //     public static void main(String[] args) {
 //        MainFrame mainFrame = new MainFrame();
 //    }
-    public LibraryListenerToPlaylistBar getPlayListPanel()
-    {
+    public LibraryListenerToPlaylistBar getPlayListPanel() {
         return playListPanel;
     }
-    public void setTimeSliderListener(TimeProgressBarListener listener)
-    {
+
+    public void setTimeSliderListener(TimeProgressBarListener listener) {
         playerBar.setTimeSliderListener(listener);
     }
-    public void setSoundSliderListener(SoundSliderListener listener)
-    {
+
+    public void setSoundSliderListener(SoundSliderListener listener) {
         playerBar.setSoundSliderListener(listener);
     }
 
+    public void setListGUIListener(ListGUIListener listener) {
+        playListPanel.setListGUIListener(listener);
+    }
 
+
+    @Override
+    public void updateCenter(List list) {
+        System.out.println("pppp:"+list.getName());
+//        listDisplayer = new ListDisplayer(list);
+        panel.remove(listDisplayer);
+        panel.revalidate();
+        panel.repaint();
+        listDisplayer = new ListDisplayer(list);
+        panel.add(listDisplayer, gbc);
+    }
 }

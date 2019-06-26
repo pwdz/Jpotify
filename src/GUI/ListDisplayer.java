@@ -72,7 +72,7 @@ public class ListDisplayer extends JPanel {
         jTable.setBackground(Essentials.getColor("heavy grey"));
         jTable.setForeground(Essentials.getColor("grey"));
         jTable.setGridColor(Essentials.getColor("heavy grey"));
-        JScrollPane js=new JScrollPane(jTable,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane js=new JScrollPane(jTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         js.setVisible(true);
 
 //        jTable.add(js);
@@ -98,9 +98,13 @@ public class ListDisplayer extends JPanel {
 //        Essentials.gridBagSetups(gridBagConstraints,0,5,15,15);
 //        this.add(panel2,gridBagConstraints);
        // this.add(panel1,BorderLayout.NORTH);
-       this.add(panel3,BorderLayout.NORTH);
-        this.add(panel2,BorderLayout.CENTER);
+       this.add(panel3,BorderLayout.CENTER);
+        this.add(panel2,BorderLayout.SOUTH);
 //        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+    }
+
+    public ListDisplayer() {
+
     }
 
     public void albumDisplaySetups(){
