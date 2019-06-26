@@ -2,6 +2,7 @@ package ClientPackage;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.swing.*;
 
 public class Library implements AddPlaylistListener, ChooseSongListener, ListGUIListener {
     private ArrayList<List> lists;
+    private ArrayList<Album> albums;
     private SharedPlaylist sharedPlaylist;
     private FavouriteSongs favouriteSongs;
     private LibrarySong songs;
@@ -26,10 +28,13 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     //    private ArrayList<Song> songs;
     public Library() {
         lists = new ArrayList<>();
-        songs = new LibrarySong("Songs", "All songs", imageConverterToByteCode(".\\pics\\Music.png"));
-        favouriteSongs = new FavouriteSongs("Favourite Songs", "", imageConverterToByteCode(".\\pics\\Favourite2.png"));
-        sharedPlaylist = new SharedPlaylist("Shared playlist", "", imageConverterToByteCode(".\\pics\\Shared.png"));
+        songs = new LibrarySong("Songs", "All songs", imageConverterToByteCode("./pics/Music.png"));
+        favouriteSongs = new FavouriteSongs("Favourite Songs", "", imageConverterToByteCode("./pics/Favourite2.png"));
+        sharedPlaylist = new SharedPlaylist("Shared playlist", "", imageConverterToByteCode("./pics/Shared.png"));
         currentList = songs;
+        lists.add(favouriteSongs);
+        lists.add(sharedPlaylist);
+        albums = songs.buildAlbums();
 //        libraryChangeListListener.updateCenter(currentList);
     }
 
@@ -100,14 +105,14 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     }
 
     private Playlist searchForPlaylist(String playlistName) {
-        System.out.println("PlaylistName:"+playlistName);
+        System.out.println("PlaylistName:" + playlistName);
         for (List list : lists) {
-            System.out.println("N:"+list.getName());
+            System.out.println("N:" + list.getName());
             if (list instanceof Playlist) {
                 if (((Playlist) list).getName().equals(playlistName))
                     if (((Playlist) list).isRemovable())//if removable is true then it's not Fav and Shared playlist.
                     {
-                        System.out.println("000000"+list.getName());
+                        System.out.println("000000" + list.getName());
                         return (Playlist) list;
                     }
             }
@@ -115,8 +120,31 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
         return null;
     }
 
-    public void setLibraryChangeListListener(LibraryChangeListListener listener)
-    {
+    public void setLibraryChangeListListener(LibraryChangeListListener listener) {
         libraryChangeListListener = listener;
+    }
+
+    public void refresh(String path) {
+        songs.changeOrder(path, 1);
+        Album albumFound=null;
+        Album arrayOfAlbum[]=(Album[])albums.toArray();
+        int index=0;
+            for (Album album : albums) {
+            if (album.getSongsPaths().contains(path)) {
+                    albumFound=album;
+                    index=albums.indexOf(album);
+            }
+            break;
+        }
+
+            for (int i = index; i>0; i--) {
+                arrayOfAlbum[i]=arrayOfAlbum[i-1];
+            }
+            albums=new ArrayList<>();
+            arrayOfAlbum[0]=albumFound;
+        for (int i = 0; i <arrayOfAlbum.length ; i++) {
+            albums.add(arrayOfAlbum[i]);
+        }
+
     }
 }
