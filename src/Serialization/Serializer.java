@@ -1,20 +1,17 @@
 package Serialization;
 
-import Lists.Album;
-import Lists.List;
+import Lists.*;
 
 import java.io.*;
 import java.util.ArrayList;
 
 public class Serializer {
 
-    public static void writeToFile(ArrayList<List> lists, String filePath) {
+    public static void writeToFile(ArrayList<List> lists,String filePath){
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(new File(filePath));
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            for (List list : lists) {
-                objectOutputStream.writeObject(list);
-            }
+            FileOutputStream fileOutputStream=new FileOutputStream(filePath);
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);
+           objectOutputStream.writeObject(lists);
 
             objectOutputStream.close();
             fileOutputStream.close();
@@ -24,35 +21,30 @@ public class Serializer {
             e.printStackTrace();
         }
     }
+    public static ArrayList<List> readFromFile(String filePath){
+        ArrayList<List> lists=null;
 
-    public static ArrayList<List> readFromFile(String filePath) {
         try {
-//            FileHan
-            ArrayList<List> lists = new ArrayList<>();
-            FileInputStream fileInputStream = null;
-            fileInputStream = new FileInputStream(new File(filePath));
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            boolean continues = true;
-            while (continues) {
-                List list = (List) objectInputStream.readObject();
-                if (list != null) {
-                    lists.add(list);
-                } else {
-                    continues = false;
-                }
-            }
-            return lists;
-        } catch (FileNotFoundException e) {
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
+            lists=(ArrayList<List>) objectInputStream.readObject();
+
+            } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return null;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
         }
-
+        return lists;
 
     }
+
+//    public static void main(String[] args) {
+//        ArrayList<List>lists=new ArrayList<>();
+//         LibrarySong songs = new LibrarySong("Songs", "All songs", imageConverterToByteCode(".\\pics\\Music.png"));
+//           FavouriteSongs favouriteSongs = new FavouriteSongs("Favourite Songs", "", imageConverterToByteCode(".\\pics\\Favourite2.png"));
+//            SharedPlaylist sharedPlaylist = new SharedPlaylist("Shared playlist", "", imageConverterToByteCode(".\\pics\\Shared.png"));
+//        lists.add(new LibrarySong("Songs",""));
+//    }
 }

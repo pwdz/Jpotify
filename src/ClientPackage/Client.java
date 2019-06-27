@@ -9,7 +9,7 @@ public class Client {
     private Library library;
     public Client(String username){
         this.username=username;
-        library=new Library(Serializer.readFromFile(".\\SaveFiles\\save.bin"));
+        library=new Library(Serializer.readFromFile(""));
 
     }
     public Library getLibrary()

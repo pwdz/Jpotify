@@ -36,13 +36,13 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
             this.lists.add(songs);
             this.lists.add(favouriteSongs);
             this.lists.add(sharedPlaylist);
-//            Serializer.writeToFile(this.lists,".\\SaveFiles\\save.bin");
+//            Serializer.writeToFile(this.lists,".\\SaveFiles\\saved.bin");
 
-       } else {//restore from file
+        } else {//restore from file
             songs = (LibrarySong) lists.get(0);
-            favouriteSongs = (FavouriteSongs)lists.get(1);
-            sharedPlaylist =  (SharedPlaylist) lists.get(2);
-            for(int i=3;i<lists.size();i++)
+            favouriteSongs = (FavouriteSongs) lists.get(1);
+            sharedPlaylist = (SharedPlaylist) lists.get(2);
+            for (int i = 3; i < lists.size(); i++)
                 this.lists.add(lists.get(i));
         }
         currentList = songs;
@@ -59,6 +59,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
         Playlist playlist = new Playlist(name, description, imageConverterToByteCode(artworkPath));
         if (!lists.contains(playlist)) {
             addList(playlist);
+//            Serializer.writeToFile(lists, ".\\SaveFiles\\saved.bin");
             libraryListenerToPlaylistBar.addNewPlaylist(playlist);
         }
 
@@ -68,6 +69,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     public void addSongToLibrary(String songPath) {
         if (!songs.getSongsPaths().contains(songPath)) {
             songs.addSong(songPath);
+//            Serializer.writeToFile(lists, ".\\SaveFiles\\saved.bin");
         }
 //        System.out.println(songPath);
     }
