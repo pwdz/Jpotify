@@ -1,4 +1,7 @@
 package Lists;
+import Music.Song;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Playlist extends List {
@@ -19,6 +22,7 @@ public class Playlist extends List {
         setTotalTime();
     }
     public void changeOrder(String path ,int newPlace){
+        newPlace--;
         int index=songPath.indexOf(path);
         String arrayOfPaths [] = new String[songPath.size()];
         for (int i = 0; i <songPath.size() ; i++) {
@@ -41,8 +45,9 @@ public class Playlist extends List {
         }
     }
 
-
+//
 //    public void changeOrderTest(int intChange ,int newPlace){
+//        newPlace--;
 //        ArrayList<Integer> integers=new ArrayList<>();
 //        for (Integer i = 0; i <11 ; i++) {
 //            integers.add(i);
@@ -74,12 +79,18 @@ public class Playlist extends List {
 //            System.out.println(integers.get(i));
 //        }
 //
-
+//
 //    }
-
+//
 //    public static void main(String[] args) {
-//        Playlist playlist=new Playlist("myPlaylist");
-//        playlist.changeOrderTest(4,7);
+//        try {
+//            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//            Playlist playlist=new Playlist("myPlaylist"," ",song.getArtwork());
+//            playlist.changeOrderTest(3,1);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
 //
 //    }
 }
