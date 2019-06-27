@@ -6,13 +6,23 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ClientSender implements Runnable{
     private OutputStream output;
     private ArrayList<String>friendsIPList;
+    private Timer timer;
     public ClientSender(OutputStream outputStream, ArrayList<String>friendsIPList) {
         this.output=outputStream;
         this.friendsIPList = friendsIPList;
+//        timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
     @Override

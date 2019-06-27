@@ -29,6 +29,12 @@ public class Serializer {
             ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
             lists=(ArrayList<List>) objectInputStream.readObject();
 
+            System.out.println("mind blowed"+lists.get(0)+"|size:|"+lists.size());
+
+            System.out.println("mind blowed"+lists.get(1)+"|size:|"+lists.size());
+
+            System.out.println("mind blowed"+lists.get(2)+"|size:|"+lists.size());
+
             } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

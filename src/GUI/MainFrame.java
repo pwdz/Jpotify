@@ -4,6 +4,7 @@ import Listeners.*;
 import Lists.*;
 import Lists.List;
 import Music.Song;
+import Serialization.Serializer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,24 +21,10 @@ public class MainFrame implements LibraryChangeListListener {
     private static final int HEIGHT = 920, WIDTH = 1500;
     private GridBagConstraints gbc;
     private ListDisplayer listDisplayer;
-
+    private CloseWindowListener closeWindowListener;
     public MainFrame(List list) {
-//        Song song = null;
-//        try {
-//            song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        SharedPlaylist list = new SharedPlaylist("the thrill of it all", "", song.getArtwork());
-//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+
         listDisplayer = new ListDisplayer(list);
-        //set JFrame's default properties
-//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-//        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2 - 100);
         this.mainFrame = new JFrame("Jpotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setSize(WIDTH, HEIGHT);
@@ -121,6 +108,19 @@ public class MainFrame implements LibraryChangeListListener {
         gbc.weighty = 1;
 
         mainFrame.setVisible(true);
+        mainFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+//                Serializer.writeToFile(); // inja goh hayi ke bayad bokhori ro benevis
+                closeWindowListener.windowClosed();
+                System.out.println(":|:|:|:|:|:|:|:|");
+                System.exit(0);
+            }
+        });
+    }
+    public void setCloseWindowListener(CloseWindowListener listener)
+    {
+        closeWindowListener =listener;
     }
 
     public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination) {
@@ -162,17 +162,10 @@ public class MainFrame implements LibraryChangeListListener {
 
     @Override
     public void updateCenter(List list) {
-        System.out.println("pppp:"+list.getName());
-        if(list instanceof LibrarySong)
-            System.out.println("dembele");
-//        listDisplayer = new ListDisplayer(list);
-//        if()
         panel.remove(listDisplayer);
         panel.revalidate();
         panel.repaint();
         listDisplayer = new ListDisplayer(list);
-        System.out.println("mosaaaaaaaaaaaaa");
         panel.add(listDisplayer, gbc);
-//        panel.repaint();
     }
 }

@@ -1,5 +1,7 @@
 package Music;
+
 import java.io.*;
+
 import Mp3agic.ID3v2;
 import Mp3agic.InvalidDataException;
 import Mp3agic.Mp3File;
@@ -17,17 +19,18 @@ public class Song {
     private byte artwork[];
     private int duration;
     private int numberOfFrames;
+
     public Song(String path) throws FileNotFoundException {
         this.path = path;
         file = new File(path);
 
         setMetaData();
         try {
-            mp3File=new Mp3File(path);
-            id3v2=mp3File.getId3v2Tag();
+            mp3File = new Mp3File(path);
+            id3v2 = mp3File.getId3v2Tag();
             setArtwork();
             setDuration();
-            numberOfFrames=mp3File.getFrameCount();
+            numberOfFrames = mp3File.getFrameCount();
         } catch (InvalidDataException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -57,13 +60,15 @@ public class Song {
     }
 
     public void setArtwork() throws InvalidDataException, IOException, UnsupportedTagException {
-        artwork=id3v2.getAlbumImage();
+        artwork = id3v2.getAlbumImage();
 
     }
-    public void setDuration(){
-       duration= (int) mp3File.getLengthInSeconds();
+
+    public void setDuration() {
+        duration = (int) mp3File.getLengthInSeconds();
 
     }
+
     public byte[] getArtwork() {
         return artwork;
     }
@@ -95,18 +100,20 @@ public class Song {
     public int getDuration() {
         return duration;
     }
-    public String songDurationToString(){
-        int seconds=duration%60;
-        int minutes=duration/60;
-        if (seconds>=10)
-        return minutes+":"+seconds;
+
+    public String songDurationToString() {
+        int seconds = duration % 60;
+        int minutes = duration / 60;
+        if (seconds >= 10)
+            return minutes + ":" + seconds;
         else
-            return minutes+":0"+seconds;
+            return minutes + ":0" + seconds;
 
     }
-    //       public static void main(String[] args) {
+//           public static void main(String[] args) {
 //        try {
-//            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
+//            Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
+//            new
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }

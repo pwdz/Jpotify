@@ -3,6 +3,7 @@ package GUI;
 import Lists.Album;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class DisplayAlbums extends JPanel {
         JPanel panel2=new JPanel();
         JPanel panel3=new JPanel();
         this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         panel2.setLayout(new BorderLayout());
         panel2.add(title,BorderLayout.CENTER);
         panel2.add(artworkLable,BorderLayout.WEST);
@@ -62,8 +64,8 @@ public class DisplayAlbums extends JPanel {
     public static void main(String[] args) {
         Album album1 = new Album("album1", "");
         Album album2 = new Album("album2", "");
-        album1.addSong("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-        album2.addSong("/Users/taratt/Downloads/2019-06-21 12.13.43.mp3");
+        album1.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
+        album2.addSong("C:/Users/acer/Music/01 I Found You _ Nilda's Story.mp3");
         ArrayList<Album> albums=new ArrayList<>();
         albums.add(album1);
         albums.add(album2);
