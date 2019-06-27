@@ -10,11 +10,9 @@ public class Serializer {
 
     public static void writeToFile(ArrayList<List> lists,String filePath){
         try {
-            FileOutputStream fileOutputStream=new FileOutputStream(new File(filePath));
+            FileOutputStream fileOutputStream=new FileOutputStream(filePath);
             ObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);
-            for (List list :lists) {
-               objectOutputStream.writeObject(list);
-            }
+           objectOutputStream.writeObject(lists);
 
             objectOutputStream.close();
             fileOutputStream.close();
@@ -25,31 +23,35 @@ public class Serializer {
         }
     }
     public static ArrayList<List> readFromFile(String filePath){
-        ArrayList<List> lists=new ArrayList<>();
-        FileInputStream fileInputStream= null;
-        try {
-            fileInputStream = new FileInputStream(new File(filePath));
-            ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
-            boolean continues=true;
-            while(continues){
-                List list=(List)objectInputStream.readObject();
-                if(list!=null){
-                    lists.add(list);
-                }
-                else
-                {
-                    continues=false;
-                }
-            }
+        ArrayList<List> lists=null;
 
-        } catch (FileNotFoundException e) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
+            lists=(ArrayList<List>) objectInputStream.readObject();
+
+            } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return lists;
 
-    }
+
+        return lists;
+}
+
+//    public static void main(String[] args) {
+//        ArrayList<List> lists=new ArrayList<>();
+//        List list=new List("fh","");
+//        List list1=new List("fhf","");
+//        lists.add(list);
+//        lists.add(list1);
+//        Serializer.writeToFile(lists,"./testFile.bin");
+//        ArrayList lists1=readFromFile("./testFile.bin");
+//        List listRead=(List)lists1.get(0);
+//        System.out.println(listRead.getName());
+//
+//    }
 }
