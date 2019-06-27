@@ -1,4 +1,6 @@
-package Network;
+package Network.Server;
+
+import Network.Linker;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

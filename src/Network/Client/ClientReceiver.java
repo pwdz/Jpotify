@@ -1,4 +1,4 @@
-package Network;
+package Network.Client;
 import java.io.InputStream;
 public class ClientReceiver implements Runnable{
     private InputStream inputStream;
