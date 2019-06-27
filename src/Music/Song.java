@@ -1,6 +1,7 @@
 package Music;
 
 import java.io.*;
+import java.nio.file.Files;
 
 import Mp3agic.ID3v2;
 import Mp3agic.InvalidDataException;
@@ -59,57 +60,69 @@ public class Song {
 
     }
 
-    public void setArtwork() throws InvalidDataException, IOException, UnsupportedTagException {
-        artwork = id3v2.getAlbumImage();
+    public void setArtwork() {
+        try {
+            artwork = id3v2.getAlbumImage();
+        } catch (Exception e) {
+            File artworkFile = new File(".\\pics\\Music2.JPG");
+            byte[] artworkByteCode;
+            try {
+                artworkByteCode = Files.readAllBytes(artworkFile.toPath());
+                artwork = artworkByteCode;
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
 
-    }
 
-    public void setDuration() {
-        duration = (int) mp3File.getLengthInSeconds();
+        }
 
-    }
+        public void setDuration () {
+            duration = (int) mp3File.getLengthInSeconds();
 
-    public byte[] getArtwork() {
-        return artwork;
-    }
+        }
 
-    public String getArtist() {
-        return artist;
-    }
+        public byte[] getArtwork () {
+            return artwork;
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public String getArtist () {
+            return artist;
+        }
 
-    public String getAlbum() {
-        return album;
-    }
+        public String getTitle () {
+            return title;
+        }
 
-    public File getFile() {
-        return file;
-    }
+        public String getAlbum () {
+            return album;
+        }
 
-    public String getPath() {
-        return path;
-    }
+        public File getFile () {
+            return file;
+        }
 
-    public int getNumberOfFrames() {
-        return numberOfFrames;
-    }
+        public String getPath () {
+            return path;
+        }
 
-    public int getDuration() {
-        return duration;
-    }
+        public int getNumberOfFrames () {
+            return numberOfFrames;
+        }
 
-    public String songDurationToString() {
-        int seconds = duration % 60;
-        int minutes = duration / 60;
-        if (seconds >= 10)
-            return minutes + ":" + seconds;
-        else
-            return minutes + ":0" + seconds;
+        public int getDuration () {
+            return duration;
+        }
 
-    }
+        public String songDurationToString () {
+            int seconds = duration % 60;
+            int minutes = duration / 60;
+            if (seconds >= 10)
+                return minutes + ":" + seconds;
+            else
+                return minutes + ":0" + seconds;
+
+        }
 //           public static void main(String[] args) {
 //        try {
 //            Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
@@ -120,7 +133,7 @@ public class Song {
 //
 //    }
 
-}
+    }
 
 
 

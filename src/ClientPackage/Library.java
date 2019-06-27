@@ -85,6 +85,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     public void addSongToLibrary(String songPath) {
         if (!songs.getSongsPaths().contains(songPath)) {
             songs.addSong(songPath);
+            albums = songs.buildAlbums();
         }
 //        System.out.println(songPath);
     }
@@ -107,6 +108,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
 
     @Override
     public void listClicked(ListType listType, String listName) {
+        int tag=1;
         switch (listType) {
             case LibrarySong://Songs
                 currentList = songs;
@@ -119,17 +121,24 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
                 currentList = sharedPlaylist;
                 break;
             case Album://Albums
+                if(listName.equals(""))
+                    tag=2;
+                else {
+                    tag = 1;
+                    currentList = searchForAlbum(listName);
+//                    System.out.println("yaaaaayyyaaaaaaaaaa");
+                }
+//                System.out.println("LISTCLICKED:"+albums.get(0).size());
                 //code here
                 break;
             case Playlist:
-//                System.out.println("~~~~~~~~~");
                 if (searchForPlaylist(listName) != null) {
                     currentList = searchForPlaylist(listName);
-//                    System.out.println("][][][][][][");
                 }
                 break;
         }
-        libraryChangeListListener.updateCenter(currentList);
+
+        libraryChangeListListener.updateCenter(currentList,tag,albums);
     }
 
     private Playlist searchForPlaylist(String playlistName) {
@@ -143,6 +152,15 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
                         return (Playlist) list;
                     }
             }
+        }
+        return null;
+    }
+    private Album searchForAlbum(String name)
+    {
+        for(Album album:albums)
+        {
+            if(album.getName().equals(name))
+                return album;
         }
         return null;
     }

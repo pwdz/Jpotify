@@ -24,6 +24,8 @@ public class Essentials {
                 return new Color(70, 40, 40);
             case "green":
                 return new Color(10, 100, 50);
+            case "light red":
+                return new Color(60,40,40);
             default:
                 return new Color(0, 0, 0);
 

@@ -34,7 +34,13 @@ public class ListDisplayer extends JPanel {
             playListDisplaySetups();
         }
         this.setBackground(Essentials.getColor("heavy grey"));
-        artworkImage = new ImageIcon(list.getArtwork());
+        try {
+            artworkImage = new ImageIcon(list.getArtwork());
+        }
+        catch (Exception e)
+        {
+            artworkImage = new ImageIcon("./pics/Music2.JPG");
+        }
         artworkImage = new ImageIcon(artworkImage.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH));
         JLabel artworkLable = new JLabel(artworkImage,JLabel.RIGHT);
         artworkLable.setPreferredSize(new Dimension(300,200));
@@ -48,10 +54,10 @@ public class ListDisplayer extends JPanel {
 
         JTable jTable=new JTable(defaultTableModel);
 //        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
- //      jTable.getColumnModel().getColumn(0).setPreferredWidth(10);
-//        jTable.getColumnModel().getColumn(1).setPreferredWidth(10);
-//        jTable.getColumnModel().getColumn(2).setPreferredWidth(10);
-//        jTable.getColumnModel().getColumn(3).setPreferredWidth(90);
+ //      jTable.getColumnModel().getColumn(0).setPreferheavy greyWidth(10);
+//        jTable.getColumnModel().getColumn(1).setPreferheavy greyWidth(10);
+//        jTable.getColumnModel().getColumn(2).setPreferheavy greyWidth(10);
+//        jTable.getColumnModel().getColumn(3).setPreferheavy greyWidth(90);
 //
 //        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         jTable.setEnabled(false);
@@ -67,8 +73,9 @@ public class ListDisplayer extends JPanel {
         panel2.setBackground(Essentials.getColor("heavy grey"));
         panel3.setBackground(Essentials.getColor("heavy grey"));
         artworkLable.setVisible(true);
-        panel3.setBackground(Essentials.getColor("heavy grey"));
+//        panel3.setBackground(Essentials.getColor("heavy grey"));
         artworkLable.setForeground(Essentials.getColor("heavy grey"));
+        artworkLable.setBackground(Essentials.getColor("heavy grey"));
         jTable.setBackground(Essentials.getColor("heavy grey"));
         jTable.setForeground(Essentials.getColor("grey"));
         jTable.setGridColor(Essentials.getColor("heavy grey"));
@@ -89,22 +96,9 @@ public class ListDisplayer extends JPanel {
         panel3.add(panel1,BorderLayout.CENTER);
         panel3.add(artworkLable,BorderLayout.WEST);
         this.setLayout(new BorderLayout());
-//        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
-//        this.setLayout(gridBagLayout);
-//        Essentials.gridBagSetups(gridBagConstraints,0,0,4,4);
-//        this.add(panel1,gridBagConstraints);
-//        Essentials.gridBagSetups(gridBagConstraints,5,0,3,3);
-//        this.add(panel3,gridBagConstraints);
-//        Essentials.gridBagSetups(gridBagConstraints,0,5,15,15);
-//        this.add(panel2,gridBagConstraints);
-       // this.add(panel1,BorderLayout.NORTH);
        this.add(panel3,BorderLayout.CENTER);
         this.add(panel2,BorderLayout.SOUTH);
 //        list.addSong("C:\\Users\\acer\\Music\\01 Honey.mp3");
-    }
-
-    public ListDisplayer() {
-
     }
 
     public void albumDisplaySetups(){

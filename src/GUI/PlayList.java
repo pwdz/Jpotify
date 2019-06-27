@@ -1,5 +1,6 @@
 package GUI;
 
+import Listeners.AlbumPanelListener;
 import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.ListGUIListener;
 import Lists.ListType;
@@ -11,7 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class PlayList extends JPanel implements LibraryListenerToPlaylistBar {
+public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , AlbumPanelListener {
     private GridBagConstraints gbc;
     private JPanel playlistPanel;
     private JLabel yourLibrary;
@@ -226,4 +227,9 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar {
 
     }
 
+    @Override
+    public void openAlbum(String name) {
+        listGUIListener.listClicked(ListType.Album,name);
+        System.out.println("name:"+name);
+    }
 }

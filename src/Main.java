@@ -1,11 +1,6 @@
 import ClientPackage.Client;
 import GUI.MainFrame;
-import Lists.LibrarySong;
-import Lists.List;
 import PlayerPackage.SongPlayer;
-import Serialization.Serializer;
-
-import java.util.ArrayList;
 
 public class Main {
     private Client client;

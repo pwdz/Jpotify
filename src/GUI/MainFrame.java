@@ -9,8 +9,9 @@ import Serialization.Serializer;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
-public class MainFrame implements LibraryChangeListListener {
+public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToMainframe{
 
     private JFrame mainFrame;
     private JPanel panel, panel2;
@@ -22,6 +23,9 @@ public class MainFrame implements LibraryChangeListListener {
     private GridBagConstraints gbc;
     private ListDisplayer listDisplayer;
     private CloseWindowListener closeWindowListener;
+    private boolean flag = true;
+    private DisplayAlbums displayAlbums;
+
     public MainFrame(List list) {
 
         listDisplayer = new ListDisplayer(list);
@@ -118,9 +122,9 @@ public class MainFrame implements LibraryChangeListListener {
             }
         });
     }
-    public void setCloseWindowListener(CloseWindowListener listener)
-    {
-        closeWindowListener =listener;
+
+    public void setCloseWindowListener(CloseWindowListener listener) {
+        closeWindowListener = listener;
     }
 
     public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination) {
@@ -161,11 +165,40 @@ public class MainFrame implements LibraryChangeListListener {
 
 
     @Override
-    public void updateCenter(List list) {
-        panel.remove(listDisplayer);
-        panel.revalidate();
-        panel.repaint();
-        listDisplayer = new ListDisplayer(list);
-        panel.add(listDisplayer, gbc);
+    public void updateCenter(List list, int tag, ArrayList<Album> albums) {
+
+        if (tag == 1) {
+            if (flag)
+                panel.remove(listDisplayer);
+            else
+                panel.remove(displayAlbums);
+            panel.revalidate();
+            panel.repaint();
+            listDisplayer = new ListDisplayer(list);
+            panel.add(listDisplayer, gbc);
+            flag = true;
+        } else {
+            if (flag)
+                panel.remove(listDisplayer);
+            else
+                panel.remove(displayAlbums);
+            panel.revalidate();
+            panel.repaint();
+            displayAlbums = new DisplayAlbums(albums);
+            displayAlbums.setAlbumPanelLinkerToMainframe(this);
+            displayAlbums.contniue();
+            panel.add(displayAlbums, gbc);
+            flag = false;
+        }
     }
+    public void setAlbumPanelListener(AlbumPanelListener listener)
+    {
+        displayAlbums.getAlbumPanel().setAlbumPanelListener(listener);
+    }
+
+    @Override
+    public void albumLabelMade(String name) {
+        setAlbumPanelListener(playListPanel);
+    }
+
 }
