@@ -21,7 +21,8 @@ import java.util.Collections;
 
         }
         public void addSong(String path){
-            songPath.add(path);
+            if(!songPath.contains(path))
+                songPath.add(path);
             setTotalTime();
         }
         public String getName()

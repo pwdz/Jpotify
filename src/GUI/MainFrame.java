@@ -4,6 +4,7 @@ import Listeners.*;
 import Lists.*;
 import Lists.List;
 import Music.Song;
+import PlayerPackage.SongPlayer;
 import Serialization.Serializer;
 
 import javax.swing.*;
@@ -25,9 +26,8 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
     private CloseWindowListener closeWindowListener;
     private boolean flag = true;
     private DisplayAlbums displayAlbums;
-
+    private ListDisplayerListener listDisplayerListener;
     public MainFrame(List list) {
-
         listDisplayer = new ListDisplayer(list);
         this.mainFrame = new JFrame("Jpotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -122,7 +122,10 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
             }
         });
     }
-
+    public void setInitialListDisplayerChangeSongListener()
+    {
+        listDisplayer.setListDisplayerChangeSongListener(listDisplayerListener);
+    }
     public void setCloseWindowListener(CloseWindowListener listener) {
         closeWindowListener = listener;
     }
@@ -175,6 +178,7 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
             panel.revalidate();
             panel.repaint();
             listDisplayer = new ListDisplayer(list);
+            listDisplayer.setListDisplayerChangeSongListener(listDisplayerListener);
             panel.add(listDisplayer, gbc);
             flag = true;
         } else {
@@ -199,6 +203,14 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
     @Override
     public void albumLabelMade(String name) {
         setAlbumPanelListener(playListPanel);
+    }
+    public void setListDisplayerChangeSongListener(ListDisplayerListener listener)
+    {
+        listDisplayerListener = listener;
+    }
+    public SongPlayerChangeSongListener getPlayerBar()
+    {
+        return playerBar;
     }
 
 }

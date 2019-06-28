@@ -9,14 +9,15 @@ public class Main {
 
     public Main() {
         client = new Client("ali");
+        songPlayer = new SongPlayer();
         mainFrame = new MainFrame(client.getLibrary().getSongs());
-        songPlayer = new SongPlayer("C:\\Users\\acer\\Music\\01 Honey.mp3");
-        songPlayer.playTheSong();
-        songPlayer.pause();
         setLinkers();
+        client.getLibrary().setStartSong();
+        songPlayer.pause();
         client.getLibrary().organizePlaylistPanelInStart();
+        mainFrame.setListDisplayerChangeSongListener(client.getLibrary());
+        mainFrame.setInitialListDisplayerChangeSongListener();
     }
-
     public void setLinkers() {
         songPlayer.setDestinationToTimeSlider(mainFrame.getTimeSlider());
         mainFrame.setPauseAndPlayDestination(songPlayer);
@@ -28,7 +29,8 @@ public class Main {
         mainFrame.setListGUIListener(client.getLibrary());
         client.getLibrary().setLibraryChangeListListener(mainFrame);
         mainFrame.setCloseWindowListener(client.getLibrary());
-
+        client.getLibrary().setLibraryChangeSongListener(songPlayer);
+        songPlayer.setSongPlayerChangeSongListener(mainFrame.getPlayerBar());
     }
 
     public static void main(String[] args) {

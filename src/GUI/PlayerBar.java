@@ -1,6 +1,7 @@
 package GUI;
 
 import Listeners.SongPlayerAndGUIListener;
+import Listeners.SongPlayerChangeSongListener;
 import Listeners.SoundSliderListener;
 import Listeners.TimeProgressBarListener;
 import Music.Song;
@@ -16,7 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class PlayerBar extends JPanel {
+public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
     private SongInfo songInfo;
     private SongPlayer songPlayer;
     private static final int WIDTH = 0, HEIGHT = 120;
@@ -48,6 +49,15 @@ public class PlayerBar extends JPanel {
 
     public void setTime(int count) {
         songPlayer.setTimeProgressValue(count);
+    }
+
+    @Override
+    public void changeArtworkAndStuff(Song song) {
+        if (song.getArtwork() != null)
+            songInfo.setArtwork(song.getArtwork());
+        songInfo.setArtistName(song.getArtist());
+        songInfo.setSongTitle(song.getArtist());
+        songPlayer.pauseAndPlay.setIcon(Essentials.imageProvider(".\\pics\\Pause.png", 40, 40));
     }
 
     private class SongInfo extends JPanel {
@@ -112,12 +122,18 @@ public class PlayerBar extends JPanel {
          */
         public void setArtwork(byte[] artworkByteCode) {
             try {
-                artworkImage = new ImageIcon(ImageIO.read(new ByteArrayInputStream(artworkByteCode)));
-                artworkImage = new ImageIcon(artworkImage.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH));
-                artworkLabel.setIcon(artworkImage);
+                if (artworkByteCode != null) {
+                    System.out.println("***************************************");
+                    artworkImage = new ImageIcon(ImageIO.read(new ByteArrayInputStream(artworkByteCode)));
+                    artworkImage = new ImageIcon(artworkImage.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH));
+                } else
+                    artworkImage = Essentials.imageProvider("./pics/Music2.png", 90, 90);
+
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
+
             }
+            artworkLabel.setIcon(artworkImage);
         }
 
         public void setSongTitle(String title) {
@@ -144,7 +160,7 @@ public class PlayerBar extends JPanel {
 
     private class SongPlayer extends JPanel implements SongPlayerAndGUIListener {
 
-        private JSlider  soundSlider;
+        private JSlider soundSlider;
         private JProgressBar timeProgress;
         private JLabel pauseAndPlay;
         private JLabel next, previous;
@@ -164,8 +180,8 @@ public class PlayerBar extends JPanel {
             setOpaque(true);
             setBackground(Essentials.getColor("heavy grey"));
 
-            timeProgress = new JProgressBar(0,0,timeProgressMax);
-            timeProgress.setPreferredSize(new Dimension(900, 5));
+            timeProgress = new JProgressBar(0, 0, timeProgressMax);
+            timeProgress.setPreferredSize(new Dimension(900, 7));
             timeProgress.setBackground(Essentials.getColor("heavy grey"));
             timeProgress.setValue(0);
             addTimeProgressMouseListener();
@@ -275,7 +291,6 @@ public class PlayerBar extends JPanel {
         @Override
         public void syncSongWithGUI(double percentage) {
             setTimeProgressValue((int) (percentage * timeProgressMax));
-//            System.out.println("PER:"+percentage);
         }
 
         //Down: It must stay empty. doesn't have any use.
@@ -289,24 +304,24 @@ public class PlayerBar extends JPanel {
                 public void mouseClicked(MouseEvent e) {
                     super.mouseReleased(e);
                     int mouseX = e.getX();
-                    int progressBarVal = (int)Math.round(((double)mouseX / (double)timeProgress.getWidth()) * timeProgress.getMaximum());
+                    int progressBarVal = (int) Math.round(((double) mouseX / (double) timeProgress.getWidth()) * timeProgress.getMaximum());
                     timeProgress.setValue(Math.round(progressBarVal));
-                    timeProgressListener.seekToFrame((double)progressBarVal/timeProgressMax);
+                    timeProgressListener.seekToFrame((double) progressBarVal / timeProgressMax);
 //                    System.out.println(timeProgressMax+" "+timeProgress.getMaximum());
                 }
             });
         }
-        private void addSoundSliderMouseListener()
-        {
+
+        private void addSoundSliderMouseListener() {
             soundSlider.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     super.mouseClicked(e);
-                    int value=(int) Math.round((double)e.getX()/soundSlider.getWidth()*soundSlider.getMaximum());
+                    int value = (int) Math.round((double) e.getX() / soundSlider.getWidth() * soundSlider.getMaximum());
                     soundSlider.setValue(value);
-                    soundSliderListener.setVolume((float) value/soundSlider.getMaximum());
+                    soundSliderListener.setVolume((float) value / soundSlider.getMaximum());
 //                    System.out.println((float) value/soundSlider.getMaximum());
-            }
+                }
             });
         }
     }
@@ -327,7 +342,8 @@ public class PlayerBar extends JPanel {
     public void setTimeSliderListener(TimeProgressBarListener listener) {
         songPlayer.timeProgressListener = listener;
     }
-    public void setSoundSliderListener(SoundSliderListener listener){
+
+    public void setSoundSliderListener(SoundSliderListener listener) {
         songPlayer.soundSliderListener = listener;
     }
     ///////////////////////////////PlayerBar class

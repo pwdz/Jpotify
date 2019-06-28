@@ -1,16 +1,14 @@
 package PlayerPackage;
 
-import Listeners.SoundSliderListener;
-import Listeners.TimeProgressBarListener;
+import Listeners.*;
 import Music.Song;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import Listeners.SongPlayerAndGUIListener;
-
-public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener, SoundSliderListener {
+public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener, SoundSliderListener, LibraryChangeSongListener {
     private AdvancedPlayer player;
     private String path;
     private Object playerLock;
@@ -20,13 +18,9 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     private Song song;
     private int frameNumber = 0;
 
-    public SongPlayer(String path) {
-        setPath(path);
-        try {
-            song = new Song(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    private SongPlayerChangeSongListener songPlayerChangeSongListener;
+
+    public SongPlayer() {
         playerLock = new Object();
         playerStatus = PlayerStatus.NOTSTARTED;
     }
@@ -37,7 +31,7 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
             fileInputStream = new FileInputStream(path);
             player = new AdvancedPlayer(fileInputStream);
             player.setVol(6f);
-
+            song = new Song(path);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -194,24 +188,28 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
 
     @Override
     public void setVolume(float percentage) {
-        player.setVol(percentage*86-80);
+        player.setVol(percentage * 86 - 80);
 
     }
-//    public static void main(String[] args) {
-//        try {
-//
-//            SongPlayer songPlayer=new SongPlayer("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//            songPlayer.playTheSong();
-//            Thread.sleep(2000);
-//            songPlayer.seekTo(3000 );
-//            Thread.sleep(60000);
-//
-//        }
-//        catch (InterruptedException e){
-//            e.printStackTrace();
-//        }
-//
-//    }
+
+    @Override
+    public void changeSong(String newPath) {
+
+        try {
+            setPath(newPath);
+            songPlayerChangeSongListener.changeArtworkAndStuff(new Song(newPath));
+            listener.syncSongWithGUI(0);
+            frameNumber = 0;
+            playTheSong();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setSongPlayerChangeSongListener(SongPlayerChangeSongListener listener) {
+        songPlayerChangeSongListener = listener;
+    }
 }
 
 
