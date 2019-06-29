@@ -26,7 +26,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     private List currentList;
     private LibraryChangeListListener libraryChangeListListener;
     private LibraryChangeSongListener libraryChangeSongListener;
-
+    private ArrayList<String> sharedPlaylistSongs;
     //    private ArrayList<Song> songs;
     public Library(ArrayList<List> fileLists) {
 //        this.lists = fileLists;

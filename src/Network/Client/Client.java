@@ -1,8 +1,10 @@
 package Network.Client;
 
+import ClientPackage.User;
 import Lists.SharedPlaylist;
 import Network.Server.Server;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Client {
+    private User user;
     private String IP;
     private String message;
     private final int PORT = 1235;
@@ -24,35 +27,35 @@ public class Client {
     private String currentSongNameOfFriend;
     private ArrayList<String> friendsIpAddressesOfFriend;
     private byte[] mp3OfFriend;
-    boolean flag=false;
-//    Timer timer;
-//    TimerTask timerTask;
+    boolean flag = false;
+
     public Client(String IP, ArrayList<String> friendsIpAddresses) {
         this.IP = IP;
-   //     timer=new Timer();
-        System.out.println("gf");
+        user=new User("sbdols");
+
+      System.out.println("gf");
         this.friendsIpAddresses = friendsIpAddresses;
         try {
             clientSocket = new Socket(IP, PORT);
             input = clientSocket.getInputStream();
             output = clientSocket.getOutputStream();
 
-            Thread clientSender =new Thread(new Runnable() {
+            Thread clientSender = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (true){
+                    while (true) {
                         try {
 
-                            while(flag) {
-                                ObjectOutputStream objectOutputStream=new ObjectOutputStream(output);
+                            while (flag) {
+
+                                ObjectOutputStream objectOutputStream = new ObjectOutputStream(output);
                                 objectOutputStream.writeObject(friendsIpAddresses);
                                 objectOutputStream.writeObject(sharedPlaylist);
                                 objectOutputStream.writeObject(currentSongName);
-                               objectOutputStream.writeObject(mp3);
+                                objectOutputStream.writeObject(mp3);
                                 objectOutputStream.writeObject(message);
-                                flag=false;
+                                flag = false;
                             }
-                        //    System.out.println("hhhhh");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -60,26 +63,26 @@ public class Client {
 
                 }
             });
-            Thread clientReceiver=new Thread(new Runnable() {
+            Thread clientReceiver = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (true){
+                    while (true) {
                         try {
-                            ObjectInputStream objectInputStream=new ObjectInputStream(input);
-                            int tag=(int)objectInputStream.readObject();
-                            switch(tag){
+                            ObjectInputStream objectInputStream = new ObjectInputStream(input);
+                            int tag = (int) objectInputStream.readObject();
+                            switch (tag) {
                                 case 1:
-                                    sharedPlaylistOfFriend=(ArrayList<String>) objectInputStream.readObject();
+                                    sharedPlaylistOfFriend = (ArrayList<String>) objectInputStream.readObject();
                                     break;
                                 case 2:
-                                    currentSongNameOfFriend=(String) objectInputStream.readObject();
+                                    currentSongNameOfFriend = (String) objectInputStream.readObject();
                                     break;
                                 case 3:
-                                    mp3OfFriend=(byte[]) objectInputStream.readObject();
+                                    mp3OfFriend = (byte[]) objectInputStream.readObject();
                                     break;
                                 case 4:
-                                    friendsIpAddressesOfFriend=(ArrayList<String>) objectInputStream.readObject();
-                                    System.out.println("receiver : "+ friendsIpAddressesOfFriend.get(0));
+                                    friendsIpAddressesOfFriend = (ArrayList<String>) objectInputStream.readObject();
+                                    System.out.println("receiver : " + friendsIpAddressesOfFriend.get(0));
 
                             }
                         } catch (IOException e) {
@@ -95,12 +98,6 @@ public class Client {
             clientReceiver.start();
 
 
-
-
-
-
-
-
 //            timerTask=new TimerTask() {
 //                @Override
 //                public void run() {
@@ -114,9 +111,9 @@ public class Client {
 
     }
 
-    public void setMessage(String message){
-        this.message=message;
-        flag=true;
+    public void setMessage(String message) {
+        this.message = message;
+        flag = true;
     }
 
 
@@ -124,8 +121,7 @@ public class Client {
         return IP;
     }
 
-    public ArrayList<String> getFriendsIpAddresses()
-    {
+    public ArrayList<String> getFriendsIpAddresses() {
         return friendsIpAddresses;
     }
 
