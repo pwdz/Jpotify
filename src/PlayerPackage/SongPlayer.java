@@ -72,7 +72,7 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
         while (playerStatus != PlayerStatus.FINISHED) {
             try {
                 frameNumber++;
-//                if (frameNumber % == 0)
+                if (frameNumber % 100== 0)
                 listener.syncSongWithGUI((double) frameNumber / song.getNumberOfFrames());
                 if (!player.play(1)) {
                     break;
@@ -90,6 +90,7 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
                 }
             }
         }
+        listener.syncSongWithGUI(1);
         myClose();
     }
 
@@ -193,11 +194,12 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     }
 
     @Override
-    public void changeSong(String newPath) {
+    public void changeSong(String newPath,int tag) {
 
         try {
             setPath(newPath);
-            songPlayerChangeSongListener.changeArtworkAndStuff(new Song(newPath));
+
+            songPlayerChangeSongListener.changeArtworkAndStuff(new Song(newPath),tag);
             listener.syncSongWithGUI(0);
             frameNumber = 0;
             playTheSong();

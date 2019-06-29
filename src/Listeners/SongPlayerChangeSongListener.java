@@ -3,5 +3,5 @@ package Listeners;
 import Music.Song;
 
 public interface SongPlayerChangeSongListener {
-    void changeArtworkAndStuff(Song song);
+    void changeArtworkAndStuff(Song song,int tag);
 }

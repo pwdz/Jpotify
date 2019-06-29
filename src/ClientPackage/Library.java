@@ -64,7 +64,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
 
     public void setStartSong() {
         if (songs.getSongsPaths().size() > 0)
-            libraryChangeSongListener.changeSong(songs.getSongsPaths().get(0));
+            libraryChangeSongListener.changeSong(songs.getSongsPaths().get(0),1);
     }
 
     public void organizePlaylistPanelInStart() {
@@ -217,7 +217,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     public void changeSongInLibrary(String songName) {
         String newPath = songs.searchForSong(songName);
 //        System.out.println("newPath:" + newPath);
-        libraryChangeSongListener.changeSong(newPath);
+        libraryChangeSongListener.changeSong(newPath,0);
     }
 
     @Override

@@ -52,12 +52,13 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
     }
 
     @Override
-    public void changeArtworkAndStuff(Song song) {
+    public void changeArtworkAndStuff(Song song,int tag) {
         if (song.getArtwork() != null)
             songInfo.setArtwork(song.getArtwork());
         songInfo.setArtistName(song.getArtist());
         songInfo.setSongTitle(song.getTitle());
-        songPlayer.pauseAndPlay.setIcon(Essentials.imageProvider(".\\pics\\Pause.png", 40, 40));
+        if(tag==0)
+            songPlayer.pauseAndPlay.setIcon(Essentials.imageProvider(".\\pics\\Pause.png", 40, 40));
     }
 
     private class SongInfo extends JPanel {
@@ -171,7 +172,8 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
         private final int timeProgressMax = 100;
         private TimeProgressBarListener timeProgressListener;
         private SoundSliderListener soundSliderListener;
-        private JLabel totalTime,timeGone;
+        private JLabel totalTime, timeGone;
+
         public SongPlayer() {
             super();
             setLayout(new BorderLayout());
@@ -193,7 +195,8 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             addSoundSliderMouseListener();
 
             pauseAndPlay = Essentials.labelMaker("", "heavy grey", 45, 45);
-            ImageIcon pauseImg = Essentials.imageProvider(".\\pics\\Play.png", 40, 40);
+            ImageIcon pauseImg;
+            pauseImg = Essentials.imageProvider(".\\pics\\Play.png", 40, 40);
             pauseAndPlay.setIcon(pauseImg);
             pauseAndPlay.addMouseListener(new MouseAdapter() {
                 @Override
@@ -254,10 +257,10 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             gbc.gridx = 0;
             gbc.gridy = 0;
 
-            timeGone = Essentials.labelMaker("","grey",25,25);
-            totalTime = Essentials.labelMaker("","grey",25,25);
+            timeGone = Essentials.labelMaker("", "grey", 25, 25);
+            totalTime = Essentials.labelMaker("", "grey", 25, 25);
 
-            timeProgressTmp.add(timeGone,gbc);
+            timeProgressTmp.add(timeGone, gbc);
 
             gbc.gridx++;
             gbc.weightx = 1;
@@ -266,9 +269,9 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             timeProgressTmp.setLayout(new GridBagLayout());
             timeProgressTmp.add(timeProgress, gbc);
 
-            gbc.weightx=0;
+            gbc.weightx = 0;
             gbc.gridx++;
-            timeProgressTmp.add(totalTime,gbc);
+            timeProgressTmp.add(totalTime, gbc);
 
 
 //down: a small JSlider for sound in a JLabel
