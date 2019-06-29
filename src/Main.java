@@ -31,6 +31,7 @@ public class Main {
         mainFrame.setCloseWindowListener(user.getLibrary());
         user.getLibrary().setLibraryChangeSongListener(songPlayer);
         songPlayer.setSongPlayerChangeSongListener(mainFrame.getPlayerBar());
+        mainFrame.getPlayList().setPlaylistRemoveListener(user.getLibrary());
     }
 
     public static void main(String[] args) {

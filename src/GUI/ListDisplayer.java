@@ -33,9 +33,10 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
     String timeString;
     String number;
     ImageIcon addToPlaylist, heartImg, removeImg, playAndPause;
-    ArrayList<List>lists;
-    public ListDisplayer(List list, ArrayList<List>lists) {
-        this.lists=lists;
+    ArrayList<List> lists;
+
+    public ListDisplayer(List list, ArrayList<List> lists) {
+        this.lists = lists;
         addToPlaylist = Essentials.imageProvider("./pics/Add2.png", 17, 17);
         playAndPause = Essentials.imageProvider("./pics/Play.png", 25, 25);
         heartImg = Essentials.imageProvider("./pics/EmptyHeart.png", 17, 17);
@@ -175,7 +176,7 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
 
     public void playListDisplaySetups() {
         if (list instanceof FavouriteSongs) {
-            objectArray = new Object[]{"play", "   #", "Title", "Artist", "Duration", "Remove"};
+            objectArray = new Object[]{"play", "   #", "Title", "Artist", "Duration", "Remove", "addToPlaylist"};
             defaultTableModel = new DefaultTableModel(objectArray, 0) {
                 @Override
                 public Class<?> getColumnClass(int column) {
@@ -191,6 +192,8 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                         case 4:
                             return String.class;
                         case 5:
+                            return ImageIcon.class;
+                        case 6:
                             return ImageIcon.class;
                         default:
                             return Object.class;
@@ -268,7 +271,7 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                 artistString = song.getArtist();
                 number = String.valueOf(list.getSongsPaths().indexOf(path) + 1);
                 if (list instanceof FavouriteSongs)
-                    defaultTableModel.addRow(new Object[]{playAndPause, "   " + number, titleString, artistString, timeString, removeImg});
+                    defaultTableModel.addRow(new Object[]{playAndPause, "   " + number, titleString, artistString, timeString, removeImg, addToPlaylist});
                 else if (list instanceof LibrarySong)
                     defaultTableModel.addRow(new Object[]{playAndPause, heartImg, number, titleString, artistString, timeString, addToPlaylist});
                 else
@@ -308,7 +311,7 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                     case 1://like
                         if (!(list instanceof FavouriteSongs)) {
                             listDisplayerListener.addSongToFavourites(songName);
-                            jTable.setValueAt(Essentials.imageProvider("./pics/FilledHeart.png",20,20),row,1);
+                            jTable.setValueAt(Essentials.imageProvider("./pics/FilledHeart.png", 20, 20), row, 1);
                         }
                         break;
                     case 5:
@@ -316,26 +319,23 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                         {
                             listDisplayerListener.removeSongFromPlaylist(list, songName);
 //                            System.out.println("baghali?????????????????");
-                        }
-                        else if(list instanceof  Album)
-                        {
-                            AddSongToPlaylist addSongToPlaylist=new AddSongToPlaylist(lists,songName);
+                        } else if (list instanceof Album) {
+                            AddSongToPlaylist addSongToPlaylist = new AddSongToPlaylist(lists, songName);
                             addSongToPlaylist.setAddSongToPlaylistListener(ListDisplayer.this::addToPlaylist);
                         }
                         break;
                     case 6:
-                        if(!(list instanceof FavouriteSongs))//add from specific playlist to other playlists
-                        {
-                            AddSongToPlaylist addSongToPlaylist=new AddSongToPlaylist(lists,songName);
-                            addSongToPlaylist.setAddSongToPlaylistListener(ListDisplayer.this::addToPlaylist);
-                        }
+//                        if(!(list instanceof FavouriteSongs))//add from specific playlist to other playlists
+//                        {
+                        AddSongToPlaylist addSongToPlaylist = new AddSongToPlaylist(lists, songName);
+                        addSongToPlaylist.setAddSongToPlaylistListener(ListDisplayer.this::addToPlaylist);
+//                        }
                         break;
                     case 7:
-                        if(list instanceof Playlist)//remove from SharedPlaylist and normal playlists
+                        if (list instanceof Playlist)//remove from SharedPlaylist and normal playlists
                         {
-                            if(!(list instanceof FavouriteSongs) && !(list instanceof LibrarySong))
-                            {
-                                listDisplayerListener.removeSongFromPlaylist(list,songName);
+                            if (!(list instanceof FavouriteSongs) && !(list instanceof LibrarySong)) {
+                                listDisplayerListener.removeSongFromPlaylist(list, songName);
                             }
                         }
                         break;
@@ -352,7 +352,7 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
 
     @Override
     public void addToPlaylist(String playlistName, String songName) {
-        listDisplayerListener.addSongToPlaylist(playlistName,songName);
+        listDisplayerListener.addSongToPlaylist(playlistName, songName);
         System.out.println("CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }

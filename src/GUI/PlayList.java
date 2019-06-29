@@ -3,6 +3,7 @@ package GUI;
 import Listeners.AlbumPanelListener;
 import Listeners.LibraryListenerToPlaylistBar;
 import Listeners.ListGUIListener;
+import Listeners.PlayListRemoveListener;
 import Lists.ListType;
 import Lists.Playlist;
 
@@ -24,6 +25,7 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
     private ChooseSong chooseSong;
     private static final int WIDTH = 250, HEIGHT = 30;
     private ListGUIListener listGUIListener;
+    private PlayListRemoveListener playlistRemoveListener;
     GridBagConstraints gb = new GridBagConstraints();
 
     public PlayList() {
@@ -42,7 +44,6 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
         gbc.anchor = GridBagConstraints.NORTH;
 
         yourLibrary = Essentials.labelMaker("YOUR LIBRARY", "grey", WIDTH, HEIGHT);
-//        gbc.weightx=1;
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(yourLibrary, gbc);
@@ -75,25 +76,6 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
         gbc.gridy++;
         add(playlistLabel, gbc);
 
-//        l = new DefaultListModel<>();
-//        playlist = new JList<>(l);
-        //strings will be in center
-//        DefaultListCellRenderer renderer = (DefaultListCellRenderer) playlist.getCellRenderer();
-//        renderer.setHorizontalAlignment(JLabel.CENTER);
-/////////////////////////////////////////////////////////////////////
-//        playlist.setPreferredSize(new Dimension(WIDTH, 0));
-//        playlist.setBackground(Essentials.getColor("heavy grey"));
-//        playlist.setForeground(Color.WHITE);
-//        addListGUIListenerToComponents(null);//if the input be null then method will consider it the JList playlist.
-//        l.addElement("mosa");
-//
-//        gbc.gridy++;
-//        gbc.fill = GridBagConstraints.BOTH;
-//        gbc.weighty = 1;
-//        JScrollPane jScrollPane = new JScrollPane(playlist, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//        jScrollPane.setPreferredSize(new Dimension(WIDTH, 0));
-//        jScrollPane.setVisible(true);
-//        add(jScrollPane, gbc);
         playlistPanel = new JPanel(new GridBagLayout());
         playlistPanel.setBackground(Essentials.getColor("heavy grey"));
         playlistsNames = new ArrayList<>();
@@ -122,8 +104,6 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
         add(newSong, gbc);
 
         gbc.gridy++;
-//        gbc.weighty=0;
-//        gbc.fill=GridBagConstraints.HORIZONTAL;
         add(newPlaylist, gbc);
 
     }
@@ -176,6 +156,21 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
         arrangePlaylists();
     }
 
+    @Override
+    public void removePlaylist(Playlist playlist) {
+        for(int i=0;i<playlistsNames.size();i++)
+        {
+            JLabel temp = playlistsNames.get(i);
+            if(temp.getText().equals(playlist.getName())) {
+                playlistsNames.remove(temp);
+                break;
+            }
+
+        }
+        System.out.println("1234567890");
+        arrangePlaylists();
+    }
+
     public void setListGUIListener(ListGUIListener listener) {
         listGUIListener = listener;
     }
@@ -214,9 +209,28 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
         gb.gridx = 0;
         gb.gridy = 0;
         for (JLabel label : playlistsNames) {
+            JLabel temp=Essentials.labelMaker("","heavy grey",WIDTH,HEIGHT);
+
+            JLabel removeIcon = Essentials.labelMaker("","heavy grey",30,HEIGHT);
+            removeIcon.setIcon(Essentials.imageProvider("./pics/icons8-minus-50.png",25,25));
+            removeIcon.setName(label.getText());
+            removeIcon.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    playlistRemoveListener.removePlaylistLogically(removeIcon.getName());
+                    arrangePlaylists();
+                }
+            });
+
+
+            temp.setLayout(new BorderLayout());
             mouseEnterAndExit(label,"black","heavy grey");
             addListGUIListenerToComponents(label);
-            playlistPanel.add(label,gb);
+            temp.add(removeIcon,BorderLayout.EAST);
+            temp.add(label,BorderLayout.CENTER);
+
+            playlistPanel.add(temp,gb);
             gb.gridy++;
         }
         gb.weighty=1;
@@ -225,11 +239,18 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
         gb.weighty=0;
         gb.fill=GridBagConstraints.HORIZONTAL;
 
+        playlistPanel.revalidate();
+        playlistPanel.repaint();
+
     }
 
     @Override
     public void openAlbum(String name) {
         listGUIListener.listClicked(ListType.Album,name);
         System.out.println("name:"+name);
+    }
+    public void setPlaylistRemoveListener(PlayListRemoveListener listener)
+    {
+        playlistRemoveListener = listener;
     }
 }

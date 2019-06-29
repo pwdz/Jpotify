@@ -171,7 +171,7 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
         private final int timeProgressMax = 100;
         private TimeProgressBarListener timeProgressListener;
         private SoundSliderListener soundSliderListener;
-
+        private JLabel totalTime,timeGone;
         public SongPlayer() {
             super();
             setLayout(new BorderLayout());
@@ -253,11 +253,23 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             JLabel timeProgressTmp = Essentials.labelMaker("", "heavy grey", 1, 30);
             gbc.gridx = 0;
             gbc.gridy = 0;
+
+            timeGone = Essentials.labelMaker("","grey",25,25);
+            totalTime = Essentials.labelMaker("","grey",25,25);
+
+            timeProgressTmp.add(timeGone,gbc);
+
+            gbc.gridx++;
             gbc.weightx = 1;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.insets = new Insets(2, 2, 2, 2);
             timeProgressTmp.setLayout(new GridBagLayout());
             timeProgressTmp.add(timeProgress, gbc);
+
+            gbc.weightx=0;
+            gbc.gridx++;
+            timeProgressTmp.add(totalTime,gbc);
+
 
 //down: a small JSlider for sound in a JLabel
 
@@ -340,10 +352,6 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
         songPlayer.soundSliderListener = listener;
     }
     ///////////////////////////////PlayerBar class
-//    public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
-//    {
-//        songPlayer.setPauseAndPlayDestination(destination);
-//    }
 
 }
 

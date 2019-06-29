@@ -16,7 +16,7 @@ import Serialization.Serializer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Library implements AddPlaylistListener, ChooseSongListener, ListGUIListener, CloseWindowListener, ListDisplayerListener {
+public class Library implements AddPlaylistListener, ChooseSongListener, ListGUIListener, CloseWindowListener, ListDisplayerListener,PlayListRemoveListener {
     private ArrayList<List> lists;
     private ArrayList<Album> albums;
     private SharedPlaylist sharedPlaylist;
@@ -250,5 +250,18 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
 
     public void setLibraryChangeSongListener(LibraryChangeSongListener listener) {
         libraryChangeSongListener = listener;
+    }
+
+    @Override
+    public void removePlaylistLogically(String name) {
+        List temp=null;
+        for(int i=0;i<lists.size();i++) {
+            temp=lists.get(i);
+            if (temp.getName().equals(name)) {
+                lists.remove(temp);
+                break;
+            }
+        }
+        libraryListenerToPlaylistBar.removePlaylist((Playlist) temp);
     }
 }
