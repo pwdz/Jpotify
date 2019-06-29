@@ -305,6 +305,7 @@ public class ListDisplayer extends JPanel {
                     case 1://like
                         if (!(list instanceof FavouriteSongs)) {
                             listDisplayerListener.addSongToFavourites(songName);
+                            jTable.setValueAt(Essentials.imageProvider("./pics/FilledHeart.png",20,20),row,1);
                         }
                         break;
                     case 5://add to playlist

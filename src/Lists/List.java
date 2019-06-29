@@ -21,9 +21,11 @@ import java.util.Collections;
 
         }
         public void addSong(String path){
-            if(!songPath.contains(path))
+            if(!songPath.contains(path)) {
+                System.out.println("path>????+:"+path);
                 songPath.add(path);
-            setTotalTime();
+                setTotalTime();
+            }
         }
         public String getName()
         {
@@ -85,7 +87,9 @@ import java.util.Collections;
             Song song;
         for (String path: songPath) {
             try {
+                System.out.println("check1:"+path);
                 song=new Song(path);
+                System.out.println("check2");
                 totalTime+=song.getDuration();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

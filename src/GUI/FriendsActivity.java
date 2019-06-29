@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class FriendsActivity extends JPanel {
     private JLabel titleLabel;
-    private static final int WIDTH = 150,HEIGHT=30;
+    private static final int WIDTH = 250,HEIGHT=30;
     public FriendsActivity()
     {
         super();
