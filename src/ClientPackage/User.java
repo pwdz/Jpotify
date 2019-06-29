@@ -2,10 +2,10 @@ package ClientPackage;
 import PlayerPackage.SongPlayer;
 import Serialization.Serializer;
 
-public class Client {
+public class User{
     private String username;
     private Library library;
-    public Client(String username) {
+    public User(String username) {
         this.username = username;
         library = new Library(Serializer.readFromFile(".\\SaveFiles\\saved.bin"));
     }

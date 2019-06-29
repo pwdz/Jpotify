@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ClientServer {
+public class Client {
     private String IP;
     private final int PORT = 1234;
     private ArrayList<String> friendsIpAddresses;
@@ -14,7 +14,7 @@ public class ClientServer {
     InputStream input;
     OutputStream output;
 
-    public ClientServer(String IP, ArrayList<String> friendsIpAddresses) {
+    public Client(String IP, ArrayList<String> friendsIpAddresses) {
         this.IP = IP;
         this.friendsIpAddresses = friendsIpAddresses;
         try {

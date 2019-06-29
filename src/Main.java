@@ -1,35 +1,35 @@
-import ClientPackage.Client;
+import ClientPackage.User;
 import GUI.MainFrame;
 import PlayerPackage.SongPlayer;
 
 public class Main {
-    private Client client;
+    private User user;
     private SongPlayer songPlayer;
     private MainFrame mainFrame;
 
     public Main() {
-        client = new Client("ali");
+        user = new User("ali");
         songPlayer = new SongPlayer();
-        mainFrame = new MainFrame(client.getLibrary().getSongs());
+        mainFrame = new MainFrame(user.getLibrary().getSongs());
         setLinkers();
-        client.getLibrary().setStartSong();
+        user.getLibrary().setStartSong();
         songPlayer.pause();
-        client.getLibrary().organizePlaylistPanelInStart();
-        mainFrame.setListDisplayerChangeSongListener(client.getLibrary());
+        user.getLibrary().organizePlaylistPanelInStart();
+        mainFrame.setListDisplayerChangeSongListener(user.getLibrary());
         mainFrame.setInitialListDisplayerChangeSongListener();
     }
     public void setLinkers() {
         songPlayer.setDestinationToTimeSlider(mainFrame.getTimeSlider());
         mainFrame.setPauseAndPlayDestination(songPlayer);
-        mainFrame.getAddPlaylist().setAddPlaylistListener(client.getLibrary());
-        mainFrame.getChooseSong().setChooseSongListener(client.getLibrary());
-        client.getLibrary().setLibraryListenerToPlaylistBar(mainFrame.getPlayListPanel());
+        mainFrame.getAddPlaylist().setAddPlaylistListener(user.getLibrary());
+        mainFrame.getChooseSong().setChooseSongListener(user.getLibrary());
+        user.getLibrary().setLibraryListenerToPlaylistBar(mainFrame.getPlayListPanel());
         mainFrame.setTimeSliderListener(songPlayer);
         mainFrame.setSoundSliderListener(songPlayer);
-        mainFrame.setListGUIListener(client.getLibrary());
-        client.getLibrary().setLibraryChangeListListener(mainFrame);
-        mainFrame.setCloseWindowListener(client.getLibrary());
-        client.getLibrary().setLibraryChangeSongListener(songPlayer);
+        mainFrame.setListGUIListener(user.getLibrary());
+        user.getLibrary().setLibraryChangeListListener(mainFrame);
+        mainFrame.setCloseWindowListener(user.getLibrary());
+        user.getLibrary().setLibraryChangeSongListener(songPlayer);
         songPlayer.setSongPlayerChangeSongListener(mainFrame.getPlayerBar());
     }
 
