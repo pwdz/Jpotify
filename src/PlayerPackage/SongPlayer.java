@@ -1,6 +1,7 @@
 package PlayerPackage;
 
 import Listeners.*;
+import Lists.List;
 import Music.Song;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -8,7 +9,7 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener, SoundSliderListener, LibraryChangeSongListener {
+public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener, SoundSliderListener, LibraryChangeSongListener, PlayBarNxtAndPreListener {
     private AdvancedPlayer player;
     private String path;
     private Object playerLock;
@@ -16,6 +17,8 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     private FileInputStream fileInputStream;
     private SongPlayerAndGUIListener listener = null;
     private Song song;
+    private List currentList;
+    private int index;
     private int frameNumber = 0;
 
     private SongPlayerChangeSongListener songPlayerChangeSongListener;
@@ -23,6 +26,11 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     public SongPlayer() {
         playerLock = new Object();
         playerStatus = PlayerStatus.NOTSTARTED;
+        index = 0;
+    }
+
+    public void setCurrentList(List curList) {
+        currentList = curList;
     }
 
     public void setPath(String path) {
@@ -72,8 +80,8 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
         while (playerStatus != PlayerStatus.FINISHED) {
             try {
                 frameNumber++;
-                if (frameNumber % 100== 0)
-                listener.syncSongWithGUI((double) frameNumber / song.getNumberOfFrames());
+                if (frameNumber % 100 == 0)
+                    listener.syncSongWithGUI((double) frameNumber / song.getNumberOfFrames());
                 if (!player.play(1)) {
                     break;
                 }
@@ -194,12 +202,12 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     }
 
     @Override
-    public void changeSong(String newPath,int tag) {
+    public void changeSong(String newPath, int tag) {
 
         try {
             setPath(newPath);
 
-            songPlayerChangeSongListener.changeArtworkAndStuff(new Song(newPath),tag);
+            songPlayerChangeSongListener.changeArtworkAndStuff(new Song(newPath), tag);
             listener.syncSongWithGUI(0);
             frameNumber = 0;
             playTheSong();
@@ -211,6 +219,29 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
 
     public void setSongPlayerChangeSongListener(SongPlayerChangeSongListener listener) {
         songPlayerChangeSongListener = listener;
+    }
+
+    @Override
+    public void goNxtOrPre(int tag) {
+        if (tag == 1) {
+            if (index > 0) {
+                index--;
+                setPath(currentList.getSongsPaths().get(index));
+            }
+            else {
+                index = currentList.getSongsPaths().size() - 1;
+                setPath(currentList.getSongsPaths().get(index));
+            }
+        } else {//2
+            if (index <currentList.getSongsPaths().size()-1) {
+                index++;
+                setPath(currentList.getSongsPaths().get(index ));
+            }
+            else {
+                index = 0;
+                setPath(currentList.getSongsPaths().get(index));
+            }
+        }
     }
 }
 

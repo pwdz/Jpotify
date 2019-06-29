@@ -128,7 +128,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
                 currentList = favouriteSongs;
                 break;
             case SharedPlaylist://Shared playlist
-                System.out.println(":||||||");
+//                System.out.println(":||||||");
                 currentList = sharedPlaylist;
                 break;
             case Album://Albums

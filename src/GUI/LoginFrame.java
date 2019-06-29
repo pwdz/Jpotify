@@ -1,50 +1,54 @@
 package GUI;
 
+import Listeners.LoginFormListener;
+import sun.applet.Main;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
-    private static final int WIDTH = 950, HEIGHT = 550;
-    private JButton loginButton;
-    private JTextField username, password;
-    private JLabel usernameLable;
-    private JLabel passwordLable;
+    private LoginFormListener loginFormListener;
+
     public LoginFrame() {
-        super();
-        this.setVisible(true);
-        this.setBackground(Essentials.getColor("heavy grey"));
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc=new GridBagConstraints();
-        this.setSize(new Dimension(WIDTH, HEIGHT));
+        setSize(new Dimension(500, 500));
+        setResizable(false);
+        setLayout(new BorderLayout());
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        this.setResizable(false);
-        loginButton=new JButton("Login");
-        username=new JTextField("",24);
-        password=new JTextField("",24);
+        setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2 - 100);
 
-        username.setPreferredSize(new Dimension(500,50));
-        password.setPreferredSize(new Dimension(500,50));
-        usernameLable=Essentials.labelMaker("Username", "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 30), "grey");
-        passwordLable=Essentials.labelMaker("Password", "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 30), "grey");
-        this.setBackground(Essentials.getColor("heavy grey"));
-        Essentials.gridBagSetups(gbc, 3, 1, 2, 1);
-        this.add(usernameLable, gbc);
+        JLabel header = Essentials.labelMaker("Username", "heavy grey", 500, 200);
+        add(header, BorderLayout.NORTH);
 
-        Essentials.gridBagSetups(gbc, 3, 2, 5, 1);
-       this.add(username, gbc);
+        JTextField textField = new JTextField();
+        textField.setPreferredSize(new Dimension(500, 100));
+        add(textField, BorderLayout.CENTER);
 
-        Essentials.gridBagSetups(gbc, 4, 3, 2, 1);
-        this.add(passwordLable, gbc);
+        JLabel bottom = Essentials.labelMaker("", "heavy grey", 500, 200);
+        bottom.setLayout(new BorderLayout());
+        JButton enter = new JButton("Enter");
+        enter.setPreferredSize(new Dimension(100, 30));
+//        enter.setBackground(Essentials.getColor());
+        bottom.add(enter, BorderLayout.SOUTH);
+        add(bottom, BorderLayout.SOUTH);
 
-        Essentials.gridBagSetups(gbc, 3, 4, 5, 3);
-        this.add(password, gbc);
-        Essentials.gridBagSetups(gbc, 3, 5, 5, 3);
-        this.add(loginButton, gbc);
+//();
+//        setLoginFormListener(con);
 
+        enter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!textField.getText().equals("")) {
+                    loginFormListener.startProgram(textField.getText());
+                }
+            }
+        });
+
+        setVisible(true);
     }
 
-    public static void main(String[] args) {
-        LoginFrame loginFrame=new LoginFrame();
+    public void setLoginFormListener(LoginFormListener listener) {
+        loginFormListener = listener;
     }
 }

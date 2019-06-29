@@ -1,9 +1,6 @@
 package GUI;
 
-import Listeners.SongPlayerAndGUIListener;
-import Listeners.SongPlayerChangeSongListener;
-import Listeners.SoundSliderListener;
-import Listeners.TimeProgressBarListener;
+import Listeners.*;
 import Music.Song;
 import PlayerPackage.PlayerStatus;
 
@@ -22,6 +19,7 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
     private SongPlayer songPlayer;
     private static final int WIDTH = 0, HEIGHT = 120;
     private boolean isLiked = false;
+    private PlayBarNxtAndPreListener playBarNxtAndPreListener;
 
     public PlayerBar() {
         super();
@@ -220,10 +218,12 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             next = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon nextImg = Essentials.imageProvider(".\\pics\\Next.png", 25, 25);
             next.setIcon(nextImg);
+            setNextAndPreviousListener(next,2);
 
             previous = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon prevImg = Essentials.imageProvider(".\\pics\\Previous.png", 25, 25);
             previous.setIcon(prevImg);
+            setNextAndPreviousListener(previous,1);
 
             shuffle = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon shuffleImg = Essentials.imageProvider(".\\pics\\Shuffle.png", 25, 25);
@@ -355,6 +355,21 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
         songPlayer.soundSliderListener = listener;
     }
     ///////////////////////////////PlayerBar class
+    private void setNextAndPreviousListener(JLabel label,int tag)//1:pre 2:nxt
+    {
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                playBarNxtAndPreListener.goNxtOrPre(tag);
+
+            }
+        });
+    }
+    public void setPlayBarNxtAndPreListener(PlayBarNxtAndPreListener listener)
+    {
+        playBarNxtAndPreListener = listener;
+    }
 
 }
 

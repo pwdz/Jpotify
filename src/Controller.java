@@ -1,23 +1,25 @@
 import ClientPackage.User;
 import GUI.MainFrame;
+import Listeners.LoginFormListener;
 import PlayerPackage.SongPlayer;
 
-public class Main {
+public class Controller implements LoginFormListener {
     private User user;
     private SongPlayer songPlayer;
     private MainFrame mainFrame;
-
-    public Main() {
+    public Controller() {
         user = new User("ali");
         songPlayer = new SongPlayer();
-        mainFrame = new MainFrame(user.getLibrary().getSongs(),user.getLibrary().getLists());
+        mainFrame = new MainFrame(user.getLibrary().getSongs(), user.getLibrary().getLists());
         setLinkers();
         user.getLibrary().setStartSong();
         songPlayer.pause();
         user.getLibrary().organizePlaylistPanelInStart();
         mainFrame.setListDisplayerChangeSongListener(user.getLibrary());
         mainFrame.setInitialListDisplayerChangeSongListener();
+        songPlayer.setCurrentList(user.getLibrary().getSongs());
     }
+
     public void setLinkers() {
         songPlayer.setDestinationToTimeSlider(mainFrame.getTimeSlider());
         mainFrame.setPauseAndPlayDestination(songPlayer);
@@ -35,6 +37,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        new Main();
+        Controller controller= new Controller();
+    }
+    @Override
+    public void startProgram(String username) {
+
     }
 }
