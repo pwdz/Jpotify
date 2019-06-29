@@ -325,11 +325,8 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                         }
                         break;
                     case 6:
-//                        if(!(list instanceof FavouriteSongs))//add from specific playlist to other playlists
-//                        {
                         AddSongToPlaylist addSongToPlaylist = new AddSongToPlaylist(lists, songName);
                         addSongToPlaylist.setAddSongToPlaylistListener(ListDisplayer.this::addToPlaylist);
-//                        }
                         break;
                     case 7:
                         if (list instanceof Playlist)//remove from SharedPlaylist and normal playlists
@@ -342,7 +339,6 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                 }
             }
         });
-//        }
     }
 
     public void setListDisplayerChangeSongListener(ListDisplayerListener listener) {
@@ -353,6 +349,5 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
     @Override
     public void addToPlaylist(String playlistName, String songName) {
         listDisplayerListener.addSongToPlaylist(playlistName, songName);
-        System.out.println("CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }
