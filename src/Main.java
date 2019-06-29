@@ -10,7 +10,7 @@ public class Main {
     public Main() {
         user = new User("ali");
         songPlayer = new SongPlayer();
-        mainFrame = new MainFrame(user.getLibrary().getSongs());
+        mainFrame = new MainFrame(user.getLibrary().getSongs(),user.getLibrary().getLists());
         setLinkers();
         user.getLibrary().setStartSong();
         songPlayer.pause();

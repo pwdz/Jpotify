@@ -27,8 +27,8 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
     private boolean flag = true;
     private DisplayAlbums displayAlbums;
     private ListDisplayerListener listDisplayerListener;
-    public MainFrame(List list) {
-        listDisplayer = new ListDisplayer(list);
+    public MainFrame(List list,ArrayList<List>lists) {
+        listDisplayer = new ListDisplayer(list,lists);
         this.mainFrame = new JFrame("Jpotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setSize(WIDTH, HEIGHT);
@@ -168,7 +168,7 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
 
 
     @Override
-    public void updateCenter(List list, int tag, ArrayList<Album> albums) {
+    public void updateCenter(List list, int tag, ArrayList<Album> albums,ArrayList<List>lists) {
 
         if (tag == 1) {
             if (flag)
@@ -177,7 +177,7 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
                 panel.remove(displayAlbums);
             panel.revalidate();
             panel.repaint();
-            listDisplayer = new ListDisplayer(list);
+            listDisplayer = new ListDisplayer(list,lists);
             listDisplayer.setListDisplayerChangeSongListener(listDisplayerListener);
             panel.add(listDisplayer, gbc);
             flag = true;

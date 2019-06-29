@@ -16,7 +16,7 @@ import Serialization.Serializer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Library implements AddPlaylistListener, ChooseSongListener, ListGUIListener, CloseWindowListener, ListDisplayerListener{
+public class Library implements AddPlaylistListener, ChooseSongListener, ListGUIListener, CloseWindowListener, ListDisplayerListener {
     private ArrayList<List> lists;
     private ArrayList<Album> albums;
     private SharedPlaylist sharedPlaylist;
@@ -113,6 +113,10 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
         return null;
     }
 
+    public ArrayList<List> getLists() {
+        return lists;
+    }
+
     @Override
     public void listClicked(ListType listType, String listName) {
         int tag = 1;
@@ -145,7 +149,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
                 break;
         }
 
-        libraryChangeListListener.updateCenter(currentList, tag, albums);
+        libraryChangeListListener.updateCenter(currentList, tag, albums, lists);
     }
 
     private Playlist searchForPlaylist(String playlistName) {
@@ -218,8 +222,30 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
 
     @Override
     public void addSongToFavourites(String songName) {
-        String path= songs.searchForSong(songName);
+        String path = songs.searchForSong(songName);
         favouriteSongs.addSong(path);
+    }
+
+    @Override
+    public void removeSongFromPlaylist(List list, String songName) {
+        String path = songs.searchForSong(songName);
+        if (list instanceof SharedPlaylist)
+            sharedPlaylist.removeSong(path);
+        else if (list instanceof FavouriteSongs)
+            favouriteSongs.removeSong(path);
+        else
+            searchForPlaylist(list.getName()).removeSong(path);
+    }
+
+    @Override
+    public void addSongToPlaylist(String playlistName, String songName) {
+        String path = songs.searchForSong(songName);
+        if (playlistName.equals("Shared playlist"))
+            sharedPlaylist.addSong(path);
+        else if (playlistName.equals("Favourite Songs"))
+            favouriteSongs.addSong(path);
+        else
+            searchForPlaylist(playlistName).addSong(path);
     }
 
     public void setLibraryChangeSongListener(LibraryChangeSongListener listener) {

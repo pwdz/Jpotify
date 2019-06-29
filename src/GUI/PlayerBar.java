@@ -56,7 +56,7 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
         if (song.getArtwork() != null)
             songInfo.setArtwork(song.getArtwork());
         songInfo.setArtistName(song.getArtist());
-        songInfo.setSongTitle(song.getArtist());
+        songInfo.setSongTitle(song.getTitle());
         songPlayer.pauseAndPlay.setIcon(Essentials.imageProvider(".\\pics\\Pause.png", 40, 40));
     }
 
@@ -262,8 +262,6 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
 //down: a small JSlider for sound in a JLabel
 
             JLabel soundSlideTmp = Essentials.labelMaker("", "yellow", 150, 45);
-//            soundSlideTmp.addMouseListener();
-
             JLabel soundIconLabel = Essentials.labelMaker("", "heavy grey", 45, 45);
             ImageIcon soundImg = Essentials.imageProvider(".\\pics\\FilledSound.png", 30, 25);
             soundIconLabel.setIcon(soundImg);
@@ -278,13 +276,8 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             add(soundSlideTmp, BorderLayout.EAST);
 
         }
-//        public void setPauseAndPlayDestination(SongPlayerAndGUIListener destination)
-//        {
-//            songPlayerAndGUIListener=destination;
-//        }
 
         public void setTimeProgressValue(int value) {
-//            System.out.println("PER*100:"+value);
             timeProgress.setValue(value);
         }
 

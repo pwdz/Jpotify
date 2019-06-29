@@ -1,5 +1,6 @@
 package GUI;
 
+import Listeners.AddSongToPlaylistListener;
 import Listeners.ListDisplayerListener;
 import Lists.*;
 import Lists.List;
@@ -12,8 +13,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
-public class ListDisplayer extends JPanel {
+public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
     private final int WIDTH = 300, HEIGHT = 20;
     private List list;
     private ImageIcon artworkImage;
@@ -31,8 +33,9 @@ public class ListDisplayer extends JPanel {
     String timeString;
     String number;
     ImageIcon addToPlaylist, heartImg, removeImg, playAndPause;
-
-    public ListDisplayer(List list) {
+    ArrayList<List>lists;
+    public ListDisplayer(List list, ArrayList<List>lists) {
+        this.lists=lists;
         addToPlaylist = Essentials.imageProvider("./pics/Add2.png", 17, 17);
         playAndPause = Essentials.imageProvider("./pics/Play.png", 25, 25);
         heartImg = Essentials.imageProvider("./pics/EmptyHeart.png", 17, 17);
@@ -308,15 +311,23 @@ public class ListDisplayer extends JPanel {
                             jTable.setValueAt(Essentials.imageProvider("./pics/FilledHeart.png",20,20),row,1);
                         }
                         break;
-                    case 5://add to playlist
-                        if (list instanceof FavouriteSongs)
-                            jTable.getValueAt(row, 4);//4:title
-
+                    case 5:
+                        if (list instanceof FavouriteSongs)//remove from favourites
+                        {
+                            listDisplayerListener.removeSongFromPlaylist(list, songName);
+//                            System.out.println("baghali?????????????????");
+                        }
+                        else if(list instanceof  Album)
+                        {
+                            AddSongToPlaylist addSongToPlaylist=new AddSongToPlaylist(lists,songName);
+                            addSongToPlaylist.setAddSongToPlaylistListener(ListDisplayer.this::addToPlaylist);
+                        }
                         break;
                     case 6:
-                        if(!(list instanceof FavouriteSongs))//add from specefic playlist to other playlists
+                        if(!(list instanceof FavouriteSongs))//add from specific playlist to other playlists
                         {
-
+                            AddSongToPlaylist addSongToPlaylist=new AddSongToPlaylist(lists,songName);
+                            addSongToPlaylist.setAddSongToPlaylistListener(ListDisplayer.this::addToPlaylist);
                         }
                         break;
                     case 7:
@@ -324,7 +335,7 @@ public class ListDisplayer extends JPanel {
                         {
                             if(!(list instanceof FavouriteSongs) && !(list instanceof LibrarySong))
                             {
-
+                                listDisplayerListener.removeSongFromPlaylist(list,songName);
                             }
                         }
                         break;
@@ -338,4 +349,10 @@ public class ListDisplayer extends JPanel {
         listDisplayerListener = listener;
     }
 
+
+    @Override
+    public void addToPlaylist(String playlistName, String songName) {
+        listDisplayerListener.addSongToPlaylist(playlistName,songName);
+        System.out.println("CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
 }
