@@ -216,5 +216,9 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
     {
         return playListPanel;
     }
+    public PlayerBar getPlayerBarPanel()
+    {
+        return playerBar;
+    }
 
 }

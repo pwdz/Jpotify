@@ -34,6 +34,7 @@ public class Controller implements LoginFormListener {
         user.getLibrary().setLibraryChangeSongListener(songPlayer);
         songPlayer.setSongPlayerChangeSongListener(mainFrame.getPlayerBar());
         mainFrame.getPlayList().setPlaylistRemoveListener(user.getLibrary());
+        mainFrame.getPlayerBarPanel().setPlayBarNxtAndPreListener(songPlayer);
     }
 
     public static void main(String[] args) {

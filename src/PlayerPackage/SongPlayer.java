@@ -80,8 +80,8 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
         while (playerStatus != PlayerStatus.FINISHED) {
             try {
                 frameNumber++;
-                if (frameNumber % 100 == 0)
-                    listener.syncSongWithGUI((double) frameNumber / song.getNumberOfFrames());
+//                if (frameNumber % 100 == 0)
+                listener.syncSongWithGUI((double) frameNumber / song.getNumberOfFrames());
                 if (!player.play(1)) {
                     break;
                 }
@@ -223,21 +223,20 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
 
     @Override
     public void goNxtOrPre(int tag) {
+        frameNumber = 0;
         if (tag == 1) {
             if (index > 0) {
                 index--;
                 setPath(currentList.getSongsPaths().get(index));
-            }
-            else {
+            } else {
                 index = currentList.getSongsPaths().size() - 1;
                 setPath(currentList.getSongsPaths().get(index));
             }
         } else {//2
-            if (index <currentList.getSongsPaths().size()-1) {
+            if (index < currentList.getSongsPaths().size() - 1) {
                 index++;
-                setPath(currentList.getSongsPaths().get(index ));
-            }
-            else {
+                setPath(currentList.getSongsPaths().get(index));
+            } else {
                 index = 0;
                 setPath(currentList.getSongsPaths().get(index));
             }
