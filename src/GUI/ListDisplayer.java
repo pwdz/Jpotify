@@ -148,7 +148,6 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
             artist = Essentials.labelMaker(firstSong.getArtist(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
             numberAndTime = Essentials.labelMaker(list.getSongsPaths().size() + " songs, " + list.totalTimeToString(), "heavy grey", WIDTH, 100, new Font("Serif", Font.PLAIN, 20), "grey");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
 
 
@@ -162,7 +161,6 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                 number = String.valueOf(list.getSongsPaths().indexOf(path) + 1);
                 defaultTableModel.addRow(new Object[]{playAndPause, heartImg, number, titleString, timeString, addToPlaylist});
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
         }
         //Album:
@@ -277,7 +275,6 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                 else
                     defaultTableModel.addRow(new Object[]{playAndPause, heartImg, number, titleString, artistString, timeString, addToPlaylist, removeImg});
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
         }
         panel1.setLayout(new BoxLayout(panel1, 3));
@@ -301,9 +298,7 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                 super.mouseClicked(e);
                 int column = ((JTable) e.getSource()).columnAtPoint(new Point(e.getX(), e.getY()));
                 int row = ((JTable) e.getSource()).rowAtPoint(new Point(e.getX(), e.getY()));
-                System.out.println("column" + songColumn);
                 String songName = (String) jTable.getValueAt(row, songColumn);
-                System.out.println("MOUSE LISTENER :" + songName);
                 switch (column) {
                     case 0://play
                         listDisplayerListener.changeSongInLibrary(songName);
@@ -318,7 +313,7 @@ public class ListDisplayer extends JPanel implements AddSongToPlaylistListener {
                         if (list instanceof FavouriteSongs)//remove from favourites
                         {
                             listDisplayerListener.removeSongFromPlaylist(list, songName);
-//                            System.out.println("baghali?????????????????");
+//                            ("baghali?????????????????");
                         } else if (list instanceof Album) {
                             AddSongToPlaylist addSongToPlaylist = new AddSongToPlaylist(lists, songName);
                             addSongToPlaylist.setAddSongToPlaylistListener(ListDisplayer.this::addToPlaylist);

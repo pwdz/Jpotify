@@ -68,11 +68,11 @@ public class Server implements Linker,Runnable{
         return usernamesAndClientHandlers;
     }
 
-//     public static void main(String[] args) {
-//         Server server=  getInstance();
-//         Thread thread=new Thread(server);
-//         thread.start();
-//     }
+     public static void main(String[] args) {
+         Server server=  getInstance();
+         Thread thread=new Thread(server);
+         thread.start();
+     }
 }
 
 

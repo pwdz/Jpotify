@@ -45,7 +45,6 @@ import java.util.Collections;
                     if(song.getArtist().contains(key))
                         foundItems.add(path);
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 }
 
             }
@@ -87,12 +86,9 @@ import java.util.Collections;
             Song song;
         for (String path: songPath) {
             try {
-                System.out.println("check1:"+path);
                 song=new Song(path);
-                System.out.println("check2");
                 totalTime+=song.getDuration();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
 
         }

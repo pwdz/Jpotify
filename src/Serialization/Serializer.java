@@ -16,9 +16,7 @@ public class Serializer {
             objectOutputStream.close();
             fileOutputStream.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     public static ArrayList<List> readFromFile(String filePath){
@@ -29,28 +27,11 @@ public class Serializer {
             ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
             lists=(ArrayList<List>) objectInputStream.readObject();
 
-            System.out.println("mind blowed"+lists.get(0)+"|size:|"+lists.size());
-
-            System.out.println("mind blowed"+lists.get(1)+"|size:|"+lists.size());
-
-            System.out.println("mind blowed"+lists.get(2)+"|size:|"+lists.size());
-
             } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return lists;
 
     }
-
-//    public static void main(String[] args) {
-//        ArrayList<List>lists=new ArrayList<>();
-//         LibrarySong songs = new LibrarySong("Songs", "All songs", imageConverterToByteCode(".\\pics\\Music.png"));
-//           FavouriteSongs favouriteSongs = new FavouriteSongs("Favourite Songs", "", imageConverterToByteCode(".\\pics\\Favourite2.png"));
-//            SharedPlaylist sharedPlaylist = new SharedPlaylist("Shared playlist", "", imageConverterToByteCode(".\\pics\\Shared.png"));
-//        lists.add(new LibrarySong("Songs",""));
-//    }
 }

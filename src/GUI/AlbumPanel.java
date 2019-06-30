@@ -38,13 +38,11 @@ public class AlbumPanel extends JPanel {
         JLabel name = Essentials.labelMaker("Title : "+album.getName(), "heavy grey", 70, 10, new Font("Serif", Font.PLAIN, 20), "grey");
         JLabel artist = null;
         try {
-            System.out.println("kif+:"+album.getSongsPaths().size());
             Song song = new Song(album.getSongsPaths().get(0));
 
             artist = Essentials.labelMaker("Artist : "+song.getArtist(), "heavy grey", 70, 10, new Font("Serif", Font.PLAIN, 20), "grey");
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
         this.add(img);
         this.add(nothing);

@@ -27,36 +27,25 @@ public class LibrarySong extends Playlist {
                     if (paths.get(j).equals(""))
                         continue;
                     ;
-//                    System.out.println("khiar_|_");
                     Song temp = new Song(paths.get(j));
                     if (song.getAlbum().equals(temp.getAlbum())) {
                         album.addSong(songPath.get(j));
-                        System.out.println(songPath.get(j));
                         paths.set(j, "");
                     }
-                    System.out.println("album:" + song.getAlbum());
-                    System.out.println("nnAlbum:" + temp.getAlbum());
                 }
                 albums.add(album);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
         }
-        for (Album a : albums)
-            System.out.println(a.getSongsPaths());
-        for (String s : songPath)
-            System.out.println("-+-:" + s);
         return albums;
     }
 
     public String searchForSong(String songName) {
         Song song = null;
-        System.out.println("----==--+:"+songName);
         try {
             for (String path : songPath) {
                 song = new Song(path);
                 if (song.getTitle().equals(songName)) {
-                    System.out.println("asdasdasdasdasd:"+path);
                     return path;
                 }
             }

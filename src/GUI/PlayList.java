@@ -167,7 +167,6 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
             }
 
         }
-        System.out.println("1234567890");
         arrangePlaylists();
     }
 
@@ -185,17 +184,17 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
                 super.mouseClicked(e);
                 if (label.equals(songs)) {
                     listGUIListener.listClicked(ListType.LibrarySong, "");
-//                    System.out.println("dafuk");
+//                    ("dafuk");
                 } else if (label.equals(favouriteSongs)) {
                     listGUIListener.listClicked(ListType.FavouriteSong, "");
-//                    System.out.println(ListType.FavouriteSong.toString());
+//                    (ListType.FavouriteSong.toString());
                 } else if (label.equals(sharedPlaylist))
                     listGUIListener.listClicked(ListType.SharedPlaylist, "");
                 else if (label.equals(albums))
                     listGUIListener.listClicked(ListType.Album, "");
                 else {
                     listGUIListener.listClicked(ListType.Playlist, label.getText());
-//                    System.out.println("{}"+label.getName());
+//                    ("{}"+label.getName());
                 }
             }
         });
@@ -247,7 +246,6 @@ public class PlayList extends JPanel implements LibraryListenerToPlaylistBar , A
     @Override
     public void openAlbum(String name) {
         listGUIListener.listClicked(ListType.Album,name);
-        System.out.println("name:"+name);
     }
     public void setPlaylistRemoveListener(PlayListRemoveListener listener)
     {

@@ -3,13 +3,15 @@ package PlayerPackage;
 import Listeners.*;
 import Lists.List;
 import Music.Song;
+import Network.GetCurrentSongFromSongPlayerForClient;
+import Network.GiveCurrentSongToClient;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarListener, SoundSliderListener, LibraryChangeSongListener, PlayBarNxtAndPreListener {
+public class SongPlayer implements SongPlayerAndGUIListener, GetCurrentSongFromSongPlayerForClient,TimeProgressBarListener, SoundSliderListener, LibraryChangeSongListener, PlayBarNxtAndPreListener {
     private AdvancedPlayer player;
     private String path;
     private Object playerLock;
@@ -20,7 +22,7 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     private List currentList;
     private int index;
     private int frameNumber = 0;
-
+    private GiveCurrentSongToClient giveCurrentSongToClient;
     private SongPlayerChangeSongListener songPlayerChangeSongListener;
 
     public SongPlayer() {
@@ -42,9 +44,7 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
             song = new Song(path);
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (JavaLayerException e) {
-            e.printStackTrace();
         }
 
     }
@@ -126,13 +126,11 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
             frameNumber = (int) (percentage * song.getNumberOfFrames());
             seekTo((int) ((percentage) * song.getNumberOfFrames()));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
     public void seekTo(int frame) {
         synchronized (playerLock) {
-//            System.out.println(playerStatus);
             player.close();
             try {
                 fileInputStream = new FileInputStream(path);
@@ -140,10 +138,8 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
                 player.play(frame, frame + 1);
 
             } catch (JavaLayerException ex) {
-                ex.printStackTrace();
 
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
 
         }
@@ -159,7 +155,7 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
     public void myClose() {
         synchronized (playerLock) {
             playerStatus = PlayerStatus.FINISHED;
-//            System.out.println(playerStatus);
+//            (playerStatus);
         }
         try {
             player.close();
@@ -212,7 +208,6 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
             frameNumber = 0;
             playTheSong();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
 
     }
@@ -241,6 +236,15 @@ public class SongPlayer implements SongPlayerAndGUIListener, TimeProgressBarList
                 setPath(currentList.getSongsPaths().get(index));
             }
         }
+    }
+
+    @Override
+    public void giveSongToClient() {
+        giveCurrentSongToClient.currentSongPath(path);
+    }
+    public void setGiveCurrentSongToClient(GiveCurrentSongToClient linker)
+    {
+        giveCurrentSongToClient = linker;
     }
 }
 

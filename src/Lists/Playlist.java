@@ -1,7 +1,4 @@
 package Lists;
-import Music.Song;
-
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Playlist extends List {
@@ -45,53 +42,5 @@ public class Playlist extends List {
         }
     }
 
-//
-//    public void changeOrderTest(int intChange ,int newPlace){
-//        newPlace--;
-//        ArrayList<Integer> integers=new ArrayList<>();
-//        for (Integer i = 0; i <11 ; i++) {
-//            integers.add(i);
-//        }
-//
-//        int index=integers.indexOf(intChange);
-//        Integer inNewIndex=integers.get(newPlace);
-//        Integer arrayOfSongs [] = new Integer[integers.size()];
-//        for (int i = 0; i <integers.size() ; i++) {
-//            arrayOfSongs[i]=integers.get(i);
-//        }
-//        if (newPlace<index) {
-//            for (int i = index; i>newPlace; i--) {
-//                arrayOfSongs[i]=arrayOfSongs[i-1];
-//            }
-//        }
-//
-//        if(newPlace>index){
-//            for (int i = index; i<newPlace ; i++) {
-//                arrayOfSongs[i]=arrayOfSongs[i+1];
-//            }
-//        }
-//        arrayOfSongs[newPlace]=intChange;
-//        integers=new ArrayList<>();
-//        for (int i = 0; i <arrayOfSongs.length ; i++) {
-//            integers.add(arrayOfSongs[i]);
-//        }
-//        for (int i = 0; i <integers.size() ; i++) {
-//            System.out.println(integers.get(i));
-//        }
-//
-//
-//    }
-//
-//    public static void main(String[] args) {
-//        try {
-//            Song song = new Song("/Users/taratt/Music/iTunes/iTunes Media/Music/Justin Bieber/Unknown Album/Sorry (Lyric Video).mp3");
-//            Playlist playlist=new Playlist("myPlaylist"," ",song.getArtwork());
-//            playlist.changeOrderTest(3,1);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//    }
 }
 

@@ -50,7 +50,7 @@ public class ClientHandler implements Runnable {
                 currentSongName = (String) reader.readObject();
                 mp3=(byte[]) reader.readObject();
                 message = (String) reader.readObject();
-           //     System.out.println("jjjjj");
+                System.out.println("jjjjj");
                 StringTokenizer stringTokenizer=new StringTokenizer(message,"/");
                 request=stringTokenizer.nextToken();
                 usernameOfFriend=stringTokenizer.nextToken();

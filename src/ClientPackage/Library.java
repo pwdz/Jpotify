@@ -29,10 +29,11 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     private ArrayList<String> sharedPlaylistSongs;
     //    private ArrayList<Song> songs;
     public Library(ArrayList<List> fileLists) {
+        sharedPlaylistSongs=new ArrayList<>();
+
 //        this.lists = fileLists;
         lists = new ArrayList<>();
         if (fileLists == null) {//1.No such a file 2.Empty file
-            System.out.println("hi");
             songs = new LibrarySong("Songs", "All songs", imageConverterToByteCode(".\\pics\\Music.png"));
             favouriteSongs = new FavouriteSongs("Favourite Songs", "", imageConverterToByteCode(".\\pics\\Favourite2.png"));
             sharedPlaylist = new SharedPlaylist("Shared playlist", "", imageConverterToByteCode(".\\pics\\Shared.png"));
@@ -59,9 +60,23 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
         currentList = songs;
         albums = songs.buildAlbums();//EBI: check it!
 
-        System.out.println("list size:" + lists.size());
     }
 
+    public ArrayList<String> getSharedPlaylistSongs() {
+        return sharedPlaylistSongs;
+    }
+
+    public void setSharedPlaylistSongs(){
+        Song song=null;
+        for (String path: sharedPlaylist.getSongsPaths()) {
+            try {
+                song=new Song(path);
+                sharedPlaylistSongs.add(song.getTitle());
+            } catch (FileNotFoundException e) {
+            }
+
+        }
+    }
     public void setStartSong() {
         if (songs.getSongsPaths().size() > 0)
             libraryChangeSongListener.changeSong(songs.getSongsPaths().get(0),1);
@@ -94,7 +109,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
             songs.addSong(songPath);
             albums = songs.buildAlbums();
         }
-//        System.out.println(songPath);
+//        (songPath);
     }
 
     public void setLibraryListenerToPlaylistBar(LibraryListenerToPlaylistBar listener) {
@@ -108,7 +123,6 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
             artworkByteCode = Files.readAllBytes(artworkFile.toPath());
             return artworkByteCode;
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -128,7 +142,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
                 currentList = favouriteSongs;
                 break;
             case SharedPlaylist://Shared playlist
-//                System.out.println(":||||||");
+//                (":||||||");
                 currentList = sharedPlaylist;
                 break;
             case Album://Albums
@@ -137,9 +151,9 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
                 else {
                     tag = 1;
                     currentList = searchForAlbum(listName);
-//                    System.out.println("yaaaaayyyaaaaaaaaaa");
+//                    ("yaaaaayyyaaaaaaaaaa");
                 }
-//                System.out.println("LISTCLICKED:"+albums.get(0).size());
+//                ("LISTCLICKED:"+albums.get(0).size());
                 //code here
                 break;
             case Playlist:
@@ -153,9 +167,7 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
     }
 
     private Playlist searchForPlaylist(String playlistName) {
-        System.out.println("PlaylistName:" + playlistName);
         for (List list : lists) {
-            System.out.println("N:" + list.getName());
             if (list instanceof Playlist) {
                 if ((list).getName().equals(playlistName))
                     if (((Playlist) list).isRemovable())//if removable is true then it's not Fav and Shared playlist.
@@ -209,14 +221,14 @@ public class Library implements AddPlaylistListener, ChooseSongListener, ListGUI
 
     @Override
     public void windowClosed() {
-//        System.out.println("*@*@*@*@*@*@*@*@");
+//        ("*@*@*@*@*@*@*@*@");
         Serializer.writeToFile(lists, ".\\SaveFiles\\saved.bin");
     }
 
     @Override
     public void changeSongInLibrary(String songName) {
         String newPath = songs.searchForSong(songName);
-//        System.out.println("newPath:" + newPath);
+//        ("newPath:" + newPath);
         libraryChangeSongListener.changeSong(newPath,0);
     }
 

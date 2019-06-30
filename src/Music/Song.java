@@ -33,11 +33,8 @@ public class Song {
             setDuration();
             numberOfFrames = mp3File.getFrameCount();
         } catch (InvalidDataException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
         } catch (UnsupportedTagException e) {
-            e.printStackTrace();
         }
     }
 
@@ -52,8 +49,6 @@ public class Song {
             title = metadata.substring(3, 32).trim();
             artist = metadata.substring(33, 62).trim();
             album = metadata.substring(63, 92).trim();
-
-            // System.out.println(title+"      "+artist+"      "+album);
             fileInputStream.close();
         } catch (IOException e) {
         }
@@ -70,7 +65,6 @@ public class Song {
                 artworkByteCode = Files.readAllBytes(artworkFile.toPath());
                 artwork = artworkByteCode;
             } catch (IOException e1) {
-                e1.printStackTrace();
             }
         }
 
@@ -123,15 +117,6 @@ public class Song {
                 return minutes + ":0" + seconds;
 
         }
-//           public static void main(String[] args) {
-//        try {
-//            Song song = new Song("C:\\Users\\acer\\Music\\01 Honey.mp3");
-//            new
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
     }
 

@@ -22,7 +22,6 @@ public class Album extends List {
             try {
                 song = new Song(path);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
             setArtwork(song);
         }

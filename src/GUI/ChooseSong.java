@@ -70,7 +70,6 @@ public class ChooseSong extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 if (!String.valueOf(fileChooser.getSelectedFile()).equals("")) {
-                    System.out.println("!!!!!!!!!!!!!!!:" + String.valueOf(fileChooser.getSelectedFile())+"!!");
                     chooseSongListener.addSongToLibrary(String.valueOf(fileChooser.getSelectedFile()));
                     fileChooser.setSelectedFile(new File(""));
 //                    fileChooser
@@ -84,8 +83,5 @@ public class ChooseSong extends JFrame {
         chooseSongListener = listener;
     }
 
-//    public static void main(String[] args) {
-//        ChooseSong chooseSong=new ChooseSong();
-//    }
 
 }

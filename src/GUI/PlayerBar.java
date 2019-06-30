@@ -40,7 +40,6 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             songInfo.setArtistName(song.getArtist());
             songInfo.setSongTitle(song.getTitle());
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
 
     }
@@ -122,14 +121,12 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
         public void setArtwork(byte[] artworkByteCode) {
             try {
                 if (artworkByteCode != null) {
-                    System.out.println("***************************************");
                     artworkImage = new ImageIcon(ImageIO.read(new ByteArrayInputStream(artworkByteCode)));
                     artworkImage = new ImageIcon(artworkImage.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH));
                 } else
                     artworkImage = Essentials.imageProvider("./pics/Music2.png", 90, 90);
 
             } catch (IOException e) {
-//                e.printStackTrace();
 
             }
             artworkLabel.setIcon(artworkImage);
@@ -260,7 +257,7 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
             timeGone = Essentials.labelMaker("", "grey", 25, 25);
             totalTime = Essentials.labelMaker("", "grey", 25, 25);
 
-            timeProgressTmp.add(timeGone, gbc);
+//            timeProgressTmp.add(timeGone, gbc);
 
             gbc.gridx++;
             gbc.weightx = 1;
@@ -271,7 +268,7 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
 
             gbc.weightx = 0;
             gbc.gridx++;
-            timeProgressTmp.add(totalTime, gbc);
+//            timeProgressTmp.add(totalTime, gbc);
 
 
 //down: a small JSlider for sound in a JLabel
@@ -315,7 +312,7 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
                     int progressBarVal = (int) Math.round(((double) mouseX / (double) timeProgress.getWidth()) * timeProgress.getMaximum());
                     timeProgress.setValue(Math.round(progressBarVal));
                     timeProgressListener.seekToFrame((double) progressBarVal / timeProgressMax);
-//                    System.out.println(timeProgressMax+" "+timeProgress.getMaximum());
+//                    (timeProgressMax+" "+timeProgress.getMaximum());
                 }
             });
         }
@@ -328,7 +325,7 @@ public class PlayerBar extends JPanel implements SongPlayerChangeSongListener {
                     int value = (int) Math.round((double) e.getX() / soundSlider.getWidth() * soundSlider.getMaximum());
                     soundSlider.setValue(value);
                     soundSliderListener.setVolume((float) value / soundSlider.getMaximum());
-//                    System.out.println((float) value/soundSlider.getMaximum());
+//                    ((float) value/soundSlider.getMaximum());
                 }
             });
         }

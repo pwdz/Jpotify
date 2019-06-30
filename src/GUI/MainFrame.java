@@ -117,7 +117,6 @@ public class MainFrame implements LibraryChangeListListener ,AlbumPanelLinkerToM
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 //                Serializer.writeToFile(); // inja goh hayi ke bayad bokhori ro benevis
                 closeWindowListener.windowClosed();
-                System.out.println(":|:|:|:|:|:|:|:|");
                 System.exit(0);
             }
         });
