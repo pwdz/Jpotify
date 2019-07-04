@@ -1,3 +1,3 @@
 # Jpotify
 GUI is written using Swing :|
-A simple music player similar to Spotify 
+A simple music player similar to Spotify having avilities like pause and play and adding and removing songs and ... 
