@@ -16,7 +16,7 @@ public class Server implements Runnable{
     private static ArrayList<OutputStream> outputStreams;//Users outputStreams
     private static ArrayList<ObjectInputStream> objectInputStreams;
     private static ArrayList<ObjectOutputStream> objectOutputStreams;
-
+    private static ArrayList<String> usernames;
     public Server()
     {
         try {
@@ -25,6 +25,7 @@ public class Server implements Runnable{
             outputStreams = new ArrayList<>();
             objectInputStreams = new ArrayList<>();
             objectOutputStreams = new ArrayList<>();
+            usernames = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,7 +46,6 @@ public class Server implements Runnable{
     }
     private class ClientHandler extends Thread
     {
-//        private static
         private InputStream input;
         private OutputStream output;
         private ObjectOutputStream writer;
@@ -87,12 +87,9 @@ public class Server implements Runnable{
         {
             switch (arg){
                 case 0://new client has joined
-                    inputStreams.add(input);
-                    outputStreams.add(output);
-                    objectInputStreams.add(reader);
-                    objectOutputStreams.add(writer);
                     try {
                         Info info = (Info) reader.readObject();
+                        addNewUser(info);
                         alertOtherUsers(info);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -100,13 +97,39 @@ public class Server implements Runnable{
                         e.printStackTrace();
                     }
                     break;
-                case 2://request for a file
-                    sendRequestForFile();
-
+                case 1://request for a file
+                    try {
+                        Info info = (Info) reader.readObject();
+                        sendRequestForFile(info,1);
+                        sendTheFile(receiveTheFile());
+                        writer.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
-                case 3:
+                case 2://request for a shared playlist
+                    try {
+                        Info info = (Info) reader.readObject();
+                        sendRequestForFile(info,2);
+                        sendTheFile(receiveTheFile());
+                        writer.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
+        }
+        private void addNewUser(Info info)
+        {
+            inputStreams.add(input);
+            outputStreams.add(output);
+            objectInputStreams.add(reader);
+            objectOutputStreams.add(writer);
+            usernames.add(info.getSourceUserName());
         }
         private void alertOtherUsers(Info newInfo)
         {
@@ -115,16 +138,59 @@ public class Server implements Runnable{
                 try {
                     if(!objectOutputStreams.get(i).equals(output)) {
                         outputStreams.get(i).write(0);
+                        outputStreams.get(i).flush();
                         objectOutputStreams.get(i).writeObject(newInfo);
+                        objectOutputStreams.get(i).flush();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        private void sendRequestForFile()
+        private void sendRequestForFile(Info info,int arg)//file can be a song or shared playlist
         {
-
+            int index = searchUser(info.getSourceUserName());
+            if(index!=-1) {
+                try {
+                    outputStreams.get(index).write(arg);
+                    outputStreams.get(index).flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+                System.out.println("[In Server.java]:: dude what the fuck?");
+        }
+        private Info receiveTheFile()
+        {
+            try {
+                Info info = (Info) reader.readObject();
+                return info;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        private void sendTheFile(Info info)
+        {
+            try {
+                writer.writeObject(info);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        /**
+         * input username(String)
+         * return index(int)
+         */
+        private int searchUser(String username)
+        {
+            for(int i=0;i<usernames.size();i++)
+                if(usernames.get(i).equals(username))
+                    return i;
+            return -1;
         }
     }
 //////////////////////////////////////////////////
