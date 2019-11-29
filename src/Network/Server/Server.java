@@ -76,50 +76,42 @@ public class Server implements Runnable{
             {
                 try {
                     int arg = input.read();
-                    inputType(arg);
-                } catch (IOException e) {
+                    Info info=(Info)reader.readObject();
+                    inputType(arg,info);
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
 
             }
         }
-        private void inputType(int arg)
+        private void inputType(int arg,Info info)
         {
             switch (arg){
                 case 0://new client has joined
-                    try {
-                        Info info = (Info) reader.readObject();
-                        addNewUser(info);
-                        alertOtherUsers(info);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    System.out.println("[In Server]:: #USER#"+info.getSourceUserName()+"#JOINED#");
+                    addNewUser(info);
+                    alertOtherUsers(info,0);
                     break;
                 case 1://request for a file
                     try {
-                        Info info = (Info) reader.readObject();
                         sendRequestForFile(info,1);
                         sendTheFile(receiveTheFile());
                         writer.flush();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
                     }
                     break;
                 case 2://request for a shared playlist
                     try {
-                        Info info = (Info) reader.readObject();
                         sendRequestForFile(info,2);
                         sendTheFile(receiveTheFile());
                         writer.flush();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
                     }
+                    break;
+                case 3://current song that is being played
+                    alertOtherUsers(info,3);
                     break;
             }
         }
@@ -131,13 +123,13 @@ public class Server implements Runnable{
             objectOutputStreams.add(writer);
             usernames.add(info.getSourceUserName());
         }
-        private void alertOtherUsers(Info newInfo)
+        private void alertOtherUsers(Info newInfo,int arg)
         {
             for(int i=0;i<outputStreams.size();i++)
             {
                 try {
                     if(!objectOutputStreams.get(i).equals(output)) {
-                        outputStreams.get(i).write(0);
+                        outputStreams.get(i).write(arg);
                         outputStreams.get(i).flush();
                         objectOutputStreams.get(i).writeObject(newInfo);
                         objectOutputStreams.get(i).flush();

@@ -21,7 +21,7 @@ public class Client{
     private ObjectInputStream reader;
     private ObjectOutputStream writer;
     private User user;
-    private ArrayList<String> friendsIPAdresses;
+    private ArrayList<String> friendsUsernames;
     public Client(User user)
     {
         this.user = user;
@@ -32,36 +32,49 @@ public class Client{
             output = socket.getOutputStream();
             reader = new ObjectInputStream(input);
             output = new ObjectOutputStream(output);
-
-
+            friendsUsernames = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    @SuppressWarnings("Duplicates")
     public void clientReceiver()
     {
         while (true)
         {
             try {
                 int arg = input.read();
-                inputType(arg);
-            } catch (IOException e) {
+                Info info = (Info) reader.readObject();
+                receiverInputType(arg,info);
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
-    private void inputType(int arg)
+    private void receiverInputType(int arg,Info info)
     {
         switch (arg)
         {
-            case 1:
+            case 0://new user joined
+                friendsUsernames.add(info.getSourceUserName());
+                break;
+            case 1://request has come for the current song!
+                try {
+                    Info myInfo = new Info();
+                    myInfo.setFileByteCode(Files.readAllBytes(new File("D:/Music/The Neighbourhood - Sadderdaze.mp3").toPath()));
+                    writer.writeObject(myInfo);
+                    writer.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 2:
-//                Info info = (Info) reader.readObject();
                 break;
             case 3:
+                //current song must be updated!
                 break;
         }
     }
+
 
 }

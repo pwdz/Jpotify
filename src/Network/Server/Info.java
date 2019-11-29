@@ -6,6 +6,15 @@ import java.security.PublicKey;
 public class Info implements Serializable {
     private String targetUserName;
     private String sourceUserName;
+    private byte[] fileByteCode;
+
+    public byte[] getFileByteCode() {
+        return fileByteCode;
+    }
+
+    public void setFileByteCode(byte[] fileByteCode) {
+        this.fileByteCode = fileByteCode;
+    }
 
     public String getSourceUserName() {
         return sourceUserName;
