@@ -1,78 +1,136 @@
 package Network.Server;
 
-import Network.Linker;
+import ClientPackage.User;
+import com.sun.prism.shader.Solid_RadialGradient_REFLECT_AlphaTest_Loader;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class Server implements Linker,Runnable{
-    private static Server ourInstance =null;
+public class Server implements Runnable{
     private final int PORT=1235;
     private ServerSocket serverSocket;
     private ClientHandler clientHandler;
-    private ArrayList<Socket> sockets;
-    private ArrayList<ClientHandler> clientHandlers;
-    private HashMap<String,ClientHandler> usernamesAndClientHandlers;
-    private int handlerCounter;
-    private Server() {
-        sockets=new ArrayList<>();
-        clientHandlers=new ArrayList<>();
-        usernamesAndClientHandlers=new HashMap<>();
-        handlerCounter=0;
+    private static ArrayList<InputStream> inputStreams; //Users inputStreams
+    private static ArrayList<OutputStream> outputStreams;//Users outputStreams
+    private static ArrayList<ObjectInputStream> objectInputStreams;
+    private static ArrayList<ObjectOutputStream> objectOutputStreams;
+
+    public Server()
+    {
         try {
-            serverSocket=new ServerSocket(PORT);
+            serverSocket = new ServerSocket(PORT);
+            inputStreams = new ArrayList<>();
+            outputStreams = new ArrayList<>();
+            objectInputStreams = new ArrayList<>();
+            objectOutputStreams = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("server created");
     }
-
-
     @Override
     public void run() {
-        while (true){
-            Socket clientSocket=null;
+        while(true)
+        {
             try {
-                clientSocket=serverSocket.accept();
-                sockets.add(clientSocket);
-                clientHandler=new ClientHandler(clientSocket);
-                clientHandlers.add(clientHandler);
-                usernamesAndClientHandlers.put("user"+handlerCounter,clientHandler);
-                handlerCounter++;
-                Thread thread=new Thread(clientHandler);
-                thread.start();
+                Socket clientSocket  = serverSocket.accept();
+                ClientHandler clientHandler =new ClientHandler(clientSocket);
+                clientHandler.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
     }
+    private class ClientHandler extends Thread
+    {
+//        private static
+        private InputStream input;
+        private OutputStream output;
+        private ObjectOutputStream writer;
+        private ObjectInputStream reader;
 
 
+        public ClientHandler(Socket clientSocket) {
+            System.out.println("created");
+            try {
+                input = clientSocket.getInputStream();
+                output = clientSocket.getOutputStream();
+                writer = new ObjectOutputStream(output);
+                reader = new ObjectInputStream(input);
 
-    public static Server getInstance() {
-        if(ourInstance==null) {
-            ourInstance = new Server();
-            System.out.println("singletone created");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        return ourInstance;
+        @Override
+        public void run() {
+            serverReceiver();
+        }
+        private void serverReceiver()
+        {
+            while (true)
+            {
+                try {
+                    int arg = input.read();
+                    inputType(arg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        private void inputType(int arg)
+        {
+            switch (arg){
+                case 0://new client has joined
+                    inputStreams.add(input);
+                    outputStreams.add(output);
+                    objectInputStreams.add(reader);
+                    objectOutputStreams.add(writer);
+                    try {
+                        Info info = (Info) reader.readObject();
+                        alertOtherUsers(info);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2://request for a file
+                    sendRequestForFile();
+
+                    break;
+                case 3:
+                    break;
+            }
+        }
+        private void alertOtherUsers(Info newInfo)
+        {
+            for(int i=0;i<outputStreams.size();i++)
+            {
+                try {
+                    if(!objectOutputStreams.get(i).equals(output)) {
+                        outputStreams.get(i).write(0);
+                        objectOutputStreams.get(i).writeObject(newInfo);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        private void sendRequestForFile()
+        {
+
+        }
     }
-
-
-    @Override
-    public HashMap<String, ClientHandler> getUsernamesAndClientHandlers() {
-        return usernamesAndClientHandlers;
+//////////////////////////////////////////////////
+    public static void main(String[] args) {
+        new Server();
     }
-
-     public static void main(String[] args) {
-         Server server=  getInstance();
-         Thread thread=new Thread(server);
-         thread.start();
-     }
 }
 
 
