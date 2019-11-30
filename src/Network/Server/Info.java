@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.security.PublicKey;
 
 public class Info implements Serializable {
-    private String targetUserName;
-    private String sourceUserName;
-    private byte[] fileByteCode;
+    private String targetUserName=null;
+    private String sourceUserName=null;
+    private byte[] fileByteCode=null;
 
     public byte[] getFileByteCode() {
         return fileByteCode;
@@ -28,8 +28,17 @@ public class Info implements Serializable {
         this.targetUserName = targetUserName;
     }
 
-    public String getTargetUserId()
+    public String getTargetUserName()
     {
         return targetUserName;
+    }
+
+    @Override
+    public String toString()
+    {
+        if (getFileByteCode()!=null)
+            return "targetUserName:"+getTargetUserName()+"\n"+"sourceUserName"+getSourceUserName()+"\nfileByteCode:"+"true";
+
+        return "targetUserName:"+getTargetUserName()+"\n"+"sourceUserName"+getSourceUserName()+"\nfileByteCode:"+"false";
     }
 }
