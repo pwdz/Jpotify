@@ -1,5 +1,5 @@
 # Jpotify
-By pwdz and (taratt)[https://github.com/taratt]
+By [pwdz](https://github.com/pwdz) and [taratt](https://github.com/taratt)
 ### Intro
 This project is a **music-player** having the following features:
 - Adding songs/playlist from your computer
