@@ -31,7 +31,7 @@ public static Color getColor(String colorName) {
         case "grey":
             return new Color(138, 138, 117);
         case "heavy grey":
-            return new Color(100, 50, 40);//Change this and the Background color will change
+            return new Color(100, 50, 40);//Change this and the Background color will be changed
         case "blue":
             return new Color(12, 12, 100);
         case "red":
@@ -53,4 +53,4 @@ public static Color getColor(String colorName) {
 ```
 ![](ss/4.png)
 Multiple **clients** can be connected to the **server**.(network branch)
-A serializable class name Info contains all the information which is going to be send to server and clients.
+A serializable class name Info contains all the information which is going to be sent to server and clients.
